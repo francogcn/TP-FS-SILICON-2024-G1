@@ -1,0 +1,18 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+body{
+  background-color: rgb(240, 247, 252);
+}
+.navbar{
+  background-color: lightblue;
+  border-radius: 10px;
+  margin:5px;
+}
+.nav-link.active{
+  text-decoration: underline;
+}
+.container{margin-top:70px}
