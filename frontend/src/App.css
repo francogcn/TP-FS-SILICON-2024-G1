@@ -23,9 +23,32 @@ body{
   height: 30vh;
   font-size: 40px;
 }
-.perfil{
-  background: var(--bs-gray-200);
+.perfil {
+  background: var(--bs-gray-100);
   padding: 20px;
-  margin:-15vh 100px;
   border-radius: 10px;
+  position: relative;
+  top: -15vh;
+  height: calc(80vh - 110px);
+  margin: 0 5vw;
+  box-shadow: 0px 0px 10px #999;
+}
+
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  background: url('profile.jpg');
+  border-radius: 100%;
+  margin: -50px auto 0 auto;
+}
+
+.perfil-info{
+  font-size: 2em;
+  font-weight: 600;
+}
+
+span.perfil-info-bubtitle{
+  display: block;
+  font-size: 0.55em;
+  font-weight: 100;
 }
