@@ -15,11 +15,11 @@ app.use(express.urlencoded({ extended: true }));
 
 //conocer los distintos controladores, saber donde estan, traelos como constantes locales
 // const usuarioController = require('./src/controller/usuarioController');
-
+const prestamosController = require('./src/controller/prestamosController')
 
 //redireccionar las distintas peticiones a su correspondiente controlador.
 //app.use('/usuarios', usuarioController);
-
+app.use('/prestamos', prestamosController)
 
 
 // Defino una funcion que intenta iniciar el servidor en el puerto especificado o en el siguiente disponible
