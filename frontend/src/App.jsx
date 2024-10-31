@@ -4,6 +4,8 @@ import Menu from "../src/components/Menu"
 import NotFound from './pages/NotFound'
 import './App.css'
 import Perfil from './pages/Perfil'
+import Prestamos from './pages/Prestamos'
+import Books from './pages/Books'
 
 function App() {
 
@@ -13,7 +15,9 @@ function App() {
         <Menu/>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/books" element={<Books />} />
           <Route path="/perfil" element={<Perfil />} />
+          <Route path="/prestamos" element={<Prestamos />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
