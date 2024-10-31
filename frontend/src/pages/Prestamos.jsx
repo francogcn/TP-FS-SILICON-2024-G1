@@ -51,7 +51,7 @@ export default function Prestamos() {
               <td>{prestamo.id_libro}</td>
               <td>{prestamo.fecha_prestamo}</td>
               <td>{prestamo.fecha_devolucion}</td>
-              <td><button className="btn btn-"></button></td>
+              <td><button className="btn btn-secondary">Editar</button></td>
             </tr> 
           ))}
         </tbody>
