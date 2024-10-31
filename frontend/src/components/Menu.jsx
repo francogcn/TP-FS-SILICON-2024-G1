@@ -9,7 +9,7 @@ export default function Menu(){
                  <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
+                    <ul className="navbar-nav">
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/">Inicio</NavLink>
                         </li>

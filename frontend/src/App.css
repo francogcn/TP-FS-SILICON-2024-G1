@@ -15,4 +15,17 @@ body{
 .nav-link.active{
   text-decoration: underline;
 }
+
 .container{margin-top:70px}
+
+.profile-banner{
+  background: var(--bs-primary-border-subtle);
+  height: 30vh;
+  font-size: 40px;
+}
+.perfil{
+  background: var(--bs-gray-200);
+  padding: 20px;
+  margin:-15vh 100px;
+  border-radius: 10px;
+}
