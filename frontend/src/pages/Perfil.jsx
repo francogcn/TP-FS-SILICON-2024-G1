@@ -21,7 +21,7 @@ export default function Perfil() {
             <span className="perfil-info-bubtitle">Amigos</span>
             </div>
         </div>
-        <button type="button" className="btn btn-info">Agregar</button>
+        <button type="button" className="btn btn-success">Agregar</button>
       </div>
     </div>
     </>

@@ -52,3 +52,11 @@ span.perfil-info-bubtitle{
   font-size: 0.55em;
   font-weight: 100;
 }
+
+@media screen and (min-width: 400px){
+  .perfil .row{
+    width: 300px;
+    margin: auto;
+    margin-bottom: 30px;
+  }
+}
