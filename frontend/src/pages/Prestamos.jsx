@@ -2,6 +2,9 @@ import { useState, useEffect } from "react"
 
 export default function Prestamos() {
     const [prestamos, setPrestamos] = useState([]);
+
+
+   //Hago el fetch a la API para traer todos los prestamos
     useEffect(()=>{
         const fetchPrestamos = async()=>{
             try{
@@ -15,6 +18,8 @@ export default function Prestamos() {
         };
         fetchPrestamos();
     },[]);
+
+
 
     return (
         <>
@@ -30,11 +35,12 @@ export default function Prestamos() {
             <table className="table table-striped table-hover">
         <thead>
           <tr>
-            <th>ID Préstamo</th>
-            <th>ID Usuario</th>
-            <th>ID Libro</th>
+            <th>Préstamo</th>
+            <th>Usuario</th>
+            <th>Libro</th>
             <th>Fecha Préstamo</th>
             <th>Fecha Devolución</th>
+            <th>Editar</th>
           </tr>
         </thead>
         <tbody>
@@ -45,7 +51,8 @@ export default function Prestamos() {
               <td>{prestamo.id_libro}</td>
               <td>{prestamo.fecha_prestamo}</td>
               <td>{prestamo.fecha_devolucion}</td>
-            </tr>
+              <td><button className="btn btn-"></button></td>
+            </tr> 
           ))}
         </tbody>
       </table>
