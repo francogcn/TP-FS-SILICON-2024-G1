@@ -1,5 +1,5 @@
-create database biblioteca;
-use biblioteca;
+create database integrador;
+use integrador;
 
 -- Forma tradicional de relacionar usuarios y roles mediante tablas separadas
 -- util en el caso de querer aquegar mas campos o detalles a la tabla rol
