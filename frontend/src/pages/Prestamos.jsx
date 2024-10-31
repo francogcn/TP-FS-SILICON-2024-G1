@@ -3,6 +3,7 @@ export default function Prestamos() {
     <>
     <div className="container">
         <h1>Prestamos</h1>
+        <table></table>
     </div>
     </>
   )

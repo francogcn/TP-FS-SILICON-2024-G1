@@ -16,6 +16,9 @@ export default function Menu(){
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/perfil">Perfil</NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/prestamos">Prestamos</NavLink>
+                        </li>
                         <li className="nav-item dropdown">
                             <NavLink
                                 className="nav-link dropdown-toggle"
