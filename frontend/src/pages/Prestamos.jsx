@@ -20,6 +20,13 @@ export default function Prestamos() {
         <>
         <div className="container">
             <h1>Prestamos</h1>
+            <div className="row prestamos">
+              <div className="col">
+              <button className="btn btn-primary">
+                Generar Prestamos
+              </button>
+              </div>
+            </div>
             <table className="table table-striped table-hover">
         <thead>
           <tr>
