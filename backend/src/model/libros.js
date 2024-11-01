@@ -49,7 +49,6 @@ const libros = {
                 }
             }
         } catch (error) {
-            //Este error no se produce 
             if (error.code == "ER_DUP_ENTRY") {
                 throw new Error("Los datos a insertar generan un titulo duplicado");
             } else { 
@@ -92,7 +91,7 @@ const libros = {
             if (result.length == 0) {
                 throw new Error(`No se encontro un libro con el titulo: ${titulo}`);
             } else {
-                return { message: `Libro hallado con exito`, detail: result[0] };
+                return { message: `Libro hallado con exito`, detail: result };
             }
         } catch (error) {
             throw new Error('Revisar codigo de error: ' + error.message);
