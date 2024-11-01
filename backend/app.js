@@ -2,6 +2,7 @@ const express = require('express');
 const config = require('./src/config/config.json');
 const app = express();
 
+
 var cors = require('cors');
 app.use(cors());
 
@@ -15,11 +16,11 @@ app.use(express.urlencoded({ extended: true }));
 
 //conocer los distintos controladores, saber donde estan, traelos como constantes locales
 // const usuarioController = require('./src/controller/usuarioController');
-
+const librosController = require('./src/controller/librosController');
 
 //redireccionar las distintas peticiones a su correspondiente controlador.
 //app.use('/usuarios', usuarioController);
-
+app.use("/libros", librosController);
 
 
 // Defino una funcion que intenta iniciar el servidor en el puerto especificado o en el siguiente disponible
