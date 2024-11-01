@@ -7,7 +7,8 @@ const router = express.Router();
 // ----------------------------------------------------------
 router.get('/', listar_prestamos);
 router.get('/:id', buscarPorID);
-router.post('/', crearPrestamo)
+router.post('/', crearPrestamo);
+router.delete('/:id', eliminarPrestamo);
 
 // Funciones CRUD
 //Listar todos los prestamos
@@ -41,5 +42,20 @@ async function crearPrestamo(req, res) {
     } catch (error) {
         res.status(500).send(error.message);
     }
-}    
+}
+
+async function eliminarPrestamo(req, res) {
+    const { id } = req.params;
+    try {
+        const result = await model.deleteById(id);
+        if (result) {
+            res.status(200).json({ message: 'Préstamo eliminado correctamente' });
+        } else {
+            res.status(404).json({ message: 'Préstamo no encontrado' });
+        }
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 module.exports = router;
