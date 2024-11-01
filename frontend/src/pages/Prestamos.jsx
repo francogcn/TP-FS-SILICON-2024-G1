@@ -8,7 +8,7 @@ export default function Prestamos() {
     useEffect(()=>{
         const fetchPrestamos = async()=>{
             try{
-                const response = await fetch('http://localhost:8080/prestamos');
+                const response = await fetch('http://localhost:8080/api/prestamos');
                 const data = await response.json();
                 setPrestamos(data);
 
