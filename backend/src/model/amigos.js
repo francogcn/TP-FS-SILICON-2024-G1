@@ -15,8 +15,12 @@ const amigos = {
 
     listarAmigos: async function(id_usuario) {
         try {
-            query = `select u.nombre, u.apellido from Amigos a join Usuario u on a.id_amigo_usuario = u.id_usuario where a.id_usuario = ?`
-            const [result] = await db.execute(query, [id_usuario]);
+            // query = `select u.nombre, u.apellido from Amigos a join Usuario u on a.id_amigo_usuario = u.id_usuario where a.id_usuario = ?`
+            const query = `SELECT u.nombre, u.apellido FROM Amigos a 
+            JOIN Usuario u ON (a.id_amigo_usuario = u.id_usuario OR a.id_usuario = u.id_usuario)
+            WHERE ? IN (a.id_usuario, a.id_amigo_usuario)
+            AND u.id_usuario != ?;`
+            const [result] = await db.execute(query, [id_usuario, id_usuario]);
             return result;
         } catch (error) {
             throw new Error('Error al listar amistad ' + error.message);
