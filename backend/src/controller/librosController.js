@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const model = require('./../model/librosModel.js');
-// const securityController = require('./securityController');
+const model = require('../model/libros.js');
+
 
 router.get('/', listarLibros);
 router.get('/:titulo', buscarPorTitulo);
