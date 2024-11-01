@@ -28,7 +28,6 @@ async function listarLibros(req, res) {
     }
 }
 
-//Solo me trae el primer libro que se creo con ese titulo
 async function buscarPorTitulo(req, res) {
     try {
         const result = await model.buscarPorTitulo(req.params.titulo);

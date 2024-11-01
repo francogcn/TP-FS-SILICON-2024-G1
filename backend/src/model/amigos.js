@@ -1,0 +1,48 @@
+const db = require('../config/config_database');
+
+const amigos = {
+    crearAmistad: async function (datos) {
+        try {
+            const params = [datos.id_usuario, datos.id_amigo_usuario];
+            const query = "INSERT INTO Amigos (id_usuario, id_amigo_usuario) VALUES (?,?)";
+            const result = await db.execute(query, params);
+            return { message: `Amistad creada con exito`, detail: result };
+        } catch (error) {
+            throw new Error('No se pudo crear la amistad debido a: ' + error.message);
+        }
+    },
+
+//NO anda en postman, la query si funciona en la base de datos
+    listarAmigos: async function(id_usuario) {
+        try {
+            query = `select u.nombre, u.apellido from Amigos a join Usuario u on a.id_amigo_usuario = u.id_usuario where a.id_usuario = ?`
+            const [result] = await db.execute(query, [id_usuario]);
+            return result;
+        } catch (error) {
+            throw new Error('Error al listar amistad ' + error.message);
+        }
+        
+    },
+
+//NO anda en postman, la query si funciona en la base de datos
+    eliminarAmistad: async function(id_amistad) {
+        try {
+            const query = "DELETE FROM Amigos WHERE id_amistad =?;";
+            const result = await db.execute(query, [id_amistad]);
+
+            if (result.affectedRows === 0) {
+                const error = new Error("No se encontró amistad");
+                error.statusCode = 404;
+                throw error;
+            }
+            return { message: 'Amistad eliminada con éxito ', detail: result };
+
+        } catch (error) {
+            throw new Error('Error al eliminar la amistad: ' + error.message);
+        }
+    },
+
+}
+
+
+module.exports = amigos;
