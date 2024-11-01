@@ -7,7 +7,7 @@ const router = express.Router();
 // ----------------------------------------------------------
 router.get('/', listar_prestamos);
 router.get('/:id', buscarPorID);
-router.post('/', )
+router.post('/', crearPrestamo)
 
 // Funciones CRUD
 //Listar todos los prestamos
@@ -34,8 +34,9 @@ async function buscarPorID(req, res) {
 }
 
 async function crearPrestamo(req, res) {
+    const { id_usuario, id_libro, fecha_prestamo, fecha_devolucion } = req.body;
     try {
-        const result = await model.crearPrestamo(req.body);
+        const result = await model.create(id_usuario, id_libro, fecha_prestamo, fecha_devolucion);
         res.send(result);
     } catch (error) {
         res.status(500).send(error.message);

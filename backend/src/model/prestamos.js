@@ -28,7 +28,7 @@ const Prestamo={
         try {
             await db.execute(query, [id_usuario, id_libro, fecha_prestamo, fecha_devolucion]);
         } catch (error) {
-            throw new Error('Error al crear la persona: ' + error.message);
+            throw new Error('Error al crear el prestamo: ' + error.message);
         }
     }
 
