@@ -12,7 +12,7 @@ const amigos = {
         }
     },
 
-//NO anda en postman, la query si funciona en la base de datos
+
     listarAmigos: async function(id_usuario) {
         try {
             query = `select u.nombre, u.apellido from Amigos a join Usuario u on a.id_amigo_usuario = u.id_usuario where a.id_usuario = ?`
@@ -24,7 +24,7 @@ const amigos = {
         
     },
 
-//NO anda en postman, la query si funciona en la base de datos
+
     eliminarAmistad: async function(id_amistad) {
         try {
             const query = "DELETE FROM Amigos WHERE id_amistad =?;";
