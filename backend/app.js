@@ -21,8 +21,8 @@ const librosController = require('./src/controller/librosController');
 
 //redireccionar las distintas peticiones a su correspondiente controlador.
 //app.use('/usuarios', usuarioController);
-app.use('/prestamos', prestamosController)
-app.use("/libros", librosController);
+app.use('/api/prestamos', prestamosController)
+app.use("/api/libros", librosController);
 
 
 // Defino una funcion que intenta iniciar el servidor en el puerto especificado o en el siguiente disponible
