@@ -16,10 +16,12 @@ app.use(express.urlencoded({ extended: true }));
 
 //conocer los distintos controladores, saber donde estan, traelos como constantes locales
 // const usuarioController = require('./src/controller/usuarioController');
+const prestamosController = require('./src/controller/prestamosController')
 const librosController = require('./src/controller/librosController');
 
 //redireccionar las distintas peticiones a su correspondiente controlador.
 //app.use('/usuarios', usuarioController);
+app.use('/prestamos', prestamosController)
 app.use("/libros", librosController);
 
 

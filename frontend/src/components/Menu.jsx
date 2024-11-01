@@ -16,7 +16,6 @@ export default function Menu(){
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/perfil">Perfil</NavLink>
                         </li>
-                        {/*Solo mostrar el botón Si es Admin*/ }
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/prestamos">Prestamos</NavLink>
                         </li>
