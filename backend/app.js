@@ -24,7 +24,7 @@ const amigosController = require('./src/controller/amigosController');
 //app.use('/usuarios', usuarioController);
 app.use('/api/prestamos', prestamosController)
 app.use("/api/libros", librosController);
-app.use("/api/amistad/", amigosController);
+app.use("/api/amistad", amigosController);
 
 
 // Defino una funcion que intenta iniciar el servidor en el puerto especificado o en el siguiente disponible
