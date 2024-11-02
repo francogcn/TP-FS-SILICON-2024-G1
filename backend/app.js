@@ -15,14 +15,14 @@ app.use(express.urlencoded({ extended: true }));
 //*Ejemplos que subió el profe de como agregar controladores y rutas*//
 
 //conocer los distintos controladores, saber donde estan, traelos como constantes locales
-// const usuarioController = require('./src/controller/usuarioController');
 const prestamosController = require('./src/controller/prestamosController')
 const librosController = require('./src/controller/librosController');
+const usuarioController = require('./src/controller/usuarioController');
 
 //redireccionar las distintas peticiones a su correspondiente controlador.
-//app.use('/usuarios', usuarioController);
 app.use('/api/prestamos', prestamosController)
 app.use("/api/libros", librosController);
+app.use("/api/usuario", usuarioController);
 
 
 // Defino una funcion que intenta iniciar el servidor en el puerto especificado o en el siguiente disponible
