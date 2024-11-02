@@ -30,6 +30,17 @@ const Prestamo={
         } catch (error) {
             throw new Error('Error al crear el prestamo: ' + error.message);
         }
+    },
+
+    // Eliminar un préstamo por ID
+    deleteById: async (id) => {
+        const query = 'DELETE FROM Prestamo WHERE id_prestamo = ?';
+        try {
+            const [result] = await db.execute(query, [id]);
+            return result.affectedRows > 0; // Retorna true si se eliminó al menos un registro
+        } catch (error) {
+            throw new Error('Error al eliminar el préstamo: ' + error.message);
+        }
     }
 
 }
