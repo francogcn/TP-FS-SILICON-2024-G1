@@ -8,6 +8,7 @@ const router = express.Router();
 router.get('/', listar_prestamos);
 router.get('/:id', buscarPorID);
 router.post('/', crearPrestamo);
+router.put('/:id_prestamo',actualizarPrestamo);
 router.delete('/:id', eliminarPrestamo);
 
 // Funciones CRUD
@@ -58,4 +59,15 @@ async function eliminarPrestamo(req, res) {
     }
 }
 
+async function actualizarPrestamo(req, res) {
+    const { id_prestamo } = req.params;
+    const { id_libro, fecha_prestamo, fecha_devolucion } = req.body;
+    try {
+        await model.update(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion);
+        res.status(200).json({ message: 'Prestamo actualizado correctamente' });
+    } catch (error) {
+        const statusCode = error.statusCode || 500;
+        res.status(statusCode).send(error.message);
+    }
+}
 module.exports = router;

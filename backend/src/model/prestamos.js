@@ -41,6 +41,20 @@ const Prestamo={
         } catch (error) {
             throw new Error('Error al eliminar el préstamo: ' + error.message);
         }
+    },
+    update: async(id_usuario, id_libro, fecha_prestamo, fecha_devolucion)=>{
+        const query="UPDATE Prestamo SET id_usuario = ?, id_libro = ?, fecha_prestamo = ?, fecha_devolucion = ?";
+        try {
+            const result = await db.execute(query, [id_usuario, id_libro, fecha_prestamo,fecha_devolucion]);
+            if (result.affectedRows === 0) {
+                const error = new Error(`No se encontro un préstamo con la ID: ${dni}`);
+                error.statusCode = 404;
+                throw error;
+            }
+            return { message: "Prestamo actualizado con exito", detail: result };
+        } catch (error) {
+            throw new Error('Error al actualizar el prestamo: ' + error.message);
+        }
     }
 
 }
