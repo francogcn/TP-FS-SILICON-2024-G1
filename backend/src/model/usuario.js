@@ -64,6 +64,16 @@ const Usuario = {
         }
     },
 
+    findProfile: async (id) => {
+        const query = 'SELECT * FROM Usuario WHERE id_usuario = ?'; //Generar la consulta que devuelva ls datos necesarios para el perfil
+        try {
+            const [rows] = await db.execute(query, [id]);
+            return rows;
+        } catch (error) {
+            throw new Error('Error al buscar el usuario: ' + error.message);
+        }
+    },
+
     //actualizar usuario (put)
     update: async (id, nombre, apellido, mail, contrasenia, id_rol) => {
         //se vuelve a hashear la contrasenia (asumiendo que, al actualizar los datos del usuario, se ingresa el nuevo valor sin hashear)

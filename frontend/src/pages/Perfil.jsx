@@ -1,4 +1,22 @@
+import { useEffect, useState } from "react";
+
 export default function Perfil() {
+  const [perfil, setPerfil] = useState([]);
+  useEffect(()=>{
+
+      const fetchProfile = async()=>{
+          try{
+              const response = await fetch(`http://localhost:8080/api/usuario/perfil/${id_usuario}`);
+              const data = await response.json();
+              setPerfil(data);
+
+          } catch(error){
+              console.error("Error al obtener los préstamos:", error)
+          }
+      };
+      fetchProfile();
+  },[]);
+
   return (
     <>
     
@@ -9,7 +27,7 @@ export default function Perfil() {
         <h1>Username</h1>
         <div className="row">
           <div className="col-sm-4 perfil-info">
-            20
+            {/*perfil.libros*/}
             <span className="perfil-info-bubtitle">Leídos</span>
           </div>
           <div className="col-sm-4 perfil-info">

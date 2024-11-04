@@ -11,6 +11,7 @@ const model = require('../model/usuario');
 
 router.get('/', listar_usuarios);
 router.get('/:id_usuario', buscarPorID);
+router.get('/perfil/:id_usuario', buscarDatosPerfil);
 //la ruta "/mail/:mail" puede parecer innecesariamente larga, pero se pone así para evitar errores por falta de especifidad
 router.get('/mail/:mail', buscarPorMail);
 router.post('/', crear_usuario);
@@ -34,6 +35,18 @@ async function buscarPorID(req, res) {
     const { id_usuario } = req.params;
     try {
         const results = await model.findById(id_usuario);
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        res.status(200).json(results[0]);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+async function buscarDatosPerfil(req, res) {
+    const { id_usuario } = req.params;
+    try {
+        const results = await model.findProfile(id_usuario);
         if (results.length === 0) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
