@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function Perfil() {
   const [perfil, setPerfil] = useState([]);
+  const id_usuario = 1;
   useEffect(()=>{
 
       const fetchProfile = async()=>{
@@ -27,15 +28,15 @@ export default function Perfil() {
         <h1>Username</h1>
         <div className="row">
           <div className="col-sm-4 perfil-info">
-            {/*perfil.libros*/}
+            {perfil.libros}
             <span className="perfil-info-bubtitle">Leídos</span>
           </div>
           <div className="col-sm-4 perfil-info">
-            15
+          {perfil.resenias}
             <span className="perfil-info-bubtitle">Reseñas</span>
             </div>
           <div className="col-sm-4 perfil-info">
-            3
+            3{/*Acá va el perfil.amigos*/}
             <span className="perfil-info-bubtitle">Amigos</span>
             </div>
         </div>

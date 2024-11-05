@@ -32,7 +32,8 @@ export default function Prestamos() {
               </button>
               </div>
             </div>
-            <table className="table table-striped table-hover">
+            <div className="table-responsive">
+              <table className="table table-striped table-hover">
         <thead>
           <tr>
             <th>Préstamo</th>
@@ -55,7 +56,7 @@ export default function Prestamos() {
             </tr> 
           ))}
         </tbody>
-      </table>
+      </table></div>
         </div>
         </>
     )

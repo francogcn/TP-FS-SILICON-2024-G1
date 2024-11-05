@@ -65,7 +65,14 @@ const Usuario = {
     },
 
     findProfile: async (id) => {
-        const query = 'SELECT * FROM Usuario WHERE id_usuario = ?'; //Generar la consulta que devuelva ls datos necesarios para el perfil
+        const query = `
+                SELECT 
+            COUNT(id_libro) AS libros,
+            (SELECT COUNT(id_resenia) FROM resenia WHERE id_usuario = prestamo.id_usuario) AS resenias
+            FROM 
+            prestamo 
+            WHERE 
+            id_usuario = ?`
         try {
             const [rows] = await db.execute(query, [id]);
             return rows;
