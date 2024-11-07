@@ -65,3 +65,11 @@ span.perfil-info-bubtitle{
 .prestamos{
   margin-bottom: 20px;
 }
+
+/*Carrusel*/
+.newRelease{
+  height: 200px;
+  padding: 20px;
+  background-color: var(--bs-gray-200);
+  border-radius: 10px;
+}
