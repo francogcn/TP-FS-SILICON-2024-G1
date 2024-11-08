@@ -6,6 +6,7 @@ import './App.css'
 import Perfil from './pages/Perfil'
 import Prestamos from './pages/Prestamos'
 import Books from './pages/Books'
+import LogIn from './pages/LogIn'
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/prestamos" element={<Prestamos/>} />
           <Route path="/prestamos/:id" element={<Prestamos/>} />
+          <Route path="/login" element={<LogIn />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

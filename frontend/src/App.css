@@ -73,3 +73,10 @@ span.perfil-info-bubtitle{
   background-color: var(--bs-gray-200);
   border-radius: 10px;
 }
+
+#login form{
+  background: #cbdae5;
+  padding: 20px;
+  text-align: left;
+  border-radius: 10px;
+}

@@ -30,7 +30,7 @@ export default function Carrousel() {
                     <div className="carousel-item">
                     <NewRelease
                          titulo = "El Origen de las Especies"
-                         autor = "Charles Darwing"
+                         autor = "Charles Darwin"
                          genero = "Técnico"
 
                         />
