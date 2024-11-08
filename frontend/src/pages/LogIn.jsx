@@ -16,11 +16,11 @@ export default function LogIn() {
                                 <input type="password" className="form-control" id="loginPassword" placeholder="Contraseña"/>
                                 <label htmlFor="loginPassword">Contraseña</label>
                             </div>
-                            <div className="form-floating mb-3 form-check">
+                            <div className="mb-3 form-check">
                                 <input type="checkbox" className="form-check-input" id="loginCheck"/>
                                     <label className="form-check-label" htmlFor="loginCheck">Recordarme</label>
                             </div>
-                            <button type="submit" className="btn btn-primary">Submit</button>
+                            <button type="submit" className="btn btn-primary">Ingresar</button>
                         </form>
                     </div>
                 </div>

@@ -1,3 +1,6 @@
+:root{
+  -celeste:#aeecef;
+}
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -8,7 +11,7 @@ body{
   background-color: rgb(240, 247, 252);
 }
 .navbar{
-  background-color: lightblue;
+  background-color: #add8e6;
   border-radius: 10px;
   margin:5px;
 }
