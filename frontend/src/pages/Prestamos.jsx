@@ -11,7 +11,6 @@ export default function Prestamos() {
                 const response = await fetch('http://localhost:8080/api/prestamos');
                 const data = await response.json();
                 setPrestamos(data);
-                console.log(data);
 
             } catch(error){
                 console.error("Error al obtener los préstamos:", error)
