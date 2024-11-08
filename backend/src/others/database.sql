@@ -39,8 +39,8 @@ CREATE TABLE Libro (
     autor VARCHAR(100) NOT NULL,
     editorial VARCHAR(100),
     anio_publicacion YEAR,
-    genero VARCHAR(100)
-    -- existencias INT DEFAULT 0
+    genero VARCHAR(100),
+    estado ENUM('disponible', 'prestado', 'retrasado', 'extraviado') DEFAULT 'disponible'
 );
 /*
 YEAR: es un tipo de 1 byte que se utiliza para representar años, sus valores se muestran en formato YYYY y su rango es de 1901 a 2155. 
@@ -55,11 +55,12 @@ CREATE TABLE Prestamo (
     id_prestamo INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
     id_libro INT,
-    fecha_prestamo DATE NOT NULL,
-    fecha_devolucion DATE,
+    fecha_prestamo DATE NOT NULL DEFAULT CURRENT_DATE,
+    fecha_devolucion DATE DEFAULT (DATE_ADD(CURRENT_DATE, INTERVAL 14 DAY)),
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario),
     FOREIGN KEY (id_libro) REFERENCES Libro(id_libro)
 );
+
 CREATE TABLE Resenia (
     id_resenia INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,

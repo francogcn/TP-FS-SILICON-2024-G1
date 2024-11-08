@@ -4,10 +4,11 @@ const model = require('../model/libros.js');
 
 
 router.get('/', listarLibros);
-router.get('/:titulo', buscarPorTitulo);
+router.get('/titulo/:titulo', buscarPorTitulo);
 router.post('/', crearLibro);
 router.put('/:titulo', actualizarLibro);
 router.delete('/:titulo', eliminarLibro);
+router.get('/estado/:estado', buscarPorEstado);
 
 
 async function crearLibro(req, res) {
@@ -59,6 +60,18 @@ async function eliminarLibro(req, res) {
     } catch (error) {
         const statusCode = error.statusCode || 500;
         res.status(statusCode).send(error.message);
+    }
+}
+
+async function buscarPorEstado(req, res) {
+    try {
+        const result = await model.buscarPorEstado(req.params.estado);
+        if (!result) {
+            return res.status(404).send('Libros no encontrados');
+        }
+        res.json(result);
+    } catch (error) {
+        res.status(500).send(error.message);
     }
 }
 
