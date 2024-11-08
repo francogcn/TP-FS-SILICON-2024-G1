@@ -11,6 +11,7 @@ export default function Prestamos() {
                 const response = await fetch('http://localhost:8080/api/prestamos');
                 const data = await response.json();
                 setPrestamos(data);
+                console.log(data);
 
             } catch(error){
                 console.error("Error al obtener los préstamos:", error)
@@ -48,8 +49,8 @@ export default function Prestamos() {
           {prestamos.map(prestamo => (
             <tr key={prestamo.id_prestamo}>
               <td>{prestamo.id_prestamo}</td>
-              <td>{prestamo.id_usuario}</td>
-              <td>{prestamo.id_libro}</td>
+              <td>{prestamo.nombre_usuario} {prestamo.apellido_usuario}</td>
+              <td>{prestamo.titulo_libro}</td>
               <td>{prestamo.fecha_prestamo}</td>
               <td>{prestamo.fecha_devolucion}</td>
               <td><button className="btn btn-secondary">Editar</button></td>
