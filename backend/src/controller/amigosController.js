@@ -6,6 +6,7 @@ const model = require('../model/amigos.js');
 router.get('/listar/:id_usuario', listarAmigos);
 router.post('/', crearAmistad);
 router.delete('/eliminar/:id_amistad', eliminarAmistad);
+router.get('resenias_amigos/:id_usuario', buscarReseniasPorId);
 
 
 async function crearAmistad(req, res) {
@@ -38,6 +39,18 @@ async function eliminarAmistad(req, res) {
     } catch (error) {
         const statusCode = error.statusCode || 500;
         res.status(statusCode).send(error.message);
+    }
+}
+
+async function buscarReseniasPorId(req, res) {
+    try {
+        const result = await model.buscarReseniasPorId(req.params.id_usuario);
+        if (!result) {
+            return res.status(404).send('No hay resenias de amigos');
+        }
+        res.json(result);
+    } catch (error) {
+        res.status(500).send(error.message);
     }
 }
 

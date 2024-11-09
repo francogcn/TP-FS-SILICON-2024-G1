@@ -132,3 +132,8 @@ span.perfil-info-bubtitle {
   --bs-table-bg-type: var(--fondo-oscuro);
   color: #fff;
 }
+
+/*Reseñas home*/
+.resenias-amigos-home{
+  margin-top:10px;
+}
