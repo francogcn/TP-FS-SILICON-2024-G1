@@ -46,6 +46,16 @@ const amigos = {
         }
     },
 
+    buscarReseniasPorId: async function(id_amigo) {
+        try {
+            const query = 'SELECT r.id_resenia, u.nombre AS nombre_amigo, u.apellido AS apellido_amigo, l.titulo AS titulo_libro, r.texto_resenia, r.clasificacion FROM Resenia r JOIN Usuario u ON r.id_usuario = u.id_usuario JOIN Libro l ON r.id_libro = l.id_libro JOIN Amigos a ON a.id_amigo_usuario = u.id_usuario WHERE a.id_usuario = ?';
+            const [result] = await db.execute(query, [id_amigo]);
+            return result;
+        } catch (error) {
+            throw new Error('Error al buscar resenias por id amigo: ' + error.message);
+        }
+    },
+
 }
 
 
