@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 
 export default function Books() {
   const [libros, setLibros] = useState([]);
-  const isadmin = false; 
+  const isadmin = true; 
    useEffect(()=>{
        const fetchLibros = async()=>{
            try{

@@ -1,7 +1,12 @@
 :root{
   --fondo-oscuro:#006494;
   --letra-clara: #fff;
+  --fondo-claro:#ADD8E6;
+  --azul-boton:#003554;
+  --rosa-borrar: #FF5D73;
+
 }
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -16,9 +21,14 @@ body{
   border-radius: 10px;
   margin:5px;
 }
-.nav-link, .navbar-nav .nav-link.active, .navbar-nav .nav-link.show{
+.nav-link, .navbar-nav .nav-link.active, .navbar-nav .nav-link.show, .navbar-brand{
   color:var(--letra-clara);
 }
+
+.nav-link:hover, .navbar-nav .nav-link:focus, .navbar-brand:hover, .navbar-brand:focus{
+  color: var(--fondo-claro)
+}
+
 .nav-link.active{
   color:var(--letra-clara);
   text-decoration: underline;
@@ -27,9 +37,10 @@ body{
 .container{margin-top:70px}
 
 .profile-banner{
-  background: var(--bs-primary-border-subtle);
+  background: var(--fondo-claro);
   height: 30vh;
   font-size: 40px;
+  border-radius: 20px;
 }
 .perfil {
   background: var(--bs-gray-100);
@@ -88,3 +99,30 @@ span.perfil-info-bubtitle{
   text-align: left;
   border-radius: 10px;
 }
+
+.btn-primary, .btn-primary:hover{
+  background-color: var(--azul-boton);
+  border: none;
+}
+
+.prestamos, .libros{
+  margin-top: 20px;
+  margin-bottom: 25px;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)>*{
+  --bs-table-bg-type: #C3DBE9
+}
+
+.table-striped>tbody>tr:nth-of-type(even)>*{
+  --bs-table-bg-type: #98C1D9
+}
+
+.table-striped>thead>tr>th{
+  --bs-table-bg-type: var(--fondo-oscuro);
+}
+
+.table-striped>tbody>tr:hover>td, .table-striped>tbody>tr:hover>th{
+  background-color: #cbdae5;
+}
+

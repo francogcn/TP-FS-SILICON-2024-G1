@@ -28,7 +28,7 @@ export default function Prestamos() {
             <div className="row prestamos">
               <div className="col">
               <button className="btn btn-primary">
-                Generar Prestamos
+                Nuevo Prestamo
               </button>
               </div>
             </div>
