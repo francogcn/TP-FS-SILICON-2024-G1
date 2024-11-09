@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function Perfil() {
   const [perfil, setPerfil] = useState([]);
-  const id_usuario = 1;
+  const id_usuario = 1;//Esto se debe automatizar
   useEffect(()=>{
 
       const fetchProfile = async()=>{
