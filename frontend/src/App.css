@@ -1,5 +1,6 @@
 :root{
-  -celeste:#aeecef;
+  --fondo-oscuro:#006494;
+  --letra-clara: #fff;
 }
 #root {
   max-width: 1280px;
@@ -11,11 +12,15 @@ body{
   background-color: rgb(240, 247, 252);
 }
 .navbar{
-  background-color: #add8e6;
+  background-color: var(--fondo-oscuro);
   border-radius: 10px;
   margin:5px;
 }
+.nav-link, .navbar-nav .nav-link.active, .navbar-nav .nav-link.show{
+  color:var(--letra-clara);
+}
 .nav-link.active{
+  color:var(--letra-clara);
   text-decoration: underline;
 }
 
