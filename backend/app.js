@@ -20,6 +20,7 @@ const librosController = require('./src/controller/librosController');
 const usuarioController = require('./src/controller/usuarioController');
 const amigosController = require('./src/controller/amigosController');
 const reseniaController = require('./src/controller/reseniaController');
+const securityController = require('./src/controller/securityController');
 
 //redireccionar las distintas peticiones a su correspondiente controlador.
 app.use('/api/prestamos', prestamosController)
@@ -27,6 +28,7 @@ app.use("/api/libros", librosController);
 app.use("/api/usuario", usuarioController);
 app.use("/api/amistad", amigosController);
 app.use("/api/resenia", reseniaController);
+app.use("api/security", securityController.router);
 
 
 // Defino una funcion que intenta iniciar el servidor en el puerto especificado o en el siguiente disponible

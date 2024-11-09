@@ -12,11 +12,11 @@ export default function LogIn() {
         <>
             <div className="container" id="login">
                 <div className="row">
-                    <div className="col">
-                        <img src="login-icon.png" alt="Library" />
+                    <div className="col-sm-6">
+                        <img src="login-icon.png" alt="Library" className="img-fluid"/>
 
                     </div>
-                    <div className="col">
+                    <div className="col-sm-6">
                         <form>
                             <h3 style={{color:'#fff'}}>Ingresar con tu cuenta:</h3>
                             <div className="form-floating mb-3">
