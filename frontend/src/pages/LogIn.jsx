@@ -31,7 +31,6 @@ export default function LogIn() {
                                 <input type="checkbox" className="form-check-input" id="loginCheck"/>
                                     <label className="form-check-label" htmlFor="loginCheck">Recordarme</label>
                             </div>
-                            <button type="submit" className="btn btn-success m-1">Registrarse</button>
                             <button type="submit" className="btn btn-primary">Ingresar</button>
                             
                         </form>
