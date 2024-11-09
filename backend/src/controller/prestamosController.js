@@ -10,6 +10,8 @@ router.get('/:id', buscarPorID);
 router.post('/', crearPrestamo);
 router.put('/:id_prestamo',actualizarPrestamo);
 router.delete('/:id', eliminarPrestamo);
+router.get('/usuario/:id_usuario', buscarPorUsuario);
+router.get('/libro/:id_libro', buscarPorLibro);
 
 // Funciones CRUD
 //Listar todos los prestamos
@@ -61,13 +63,40 @@ async function eliminarPrestamo(req, res) {
 
 async function actualizarPrestamo(req, res) {
     const { id_prestamo } = req.params;
-    const { id_libro, fecha_prestamo, fecha_devolucion } = req.body;
+    const { id_usuario, id_libro, fecha_prestamo, fecha_devolucion } = req.body;
     try {
-        await model.update(id_prestamo, id_libro, fecha_prestamo, fecha_devolucion);
+        await model.update(id_prestamo, id_usuario, id_libro, fecha_prestamo, fecha_devolucion);
         res.status(200).json({ message: 'Prestamo actualizado correctamente' });
     } catch (error) {
         const statusCode = error.statusCode || 500;
         res.status(statusCode).send(error.message);
     }
 }
+
+async function buscarPorUsuario(req, res) {
+    const { id_usuario } = req.params;
+    try {
+        const results = await model.findAllByUser(id_usuario);
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'Prestamo no encontrado' });
+        }
+        res.status(200).json(results);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+async function buscarPorLibro(req, res) {
+    const { id_libro } = req.params;
+    try {
+        const results = await model.findAllByBook(id_libro);
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'Prestamo no encontrado' });
+        }
+        res.status(200).json(results);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 module.exports = router;

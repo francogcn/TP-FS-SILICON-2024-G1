@@ -5,7 +5,7 @@ const Prestamo = {
   findAll: async () => {
     try {
       const query =
-        "SELECT p.id_prestamo, u.nombre AS nombre_usuario, u.apellido AS apellido_usuario, l.titulo AS titulo_libro, DATE_FORMAT(p.fecha_prestamo, '%d-%m-%Y') AS fecha_prestamo, DATE_FORMAT(p.fecha_devolucion, '%d-%m-%Y') AS fecha_devolucion FROM Prestamo p JOIN Usuario u ON p.id_usuario = u.id_usuario JOIN      Libro l ON p.id_libro = l.id_libro";
+        "SELECT p.id_prestamo, u.nombre AS nombre_usuario, u.apellido AS apellido_usuario, l.titulo AS titulo_libro, DATE_FORMAT(p.fecha_prestamo, '%d-%m-%Y') AS fecha_prestamo, DATE_FORMAT(p.fecha_devolucion, '%d-%m-%Y') AS fecha_devolucion FROM Prestamo p JOIN Usuario u ON p.id_usuario = u.id_usuario JOIN Libro l ON p.id_libro = l.id_libro";
       const [rows] = await db.execute(query);
       return rows;
     } catch (error) {
@@ -48,24 +48,50 @@ const Prestamo = {
       throw new Error("Error al eliminar el préstamo: " + error.message);
     }
   },
-  update: async (id_usuario, id_libro, fecha_prestamo, fecha_devolucion) => {
+
+  update: async (id_prestamo, id_usuario, id_libro, fecha_prestamo, fecha_devolucion) => {
     const query =
-      "UPDATE Prestamo SET id_usuario = ?, id_libro = ?, fecha_prestamo = ?, fecha_devolucion = ?";
+      "UPDATE Prestamo SET id_usuario = ?, id_libro = ?, fecha_prestamo = ?, fecha_devolucion = ? where id_prestamo = ?";
     try {
       const result = await db.execute(query, [
         id_usuario,
         id_libro,
         fecha_prestamo,
         fecha_devolucion,
+        id_prestamo
       ]);
       if (result.affectedRows === 0) {
-        const error = new Error(`No se encontro un préstamo con la ID: ${dni}`);
+        const error = new Error(`No se encontro un préstamo con la ID: ${id_prestamo}`);
         error.statusCode = 404;
         throw error;
       }
       return { message: "Prestamo actualizado con exito", detail: result };
     } catch (error) {
       throw new Error("Error al actualizar el prestamo: " + error.message);
+    }
+  },
+
+  findAllByUser: async (id_usuario) => {
+    const query = "SELECT p.id_prestamo, u.nombre AS nombre_usuario, u.apellido AS apellido_usuario, l.titulo AS titulo_libro, DATE_FORMAT(p.fecha_prestamo, '%d-%m-%Y') AS fecha_prestamo, DATE_FORMAT(p.fecha_devolucion, '%d-%m-%Y') AS fecha_devolucion FROM Prestamo p JOIN Usuario u ON p.id_usuario = u.id_usuario JOIN Libro l ON p.id_libro = l.id_libro WHERE u.id_usuario = ?";
+    try {
+      const [rows] = await db.execute(query, [id_usuario]);
+      return rows;
+    } catch (error) {
+      throw new Error(
+        "Error al buscar el prestamo por usuario: " + error.message
+      );
+    }
+  },
+
+  findAllByBook: async (id_libro) => {
+    const query = "SELECT p.id_prestamo, u.nombre AS nombre_usuario, u.apellido AS apellido_usuario, l.titulo AS titulo_libro, DATE_FORMAT(p.fecha_prestamo, '%d-%m-%Y') AS fecha_prestamo, DATE_FORMAT(p.fecha_devolucion, '%d-%m-%Y') AS fecha_devolucion FROM Prestamo p JOIN Usuario u ON p.id_usuario = u.id_usuario JOIN Libro l ON p.id_libro = l.id_libro WHERE l.id_libro =?";
+    try {
+      const [rows] = await db.execute(query, [id_libro]);
+      return rows;
+    } catch (error) {
+      throw new Error(
+        "Error al buscar el prestamo por libro: " + error.message
+      );
     }
   },
 };
