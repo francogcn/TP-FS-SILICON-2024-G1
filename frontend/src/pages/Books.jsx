@@ -27,6 +27,9 @@ export default function Books() {
               {isadmin ? <button className="btn btn-primary">
                 Agregar libro
               </button> : null}
+              <button className="btn btn-primary m-3">
+                Ver libros disponibles
+              </button>
               </div>
             </div>
             <div className="table-responsive">

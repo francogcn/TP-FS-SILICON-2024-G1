@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 export default function Menu() {
   return (
     <>
-      <nav className="navbar fixed-top navbar-expand-lg">
+      <nav className="navbar fixed-top navbar-expand-lg ">
         <div className="container-fluid">
           <NavLink className="navbar-brand" to="/">
             📚Bibliotech
@@ -32,7 +32,7 @@ export default function Menu() {
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/prestamos">
-                  Prestamos
+                  Préstamos
                 </NavLink>
               </li>
               <li className="nav-item ">
