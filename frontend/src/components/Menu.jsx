@@ -40,6 +40,17 @@ export default function Menu() {
                   Libros
                 </NavLink>
               </li>
+                {/* Botones de Login y SignUp */}
+                <li className="nav-item ms-3">
+                <NavLink className="nav-link" to="/login">
+                  Iniciar sesión
+                </NavLink>
+              </li>
+              <li className="nav-item ms-3">
+                <NavLink className="nav-link" to="/signup">
+                  Registrarse
+                </NavLink>
+              </li>
             </ul>
           </div>
         </div>
