@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 
 export default function Prestamos() {
     const [prestamos, setPrestamos] = useState([]);
-
+    const isadmin = true;
 
    //Hago el fetch a la API para traer todos los prestamos
     useEffect(()=>{
@@ -24,12 +24,12 @@ export default function Prestamos() {
     return (
         <>
         <div className="container">
-            <h1>Prestamos</h1>
+            <h1>Préstamos</h1>
             <div className="row prestamos">
               <div className="col">
-              <button className="btn btn-primary">
-                Nuevo Prestamo
-              </button>
+              {isadmin ? <button className="btn btn-primary">
+                Nuevo Préstamo
+              </button> : null}
               </div>
             </div>
             <div className="table-responsive">
@@ -41,7 +41,8 @@ export default function Prestamos() {
             <th>Libro</th>
             <th>Fecha Préstamo</th>
             <th>Fecha Devolución</th>
-            <th>Editar</th>
+            {isadmin ? <th>Editar</th> : null}
+            {isadmin ? <th>Eliminar</th> : null}
           </tr>
         </thead>
         <tbody>
@@ -52,7 +53,8 @@ export default function Prestamos() {
               <td>{prestamo.titulo_libro}</td>
               <td>{prestamo.fecha_prestamo}</td>
               <td>{prestamo.fecha_devolucion}</td>
-              <td><button className="btn btn-secondary">Editar</button></td>
+              {isadmin ? <td><button className="btn btn-secondary">Editar</button></td> : null}
+              {isadmin ? <td><button className="btn btn-danger">Eliminar</button></td> : null}
             </tr> 
           ))}
         </tbody>
