@@ -32,7 +32,7 @@ async function login(req, res) {
                 rol: result.rol
             }
             //firmar usuario
-            jwt.sign(user, 'ultraMegaSecretPass', { expiresIn: '100h' }, (err, token) => {
+            jwt.sign(user, 'ultraMegaSecretPass', { expiresIn: '6000s' }, (err, token) => {
                 if (err) {
                     res.status(500).send({
                         message: err

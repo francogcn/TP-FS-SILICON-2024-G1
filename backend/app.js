@@ -28,7 +28,7 @@ app.use("/api/libros", librosController);
 app.use("/api/usuario", usuarioController);
 app.use("/api/amistad", amigosController);
 app.use("/api/resenia", reseniaController);
-app.use("api/security", securityController.router);
+app.use("/api/security", securityController.router);
 
 
 // Defino una funcion que intenta iniciar el servidor en el puerto especificado o en el siguiente disponible
