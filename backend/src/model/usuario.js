@@ -77,10 +77,12 @@ const Usuario = {
     
             (SELECT COUNT(id_resenia) 
             FROM resenia
-            WHERE id_usuario = ?) AS resenias`;
+            WHERE id_usuario = ?) AS resenias,
+            
+            (SELECT concat(nombre, " ", apellido) FROM usuario WHERE id_usuario = ?) AS nombre`;
 
         try {
-            const [rows] = await db.execute(query, [id, id, id, id]);
+            const [rows] = await db.execute(query, [id, id, id, id, id]);
             return rows;
         } catch (error) {
             throw new Error('Error al buscar el usuario: ' + error.message);

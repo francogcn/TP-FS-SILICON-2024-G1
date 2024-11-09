@@ -25,7 +25,7 @@ export default function Perfil() {
     <div className="profile-banner"></div>
       <div className="perfil">
         <div className="profile-pic"></div>
-        <h1>Username</h1>
+        <h1>{perfil.nombre}</h1>
         <div className="row">
           <div className="col-sm-4 perfil-info">
             {perfil.libros}
