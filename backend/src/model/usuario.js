@@ -66,15 +66,21 @@ const Usuario = {
 
     findProfile: async (id) => {
         const query = `
-                SELECT 
-            COUNT(id_libro) AS libros,
-            (SELECT COUNT(id_resenia) FROM resenia WHERE id_usuario = prestamo.id_usuario) AS resenias
-            FROM 
-            prestamo 
-            WHERE 
-            id_usuario = ?`
+            SELECT 
+            (SELECT COUNT(id_prestamo) 
+            FROM prestamo
+            WHERE id_usuario = ?) AS libros,
+    
+            (SELECT COUNT(*) 
+            FROM amigos 
+            WHERE id_usuario = ? OR id_amigo_usuario = ?) AS amigos,
+    
+            (SELECT COUNT(id_resenia) 
+            FROM resenia
+            WHERE id_usuario = ?) AS resenias`;
+
         try {
-            const [rows] = await db.execute(query, [id]);
+            const [rows] = await db.execute(query, [id, id, id, id]);
             return rows;
         } catch (error) {
             throw new Error('Error al buscar el usuario: ' + error.message);
@@ -110,7 +116,7 @@ const Usuario = {
             throw new Error('Error al eliminar el usuario: ' + error.message);
         }
     },
-    
+
 };
 
 module.exports = Usuario;

@@ -36,7 +36,7 @@ export default function Perfil() {
             <span className="perfil-info-bubtitle">Reseñas</span>
             </div>
           <div className="col-sm-4 perfil-info">
-            3{/*Acá va el perfil.amigos*/}
+            {perfil.amigos}
             <span className="perfil-info-bubtitle">Amigos</span>
             </div>
         </div>
