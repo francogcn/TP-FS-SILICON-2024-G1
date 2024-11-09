@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom"
 import { useState, useEffect } from "react"
 
-export default function ReviewCard() {
-    const id_usuario = 1; //Esto se debe automatizar
+export default function ReviewCard({truncate=true}) {
+    const id_usuario = 4; //Esto se debe automatizar
     const [reviewAmigos, setReviewAmigos] = useState([]);
 
     useEffect(() => {
@@ -13,29 +13,35 @@ export default function ReviewCard() {
                 setReviewAmigos(data);
 
             } catch (error) {
-                console.error("Error al obtener los préstamos:", error)
+                console.error("Error al obtener las reseñas:", error)
             }
         };
         fetchReseniaAmigos();
     }, []);
 
+    const renderStars = (valor) => {
+        const filledStars = '★'.repeat(valor);
+        const emptyStars = '☆'.repeat(5 - valor);
+        return filledStars + emptyStars;
+    };
+
     return (
         <>
-            <div className="row resenias-amigos-home">
-
-                {reviewAmigos.map(review => (
-                    <div key={review.id_resenia} className="col-sm-6 col-md-4">
-                        <div className="card text-center mb-3">
-                            <div className="card-body">
-                                <h5 className="card-title">{review.titulo_libro}</h5>
-                                <p className="card-text">{review.texto_resenia}</p>
-                                <p className="card-text">
-                                    <span className="badge badge text-bg-light">{review.nombre_amigo +" "+ review.apellido_amigo}</span>
+        <h3 className="text-start m-3">Mira lo que están leyendo tus amigos</h3>
+            {reviewAmigos.map(review => (
+                    <div key={review.id_resenia} className="row justify-content-md-center">
+                        <div className="resenias-amigos-home">
+                                <p className="">
+                                    <b>{review.nombre_amigo + " " + review.apellido_amigo} </b>
+                                    ha calificado un libro con 
+                                    <i className="stars"> {renderStars(review.clasificacion)}</i>
                                 </p>
-                                <NavLink href="/" className="btn btn-primary">Go somewhere</NavLink>
+                                <h5 className="">{review.titulo_libro}</h5>
+                                <p className={"text-start d-block "+(truncate && "text-truncate")}>{review.texto_resenia} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa id consequatur aperiam dolore laborum sequi iste et, veniam voluptate, tenetur vero facere quasi voluptatum maiores quis neque fugiat veritatis eos!</p>
+
+                                <button className="btn btn-primary">Leer más</button>
                             </div>
-                        </div></div>))}
-            </div>
+                        </div>))}
 
         </>
     )
