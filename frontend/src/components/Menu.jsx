@@ -40,7 +40,17 @@ export default function Menu() {
                   Libros
                 </NavLink>
               </li>
+              
             </ul>
+          </div>
+           {/* Aquí agregamos los botones "Iniciar sesión" y "Registrarse" */}
+           <div className="d-flex">
+            <NavLink to="/login" className="btn btn-outline-primary m-2">
+              Iniciar sesión
+            </NavLink>
+            <NavLink to="/signup" className="btn btn-outline-success m-2">
+              Registrarse
+            </NavLink>
           </div>
         </div>
       </nav>

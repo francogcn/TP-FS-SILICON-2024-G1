@@ -4,6 +4,8 @@
 const express = require('express');
 const router = express.Router();
 const model = require('../model/usuario'); 
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 // ----------------------------------------------------------
 // -- Rutas de escucha (endpoint) disponibles para USUARIO --
@@ -17,6 +19,7 @@ router.get('/mail/:mail', buscarPorMail);
 router.post('/', crear_usuario);
 router.put('/:id_usuario', actualizar_usuario);
 router.delete('/:id_usuario', eliminar_usuario);
+
 
 // -------------------------------------------------------------- 
 // -- Operaciones CRUD utilizadas por el router  ----------------

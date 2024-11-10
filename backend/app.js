@@ -2,6 +2,8 @@ const express = require('express');
 const config = require('./src/config/config.json');
 const app = express();
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.json()); // Para leer los datos JSON en las solicitudes
 
 var cors = require('cors');
 app.use(cors());
@@ -21,6 +23,7 @@ const usuarioController = require('./src/controller/usuarioController');
 const amigosController = require('./src/controller/amigosController');
 const reseniaController = require('./src/controller/reseniaController');
 const securityController = require('./src/controller/securityController');
+const rolController = require('./src/controller/rolController');
 
 //redireccionar las distintas peticiones a su correspondiente controlador.
 app.use('/api/prestamos', prestamosController)
@@ -29,6 +32,7 @@ app.use("/api/usuario", usuarioController);
 app.use("/api/amistad", amigosController);
 app.use("/api/resenia", reseniaController);
 app.use("/api/security", securityController.router);
+app.use('/api/roles', rolController);
 
 
 // Defino una funcion que intenta iniciar el servidor en el puerto especificado o en el siguiente disponible
