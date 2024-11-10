@@ -6,7 +6,7 @@ const model = require('../model/amigos.js');
 router.get('/listar/:id_usuario', listarAmigos);
 router.post('/', crearAmistad);
 router.delete('/eliminar/:id_amistad', eliminarAmistad);
-router.get('resenias_amigos/:id_usuario', buscarReseniasPorId);
+router.get('/resenias_amigos/:id_usuario', buscarReseniasPorId);
 
 
 async function crearAmistad(req, res) {
