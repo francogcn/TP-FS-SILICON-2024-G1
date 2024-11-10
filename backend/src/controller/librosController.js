@@ -55,7 +55,7 @@ async function actualizarLibro(req, res) {
 async function eliminarLibro(req, res) {
     try {
         const { titulo } = req.params;
-        const result = await model.eliminarLibro(titulo);
+        const result = await model.eliminarLibro(id_libro);
         res.status(204).send(result);
     } catch (error) {
         const statusCode = error.statusCode || 500;
