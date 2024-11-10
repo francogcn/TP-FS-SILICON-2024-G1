@@ -23,7 +23,7 @@ const usuarioController = require('./src/controller/usuarioController');
 const amigosController = require('./src/controller/amigosController');
 const reseniaController = require('./src/controller/reseniaController');
 const securityController = require('./src/controller/securityController');
-const usuarioRoutes = require('./src/controller/usuarioController');
+const rolController = require('./src/controller/rolController');
 
 //redireccionar las distintas peticiones a su correspondiente controlador.
 app.use('/api/prestamos', prestamosController)
@@ -32,7 +32,7 @@ app.use("/api/usuario", usuarioController);
 app.use("/api/amistad", amigosController);
 app.use("/api/resenia", reseniaController);
 app.use("/api/security", securityController.router);
-app.use('/api/auth', usuarioRoutes);
+app.use('/api/roles', rolController);
 
 
 // Defino una funcion que intenta iniciar el servidor en el puerto especificado o en el siguiente disponible
