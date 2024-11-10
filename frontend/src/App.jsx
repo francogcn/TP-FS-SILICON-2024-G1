@@ -7,7 +7,7 @@ import Perfil from './pages/Perfil'
 import Prestamos from './pages/Prestamos'
 import Books from './pages/Books'
 import LogIn from './pages/LogIn'
-import SignUp from './pages/SignUp'; // Asegúrate de importar SignUp
+import SignUp from './pages/SignUp';
 
 
 function App() {
