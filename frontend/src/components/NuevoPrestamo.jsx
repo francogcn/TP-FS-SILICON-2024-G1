@@ -32,8 +32,8 @@ const NuevoPrestamoModal = ({ show, handleClose, handleSave }) => {
 
   const handleSubmit = async () => {
     const nuevoPrestamo = {
-      id_usuario,
-      id_libro,
+      id_usuario: alumnoSeleccionado,
+      id_libro: libroSeleccionado,
       fecha_prestamo,
       fecha_devolucion,
     };
@@ -61,8 +61,10 @@ const NuevoPrestamoModal = ({ show, handleClose, handleSave }) => {
       );
     }
 
-    setId_usuario("");
-    setId_libro("");
+    setAlumnoSeleccionado("");
+    setLibroSeleccionado("");
+    setFecha_prestamo("");
+    setFecha_devolucion("");
   };
 
   if (!show) return null; // Oculta el modal si no está activo
@@ -96,7 +98,7 @@ const NuevoPrestamoModal = ({ show, handleClose, handleSave }) => {
                     <option value="">Selecciona un alumno</option>
                     {alumnos.map((alumno) => (
                       <option key={alumno.id_usuario} value={alumno.id_usuario}>
-                        {alumno.nombre}{" "}{alumno.apellido}
+                        {alumno.nombre} {alumno.apellido}
                       </option>
                     ))}
                   </select>
