@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { isValidEmail, isValidPassword } from '../utils/validaciones';
 
 export default function LogIn() {
     //onSubmit --> atrapa los datos del formulario
@@ -24,13 +25,6 @@ export default function LogIn() {
     const [mail, setMail] = useState('');
     const [pass, setPass] = useState('');
 
-    const isValidEmail = (email) => {
-        return /\S+@\S+\.\S+/.test(email);
-    }
-
-    const isValidPassword = (password) => {
-        return password.length >= 8 && /\d/.test(password) && /[a-z]/.test(password) && /[A-Z]/.test(password);
-    };
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -48,7 +42,7 @@ export default function LogIn() {
 
         const usuario = {
             mail: mail,
-            pass: pass
+            contrasenia: pass
         };
 
         const parametros = {
@@ -68,6 +62,7 @@ export default function LogIn() {
 
             if (res.ok) {
                 sessionStorage.setItem('token', body.token);
+                console.log('Token guardado:', body.token); // Verificar que el token se haya guardado correctamente
                 toast.success(`Bienvenido ${body.datos.nombre}`, confToast);
                 console.log(body.datos);
                 navigate("/");

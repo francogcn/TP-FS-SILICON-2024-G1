@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { isValidEmail, isValidPassword, isValidName, isValidSurname } from '../utils/validaciones';
 
 const confToast = {
     position: 'bottom-center',
@@ -44,11 +45,30 @@ export default function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // validar que los campos estén completos
     if (!nombre || !apellido || !email || !password || !id_rol) {
-      toast.error("Todos los campos son obligatorios.", confToast);
-      return;
-    }
+        toast.error("Todos los campos son obligatorios.", confToast);
+        return;
+      }
+  
+      if (!isValidName(nombre)) {
+        toast.error('El nombre solo puede contener letras.', confToast);
+        return;
+      }
+  
+      if (!isValidSurname(apellido)) {
+        toast.error('El apellido solo puede contener letras.', confToast);
+        return;
+      }
+  
+      if (!isValidEmail(email)) {
+        toast.error('Por favor, ingresa un correo electrónico válido.', confToast);
+        return;
+      }
+  
+      if (!isValidPassword(password)) {
+        toast.error('La contraseña debe tener al menos 8 caracteres, al menos 1 dígito y al menos una mayúscula.', confToast);
+        return;
+      }
 
     try {
       // hacer fetch al backend
@@ -68,7 +88,7 @@ export default function SignUp() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        alert(errorData.message || "Error al registrar el usuario");
+        alert("Error al registrar usuario: ", errorData.message);
       } else {
         toast.success("Usuario registrado correctamente", confToast);
         navigate("/login"); // se redirige al login después de un registro exitoso

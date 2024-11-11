@@ -21,8 +21,12 @@ async function login(req, res) {
         const { mail, contrasenia } = req.body;
         const [result] = await model.findByMail(mail);
 
+        if (!result) {
+            return res.status(404).send({ message: 'Usuario no encontrado' });
+        }
 
-        const iguales = bcrypt.compareSync(contrasenia, result.contrasenia);
+
+        const iguales = await bcrypt.compare(contrasenia, result.contrasenia);
 
         if (iguales) {
             let user = {
