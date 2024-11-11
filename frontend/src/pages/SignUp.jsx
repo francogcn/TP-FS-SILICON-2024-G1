@@ -1,5 +1,18 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import { isValidEmail, isValidPassword, isValidName, isValidSurname } from '../utils/validaciones';
+
+const confToast = {
+    position: 'bottom-center',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'light',
+}
 
 export default function SignUp() {
   const [nombre, setNombre] = useState('');
@@ -32,11 +45,30 @@ export default function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // validar que los campos estén completos
     if (!nombre || !apellido || !email || !password || !id_rol) {
-      alert("Todos los campos son obligatorios.");
-      return;
-    }
+        toast.error("Todos los campos son obligatorios.", confToast);
+        return;
+      }
+  
+      if (!isValidName(nombre)) {
+        toast.error('El nombre solo puede contener letras.', confToast);
+        return;
+      }
+  
+      if (!isValidSurname(apellido)) {
+        toast.error('El apellido solo puede contener letras.', confToast);
+        return;
+      }
+  
+      if (!isValidEmail(email)) {
+        toast.error('Por favor, ingresa un correo electrónico válido.', confToast);
+        return;
+      }
+  
+      if (!isValidPassword(password)) {
+        toast.error('La contraseña debe tener al menos 8 caracteres, al menos 1 dígito y al menos una mayúscula.', confToast);
+        return;
+      }
 
     try {
       // hacer fetch al backend
@@ -56,9 +88,9 @@ export default function SignUp() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        alert(errorData.message || "Error al registrar el usuario");
+        alert("Error al registrar usuario: ", errorData.message);
       } else {
-        alert("Usuario registrado correctamente");
+        toast.success("Usuario registrado correctamente", confToast);
         navigate("/login"); // se redirige al login después de un registro exitoso
       }
     } catch (error) {
@@ -71,7 +103,7 @@ export default function SignUp() {
     <div className="container" id="signup">
         <div className="row">
             <div className="col-sm-6">
-                <img src="signup-icon.png" alt="Library" className="img-fluid" />
+                <img src="login-icon.png" alt="Library" className="img-fluid" />
             </div>
             <div className="col-sm-6">
                 <form onSubmit={handleSubmit} className="form-container">

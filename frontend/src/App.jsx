@@ -8,6 +8,8 @@ import Prestamos from './pages/Prestamos'
 import Books from './pages/Books'
 import LogIn from './pages/LogIn'
 import SignUp from './pages/SignUp';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -16,6 +18,7 @@ function App() {
     <>
       <Router>
         <Menu/>
+        <ToastContainer/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/books" element={<Books />} />
