@@ -5,14 +5,8 @@
   --azul-boton: #003554;
   --rosa-borrar: #ff5d73;
   --otrocolor: #98c1d9;
+  --body: #f0f7fc
 }
-
-.poppins-regular {
-  font-family: "Poppins", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
 
 #root {
   max-width: 1280px;
@@ -22,10 +16,18 @@
 }
 
 body {
-  background-color: rgb(240, 247, 252);
+  background-color: var(--body);
   font-family: "Poppins", sans-serif;
 }
 
+/* Fuente */
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Barra navegacion */
 .navbar {
   background-color: var(--fondo-oscuro);
   border-radius: 10px;
@@ -47,14 +49,72 @@ body {
 }
 
 .nav-link.active {
-  color: var(--letra-clara);
-  text-decoration: underline;
+  color: var(--fondo-claro);
+  font-weight: bold;
 }
 
 .container {
-  margin-top: 70px;
+  margin-top: 80px;
 }
 
+/*Carrusel*/
+.newRelease {
+  padding: 25vh 10vw;
+  background-color: var(--bs-gray-200);
+  border-radius: 10px;
+}
+
+/*Busqueda Main*/
+.busqueda{
+  padding: 5% 10%;
+}
+
+/*Reseñas home*/
+.resenias-amigos-home {
+  margin-top: 10px;
+  border-bottom: 1px solid #999;
+  padding: 20px;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.stars{
+  color: #faa168;
+}
+
+/*Footer*/
+
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  background-color: var(--letra-clara);
+}
+
+/*SignUp*/
+#signup form {
+  background: #cbdae5;
+  padding: 20px;
+  text-align: left;
+  border-radius: 10px;
+  margin-top: 50px;
+}
+
+#signup .form-control {
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Pagina del Perfil */
 .profile-banner {
   background: var(--otrocolor);
   height: 30vh;
@@ -99,20 +159,15 @@ span.perfil-info-bubtitle {
     margin-bottom: 30px;
   }
 }
-/*Busqueda Main*/
-.busqueda{
-  padding: 5% 10%;
-}
+
 /*Página de Prestamos*/
 .prestamos {
   margin-bottom: 20px;
 }
-
-/*Carrusel*/
-.newRelease {
-  padding: 25vh 10vw;
-  background-color: var(--bs-gray-200);
-  border-radius: 10px;
+.prestamos,
+.libros {
+  margin-top: 20px;
+  margin-bottom: 25px;
 }
 
 #login form {
@@ -123,18 +178,24 @@ span.perfil-info-bubtitle {
   margin-top:50px;
 }
 
-.btn-primary,
+/* Botones */
+.btn-primary {
+  background-color: var(--fondo-oscuro);
+  border: none;
+  margin-left: 15px;
+}
+
 .btn-primary:hover {
   background-color: var(--azul-boton);
-  border: none;
 }
 
-.prestamos,
-.libros {
-  margin-top: 20px;
-  margin-bottom: 25px;
-}
+.btn-outline-primary, .btn-outline-success{
+  color: var(--letra-clara);
+  border-color: var(--letra-clara);
+}  
 
+
+/* Tablas libros y prestamos */
 .table-striped > tbody > tr:nth-of-type(odd) > * {
   --bs-table-bg-type: #c3dbe9;
 }
@@ -148,54 +209,3 @@ span.perfil-info-bubtitle {
   color: #fff;
 }
 
-/*Reseñas home*/
-.resenias-amigos-home {
-  margin-top: 10px;
-  border-bottom: 1px solid #999;
-  padding: 20px;
-  width: 60%;
-  margin-left: auto;
-  margin-right: auto;
-}
-.stars{
-  color: #faa168;
-}
-
-/*Footer*/
-
-.footer {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  background-color: var(--letra-clara);
-}
-
-/*SignUp*/
-#signup form {
-  background: #cbdae5;
-  padding: 20px;
-  text-align: left;
-  border-radius: 10px;
-  margin-top: 50px;
-}
-
-#signup .form-control {
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-.btn-primary,
-.btn-primary:hover {
-  background-color: var(--azul-boton);
-  border: none;
-}
-
-
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-}

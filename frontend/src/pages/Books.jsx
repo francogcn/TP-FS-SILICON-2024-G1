@@ -68,7 +68,7 @@ export default function Books() {
               handleClose={handleCloseModal}
               handleSave={handleSaveLibro}
             />
-            <button className="btn btn-primary m-3">
+            <button className="btn btn-primary">
               Ver libros disponibles
             </button>
           </div>

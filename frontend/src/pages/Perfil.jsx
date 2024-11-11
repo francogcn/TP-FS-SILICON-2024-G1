@@ -40,7 +40,8 @@ export default function Perfil() {
             <span className="perfil-info-bubtitle">Amigos</span>
             </div>
         </div>
-        <button type="button" className="btn btn-success">Agregar</button>
+        <button type="button" className="btn btn-primary">Agregar Reseña</button>
+        <button type="button" className="btn btn-primary">Agregar Amigo</button>
       </div>
     </div>
     </>
