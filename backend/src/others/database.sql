@@ -129,3 +129,27 @@ lógicas específicas
 	GET /amigos/:id_usuario/resenias: Obtener todas las reseñas realizadas por los amigos de un usuario específico.
 */
 
+-- DML
+INSERT INTO usuario (nombre, apellido, mail, contrasenia, id_rol)
+VALUES 
+(
+    "dev", 
+    "account", 
+    "admin", 
+    "$2a$12$Jh.O1rCpo7TiGWe197FIOedg0mKiGcosmqFZb5UAeMeXI5m63tfiK", 
+    COALESCE((SELECT id_rol FROM rol WHERE nombre_rol = 'Bibliotecario' LIMIT 1), 1)
+);
+
+
+INSERT INTO rol (nombre_rol, descripcion) VALUES 
+(
+"Cliente",
+"El cliente tiene acceso parcial a la web, pudiendo disfrutar de los préstamos y reviews."
+),
+(
+"Bibliotecario",
+"El bibliotecario/a tiene acceso total a la web, pudiendo (además de disfrutar los servicios de la misma) manejar la cración de usuarios."
+);
+
+
+

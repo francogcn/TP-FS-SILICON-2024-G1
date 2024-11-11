@@ -1,5 +1,17 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+
+const confToast = {
+    position: 'bottom-center',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'light',
+}
 
 export default function SignUp() {
   const [nombre, setNombre] = useState('');
@@ -34,7 +46,7 @@ export default function SignUp() {
 
     // validar que los campos estén completos
     if (!nombre || !apellido || !email || !password || !id_rol) {
-      alert("Todos los campos son obligatorios.");
+      toast.error("Todos los campos son obligatorios.", confToast);
       return;
     }
 
@@ -58,7 +70,7 @@ export default function SignUp() {
         const errorData = await response.json();
         alert(errorData.message || "Error al registrar el usuario");
       } else {
-        alert("Usuario registrado correctamente");
+        toast.success("Usuario registrado correctamente", confToast);
         navigate("/login"); // se redirige al login después de un registro exitoso
       }
     } catch (error) {
@@ -71,7 +83,7 @@ export default function SignUp() {
     <div className="container" id="signup">
         <div className="row">
             <div className="col-sm-6">
-                <img src="signup-icon.png" alt="Library" className="img-fluid" />
+                <img src="login-icon.png" alt="Library" className="img-fluid" />
             </div>
             <div className="col-sm-6">
                 <form onSubmit={handleSubmit} className="form-container">
