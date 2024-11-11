@@ -6,7 +6,7 @@ const NuevoLibroModal = ({ show, handleClose, handleSave }) => {
   const [editorial, setEditorial] = useState("");
   const [anio_publicacion, setAnioPublicacion] = useState("");
   const [genero, setGenero] = useState("");
-  const [estado, setEstado] = useState("");
+  const [estado, setEstado] = useState("disponible");
 
   const handleSubmit = async () => {
     const nuevoLibro = {
@@ -46,7 +46,7 @@ const NuevoLibroModal = ({ show, handleClose, handleSave }) => {
     setEditorial("");
     setAnioPublicacion("");
     setGenero("");
-    setEstado("");
+    setEstado("disponible");
   };
 
   if (!show) return null; // Oculta el modal si no está activo
@@ -109,7 +109,7 @@ const NuevoLibroModal = ({ show, handleClose, handleSave }) => {
 
                 <div className="mb-3">
                   <label htmlFor="anio_publicacion" className="form-label">
-                    Anio
+                    Año
                   </label>
                   <input
                     type="year"
@@ -122,7 +122,7 @@ const NuevoLibroModal = ({ show, handleClose, handleSave }) => {
 
                 <div className="mb-3">
                   <label htmlFor="genero" className="form-label">
-                    Genero
+                    Género
                   </label>
                   <input
                     type="text"
@@ -137,13 +137,17 @@ const NuevoLibroModal = ({ show, handleClose, handleSave }) => {
                   <label htmlFor="estado" className="form-label">
                     Estado
                   </label>
-                  <input
-                    type="text"
-                    className="form-control"
+                  <select
+                    className="form-select"
                     id="estado"
                     value={estado}
                     onChange={(e) => setEstado(e.target.value)}
-                  />
+                  >
+                    <option value="disponible">Disponible</option>
+                    <option value="prestado">Prestado</option>
+                    <option value="retrasado">Retrasado</option>
+                    <option value="extraviado">Extraviado</option>
+                  </select>
                 </div>
               </form>
             </div>

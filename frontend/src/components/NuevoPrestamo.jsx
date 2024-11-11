@@ -1,45 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const NuevoPrestamoModal = ({ show, handleClose, handleSave }) => {
-  const [id_usuario, setId_usuario] = useState("");
-  const [id_libro, setId_libro] = useState("");
+  const [alumnos, setAlumnos] = useState([]);
+  const [libros, setLibros] = useState([]);
+  const [alumnoSeleccionado, setAlumnoSeleccionado] = useState("");
+  const [libroSeleccionado, setLibroSeleccionado] = useState("");
   const [fecha_prestamo, setFecha_prestamo] = useState();
-  const [fecha_devolucion, setFecha_devolucion] = useState() // Día de préstamo + 14 días
- 
+  const [fecha_devolucion, setFecha_devolucion] = useState();
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/usuario")
+      .then((response) => response.json())
+      .then((data) => setAlumnos(data))
+      .catch((error) => console.error("Error al cargar alumnos:", error));
+
+    fetch("http://localhost:8080/api/libros")
+      .then((response) => response.json())
+      .then((data) => setLibros(data))
+      .catch((error) => console.error("Error al cargar libros:", error));
+
+    const hoy = new Date();
+    const fechaPrestamo = hoy.toISOString().split("T")[0];
+
+    const fechaDevolucionDate = new Date(hoy);
+    fechaDevolucionDate.setDate(hoy.getDate() + 14);
+    const fechaDevolucion = fechaDevolucionDate.toISOString().split("T")[0];
+
+    setFecha_prestamo(fechaPrestamo);
+    setFecha_devolucion(fechaDevolucion);
+  }, []);
+
   const handleSubmit = async () => {
     const nuevoPrestamo = {
       id_usuario,
       id_libro,
       fecha_prestamo,
-      fecha_devolucion
+      fecha_devolucion,
     };
 
     try {
-        const response = await fetch("http://localhost:8080/api/prestamos/", {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json",
-            },
-          body: JSON.stringify(nuevoPrestamo),
-        });
-  
-        if (!response.ok) {
-          throw new Error("Error al guardar el prestamo.");
-        }
-  
-        handleSave(nuevoPrestamo); 
-        handleClose();
-        window.location.reload();
+      const response = await fetch("http://localhost:8080/api/prestamos/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(nuevoPrestamo),
+      });
 
-      } catch (error) {
-        console.error("Error:", error);
-        alert(
-          "Hubo un error al intentar guardar el prestamo. Por favor, inténtalo de nuevo."
-        );
+      if (!response.ok) {
+        throw new Error("Error al guardar el prestamo.");
       }
-  
-      setId_usuario("");
-      setId_libro("");
+
+      handleSave(nuevoPrestamo);
+      handleClose();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error:", error);
+      alert(
+        "Hubo un error al intentar guardar el prestamo. Por favor, inténtalo de nuevo."
+      );
+    }
+
+    setId_usuario("");
+    setId_libro("");
   };
 
   if (!show) return null; // Oculta el modal si no está activo
@@ -61,29 +84,41 @@ const NuevoPrestamoModal = ({ show, handleClose, handleSave }) => {
             <div className="modal-body">
               <form>
                 <div className="mb-3">
-                  <label htmlFor="id_usuario" className="form-label">
-                    ID del Alumno
+                  <label htmlFor="alumno" className="form-label">
+                    Alumno
                   </label>
-                  <input
-                    type="int"
-                    className="form-control"
-                    id="id_usuario"
-                    value={id_usuario}
-                    onChange={(e) => setId_usuario(e.target.value)}
-                  />
+                  <select
+                    className="form-select"
+                    id="alumno"
+                    value={alumnoSeleccionado}
+                    onChange={(e) => setAlumnoSeleccionado(e.target.value)}
+                  >
+                    <option value="">Selecciona un alumno</option>
+                    {alumnos.map((alumno) => (
+                      <option key={alumno.id_usuario} value={alumno.id_usuario}>
+                        {alumno.nombre}{" "}{alumno.apellido}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div className="mb-3">
-                  <label htmlFor="id_libro" className="form-label">
-                    ID del Libro
+                  <label htmlFor="libro" className="form-label">
+                    Libro
                   </label>
-                  <input
-                    type="int"
-                    className="form-control"
-                    id="id_libro"
-                    value={id_libro}
-                    onChange={(e) => setId_libro(e.target.value)}
-                  />
+                  <select
+                    className="form-select"
+                    id="libro"
+                    value={libroSeleccionado}
+                    onChange={(e) => setLibroSeleccionado(e.target.value)}
+                  >
+                    <option value="">Selecciona un libro</option>
+                    {libros.map((libro) => (
+                      <option key={libro.id_libro} value={libro.id_libro}>
+                        {libro.titulo}{" "}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div className="mb-3">
@@ -101,7 +136,7 @@ const NuevoPrestamoModal = ({ show, handleClose, handleSave }) => {
 
                 <div className="mb-3">
                   <label htmlFor="fecha_devolucion" className="form-label">
-                  Fecha de devolucion
+                    Fecha de devolucion
                   </label>
                   <input
                     type="date"
