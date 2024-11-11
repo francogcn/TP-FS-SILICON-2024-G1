@@ -68,53 +68,52 @@ export default function Books() {
               handleClose={handleCloseModal}
               handleSave={handleSaveLibro}
             />
-            <button className="btn btn-primary">
-              Ver libros disponibles
-            </button>
+            <button className="btn btn-primary">Ver libros disponibles</button>
           </div>
         </div>
-      </div>
-      <div className="table-responsive">
-        <table className="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th>Titulo</th>
-              <th>Autor</th>
-              <th>Editorial</th>
-              <th>Año</th>
-              <th>Genero</th>
-              {isadmin ? <th>Editar</th> : null}
-              {isadmin ? <th>Eliminar</th> : null}
-            </tr>
-          </thead>
-          <tbody>
-            {libros.map((libro) => (
-              <tr key={libro.id_libro}>
-                <td>{libro.titulo}</td>
-                <td>{libro.autor}</td>
-                <td>{libro.editorial}</td>
-                <td>{libro.anio_publicacion}</td>
-                <td>{libro.genero}</td>
-                {isadmin ? (
-                  <td>
-                    <button className="btn btn-secondary">Editar</button>
-                  </td>
-                ) : null}
-                {isadmin ? (
-                  <td>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => handleDelete()}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
-                ) : null}
-                {mensajeEliminar && <p>{mensajeEliminar}</p>}
+
+        <div className="table-responsive">
+          <table className="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Titulo</th>
+                <th>Autor</th>
+                <th>Editorial</th>
+                <th>Año</th>
+                <th>Genero</th>
+                {isadmin ? <th>Editar</th> : null}
+                {isadmin ? <th>Eliminar</th> : null}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {libros.map((libro) => (
+                <tr key={libro.id_libro}>
+                  <td>{libro.titulo}</td>
+                  <td>{libro.autor}</td>
+                  <td>{libro.editorial}</td>
+                  <td>{libro.anio_publicacion}</td>
+                  <td>{libro.genero}</td>
+                  {isadmin ? (
+                    <td>
+                      <button className="btn btn-secondary">Editar</button>
+                    </td>
+                  ) : null}
+                  {isadmin ? (
+                    <td>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => handleDelete()}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                  ) : null}
+                  {mensajeEliminar && <p>{mensajeEliminar}</p>}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

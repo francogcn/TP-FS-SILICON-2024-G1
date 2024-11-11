@@ -106,7 +106,7 @@ body {
 }
 
 .modal-backdrop {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
@@ -161,9 +161,9 @@ span.perfil-info-bubtitle {
 }
 
 /*Página de Prestamos*/
-.prestamos {
+/* .prestamos {
   margin-bottom: 20px;
-}
+} */
 .prestamos,
 .libros {
   margin-top: 20px;
