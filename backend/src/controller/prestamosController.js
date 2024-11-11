@@ -1,10 +1,12 @@
 const model = require('../model/prestamos');
 const express = require('express');
 const router = express.Router();
+const { verificarToken } = require('./securityController');
 
 // ----------------------------------------------------------
 // -- Rutas de escucha (endpoint) disponibles para PERSONA --
 // ----------------------------------------------------------
+//router.all('*', verificarToken);
 router.get('/', listar_prestamos);
 router.get('/:id', buscarPorID);
 router.post('/', crearPrestamo);
