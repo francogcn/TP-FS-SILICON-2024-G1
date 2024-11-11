@@ -189,7 +189,7 @@ span.perfil-info-bubtitle {
   background-color: var(--azul-boton);
 }
 
-.btn-outline-primary, .btn-outline-success{
+.btn-outline-primary, .btn-outline-success, .btn-outline-danger{
   color: var(--letra-clara);
   border-color: var(--letra-clara);
 }  
