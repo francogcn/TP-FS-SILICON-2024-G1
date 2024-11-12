@@ -37,6 +37,17 @@ const Usuario = {
         }
     },
 
+    //funcion para buscar usuarios al agregar amistad
+    findUsers: async (id) => {
+        const query = 'SELECT nombre, apellido FROM Usuario WHERE id_usuario!=?';
+        try {
+            const [rows] = await db.execute(query, [id]);
+            return rows;
+        } catch (error) {
+            throw new Error('Error al buscar usuarios: ' + error.message);
+        }
+    },
+
     //buscar por mail (get)
     findByMail: async (mail) => {
         try {
