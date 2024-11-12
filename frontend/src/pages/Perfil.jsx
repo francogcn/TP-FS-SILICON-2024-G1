@@ -4,6 +4,7 @@ import AgregarAmigosModal from "../components/NuevoAmigoModal";
 export default function Perfil() {
   const [perfil, setPerfil] = useState([]);
   const id_usuario = 2; //Esto se debe automatizar
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -19,15 +20,15 @@ export default function Perfil() {
     fetchProfile();
   }, []);
 
-  //modal para agregar un nuevo prestamo
-  const [showModal, setShowModal] = useState(false);
+  //modal para agregar un nuevo amigo
+  // const [showModal, setShowModal] = useState(false);
 
-  const handleOpenModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  // const handleOpenModal = () => setShowModal(true);
+  // const handleCloseModal = () => setShowModal(false);
 
-  const handleSaveAmigo = (nuevaAmistad) => {
-    console.log("Nueva Amistad:", nuevaAmistad);
-  };
+  // const handleSaveAmigo = (nuevaAmistad) => {
+  //   console.log("Nueva Amistad:", nuevaAmistad);
+  // };
 
   return (
     <>
@@ -50,21 +51,14 @@ export default function Perfil() {
               <span className="perfil-info-bubtitle">Amigos</span>
             </div>
           </div>
-        </div>
-        <button type="button" className="btn btn-primary m-1">
-          Agregar Reseña
-        </button>
-        <button type="button" className="btn btn-primary m-1">
-          Agregar Amigo
-        </button>
-        <div>
-          <button type="button" className="btn btn-primary">
+
+          <button type="button" className="btn btn-primary m-1">
             Agregar Reseña
           </button>
           <button
             type="button"
-            className="btn btn-primary"
-            onClick={handleOpenModal}
+            className="btn btn-primary m-1"
+            // onClick={handleOpenModal}
           >
             Agregar Amigo
           </button>
