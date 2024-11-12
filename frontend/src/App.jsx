@@ -10,6 +10,7 @@ import LogIn from './pages/LogIn'
 import SignUp from './pages/SignUp';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { PrivateRoute } from './utils/PrivateRoute';
 
 
 function App() {
@@ -20,13 +21,20 @@ function App() {
         <Menu/>
         <ToastContainer/>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/books" element={<Books />} />
-          <Route path="/perfil" element={<Perfil />} />
-          <Route path="/prestamos" element={<Prestamos/>} />
-          <Route path="/prestamos/:id" element={<Prestamos/>} />
+          {/* Rutas públicas */}
           <Route path="/login" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
+
+          {/* Rutas protegidas */}
+          <Route element={<PrivateRoute />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/books" element={<Books />} />
+            <Route path="/perfil" element={<Perfil />} />
+            <Route path="/prestamos" element={<Prestamos />} />
+            <Route path="/prestamos/:id" element={<Prestamos />} />
+          </Route>
+
+          {/* Ruta para cuando no se encuentra la página */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
