@@ -5,7 +5,6 @@ export default function Prestamos() {
   const [prestamos, setPrestamos] = useState([]);
   const [mensajeEliminar, setMensajeEliminar] = useState("");
   const isadmin = true;
-  const id = 2;
 
   //Hago el fetch a la API para traer todos los prestamos
   useEffect(() => {
@@ -41,9 +40,10 @@ export default function Prestamos() {
       );
 
       if (response.ok) {
-        setMensajeEliminar("Libro eliminado con éxito.");
+        setPrestamos((prevPrestamos) => prevPrestamos.filter((prestamo) => prestamo.id_prestamo !== id));
+        setMensajeEliminar("Prestamo eliminado con éxito.");
       } else {
-        setMensajeEliminar("Hubo un error al eliminar el libro.");
+        setMensajeEliminar("Hubo un error al eliminar el prestamo.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -101,7 +101,7 @@ export default function Prestamos() {
                     <td>
                       <button
                         className="btn btn-danger"
-                        onClick={() => handleDelete(id)}
+                        onClick={() => handleDelete(prestamo.id_prestamo)}
                       >
                         Eliminar
                       </button>
