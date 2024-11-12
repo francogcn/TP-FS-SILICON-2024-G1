@@ -50,6 +50,14 @@ export default function Perfil() {
               <span className="perfil-info-bubtitle">Amigos</span>
             </div>
           </div>
+        </div>
+        <button type="button" className="btn btn-primary m-1">
+          Agregar Reseña
+        </button>
+        <button type="button" className="btn btn-primary m-1">
+          Agregar Amigo
+        </button>
+        <div>
           <button type="button" className="btn btn-primary">
             Agregar Reseña
           </button>
@@ -64,7 +72,7 @@ export default function Perfil() {
             show={showModal}
             handleClose={handleCloseModal}
             handleSave={handleSaveAmigo}
-          /> */}
+            /> */}
         </div>
       </div>
     </>
