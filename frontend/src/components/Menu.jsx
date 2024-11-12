@@ -14,18 +14,14 @@ export default function Menu() {
           setToken(t)
           //significa actualizar el estado interno para tener el ultimo token valido siempre
           //(por si en algún momento se renueva el token)
+
+          //esta puede ser una forma provisoria de usar el login como landing page, y devolver ahí si no hay token
+          if (!t) {
+            navigate('/login');
+          }
       }
+      
   });
-
-
-  // si no hay token y el usuario no está en las páginas de login o signup, se redirige al login
-  // (esto puede ser un método provisorio antes de filtrar por token en los servicios de la web)
-  useEffect(() => {
-    if (!token && window.location.pathname !== '/login' && window.location.pathname !== '/signup') {
-      navigate("/login"); 
-    }
-  }, [token]); // se vuelve a ejecutar si cambia el estado del token
-
 
   function logout() {
       sessionStorage.removeItem('token');
