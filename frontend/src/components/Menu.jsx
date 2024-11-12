@@ -17,10 +17,20 @@ export default function Menu() {
       }
   });
 
+
+  // si no hay token y el usuario no está en las páginas de login o signup, se redirige al login
+  // (esto puede ser un método provisorio antes de filtrar por token en los servicios de la web)
+  useEffect(() => {
+    if (!token && window.location.pathname !== '/login' && window.location.pathname !== '/signup') {
+      navigate("/login"); 
+    }
+  }, [token]); // se vuelve a ejecutar si cambia el estado del token
+
+
   function logout() {
       sessionStorage.removeItem('token');
-      setToken("");
-      navigate('/');
+      setToken(""); // limpiar el estado local
+      navigate('/'); // redirigir al inicio
   }
 
 if (token !== "" && token !== null) {
@@ -105,14 +115,7 @@ if (token !== "" && token !== null) {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/">
-                  Inicio
-                </NavLink>
-              </li>
-              
-            </ul>
+          
           </div>
           {/* Aquí agregamos los botones "Iniciar sesión" y "Registrarse" */}
           <div className="d-flex">
