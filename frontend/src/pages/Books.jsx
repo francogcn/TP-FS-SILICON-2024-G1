@@ -5,7 +5,6 @@ export default function Books() {
   const [libros, setLibros] = useState([]);
   const [mensajeEliminar, setMensajeEliminar] = useState("");
   const isadmin = true;
-  const id = "Titulo del libro";
 
   // Listar libros
   useEffect(() => {
@@ -42,7 +41,11 @@ export default function Books() {
       );
 
       if (response.ok) {
+        setLibros((prevLibros) =>
+          prevLibros.filter((libro) => libro.id_libro !== id_libro)
+        );
         setMensajeEliminar("Libro eliminado con éxito.");
+        console.log(mensajeEliminar);
       } else {
         setMensajeEliminar("Hubo un error al eliminar el libro.");
       }
@@ -81,6 +84,7 @@ export default function Books() {
                 <th>Editorial</th>
                 <th>Año</th>
                 <th>Genero</th>
+                <th>Estado</th>
                 {isadmin ? <th>Editar</th> : null}
                 {isadmin ? <th>Eliminar</th> : null}
               </tr>
@@ -93,6 +97,7 @@ export default function Books() {
                   <td>{libro.editorial}</td>
                   <td>{libro.anio_publicacion}</td>
                   <td>{libro.genero}</td>
+                  <td>{libro.estado}</td>
                   {isadmin ? (
                     <td>
                       <button className="btn btn-secondary">Editar</button>
@@ -102,13 +107,12 @@ export default function Books() {
                     <td>
                       <button
                         className="btn btn-danger"
-                        onClick={() => handleDelete()}
+                        onClick={() => handleDelete(libro.id_libro)}
                       >
                         Eliminar
                       </button>
                     </td>
                   ) : null}
-                  {mensajeEliminar && <p>{mensajeEliminar}</p>}
                 </tr>
               ))}
             </tbody>

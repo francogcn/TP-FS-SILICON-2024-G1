@@ -72,8 +72,8 @@ const libros = {
 
     eliminarLibro: async function(id_libro) {
         try {
-            const query = "DELETE FROM Resenia WHERE id_libro = ?; DELETE FROM Prestamo WHERE id_libro = ?; DELETE FROM Libro WHERE id_libro=?;";
-            const result = await db.execute(query, [id_libro, id_libro, id_libro]);
+            const query = "DELETE FROM Libro WHERE id_libro=?;";
+            const result = await db.execute(query, [id_libro]);
 
             if (result.affectedRows === 0) {
                 const error = new Error("No se encontró un libro con el id:", id_libro);

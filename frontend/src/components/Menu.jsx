@@ -14,13 +14,19 @@ export default function Menu() {
           setToken(t)
           //significa actualizar el estado interno para tener el ultimo token valido siempre
           //(por si en algún momento se renueva el token)
+
+          //esta puede ser una forma provisoria de usar el login como landing page, y devolver ahí si no hay token
+          if (!t) {
+            navigate('/login');
+          }
       }
+      
   });
 
   function logout() {
       sessionStorage.removeItem('token');
-      setToken("");
-      navigate('/');
+      setToken(""); // limpiar el estado local
+      navigate('/'); // redirigir al inicio
   }
 
 if (token !== "" && token !== null) {
@@ -105,14 +111,7 @@ if (token !== "" && token !== null) {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/">
-                  Inicio
-                </NavLink>
-              </li>
-              
-            </ul>
+          
           </div>
           {/* Aquí agregamos los botones "Iniciar sesión" y "Registrarse" */}
           <div className="d-flex">
