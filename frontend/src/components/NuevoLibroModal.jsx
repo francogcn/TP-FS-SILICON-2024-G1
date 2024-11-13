@@ -133,7 +133,7 @@ const NuevoLibroModal = ({ show, handleClose, handleSave }) => {
                   />
                 </div>
 
-                <div className="mb-3">
+                {/* <div className="mb-3">
                   <label htmlFor="estado" className="form-label">
                     Estado
                   </label>
@@ -148,7 +148,7 @@ const NuevoLibroModal = ({ show, handleClose, handleSave }) => {
                     <option value="retrasado">Retrasado</option>
                     <option value="extraviado">Extraviado</option>
                   </select>
-                </div>
+                </div> */}
               </form>
             </div>
             <div className="modal-footer">

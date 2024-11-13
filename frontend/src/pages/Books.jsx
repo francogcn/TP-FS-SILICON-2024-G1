@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import NuevoLibroModal from "../components/nuevoLibroModal";
+import EditarLibroModal from "../components/EditarLibroModal";
 
 export default function Books() {
   const [libros, setLibros] = useState([]);
@@ -22,12 +23,48 @@ export default function Books() {
 
   //modal para agregar un nuevo libro
   const [showModal, setShowModal] = useState(false);
-
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
-
   const handleSaveLibro = (nuevoLibro) => {
     console.log("Nuevo Libro:", nuevoLibro);
+  };
+
+  //modal para editar un libro
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [libroSeleccionado, setLibroSeleccionado] = useState(null);
+
+  const handleOpenEditModal = (libro) => {
+    setLibroSeleccionado(libro);
+    setShowEditModal(true);
+  };
+  const handleCloseEditModal = () => setShowEditModal(false);
+
+  const handleSaveEdit = async (updatedLibro) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/libros/${updatedLibro.id_libro}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedLibro),
+        }
+      );
+
+      if (response.ok) {
+        setLibros((prevLibros) =>
+          prevLibros.map((libro) =>
+            libro.id_libro === updatedLibro.id_libro ? updatedLibro : libro
+          )
+        );
+        setShowEditModal(false);
+      } else {
+        console.error("Error al actualizar el libro");
+      }
+    } catch (error) {
+      console.error("Error al conectar con el servidor:", error);
+    }
   };
 
   //eliminar un libro
@@ -100,7 +137,12 @@ export default function Books() {
                   <td>{libro.estado}</td>
                   {isadmin ? (
                     <td>
-                      <button className="btn btn-secondary">Editar</button>
+                      <button
+                        className="btn btn-secondary"
+                        onClick={() => handleOpenEditModal(libro)}
+                      >
+                        Editar
+                      </button>
                     </td>
                   ) : null}
                   {isadmin ? (
@@ -118,6 +160,14 @@ export default function Books() {
             </tbody>
           </table>
         </div>
+        {showEditModal && (
+          <EditarLibroModal
+            show={showEditModal}
+            handleClose={handleCloseEditModal}
+            handleSave={handleSaveEdit}
+            libro={libroSeleccionado}
+          />
+        )}
       </div>
     </>
   );

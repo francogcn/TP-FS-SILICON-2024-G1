@@ -20,7 +20,7 @@ const libros = {
         }
     },
 
-    actualizarLibro: async function (datos, titulo) {
+    actualizarLibro: async function (datos, id_libro) {
 
         try {
             const query = `UPDATE Libro SET 
@@ -30,7 +30,7 @@ const libros = {
             anio_publicacion = ?,
             genero = ?, 
             estado = ?
-            WHERE titulo = ?`;
+            WHERE id_libro = ?`;
             const params = [
                 datos.titulo,
                 datos.autor,
@@ -38,7 +38,7 @@ const libros = {
                 datos.anio_publicacion,
                 datos.genero,
                 datos.estado,
-                titulo];
+                id_libro];
 
             const result = await db.execute(query, params);
 
@@ -46,7 +46,7 @@ const libros = {
                 throw new Error("No existe un libro que coincida con el criterio de busqueda");
             } else {
                 return {
-                    message: `Se modificó con exito el libro  ${datos.titulo}`,
+                    message: `Se modificó con exito el libro ID ${datos.id_libro}`,
                     detail: result
                 }
             }
