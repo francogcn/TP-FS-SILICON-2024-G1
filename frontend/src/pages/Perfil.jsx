@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import AgregarAmigosModal from "../components/NuevoAmigoModal";
+import {jwtDecode} from "jwt-decode";
 
 export default function Perfil() {
+  const token = sessionStorage.getItem("token");
+  const decode = jwtDecode(token);
+  console.log(decode);
   const [perfil, setPerfil] = useState([]);
   const id_usuario = 2; //Esto se debe automatizar
 
