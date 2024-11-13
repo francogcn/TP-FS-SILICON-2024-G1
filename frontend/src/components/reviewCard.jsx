@@ -1,7 +1,11 @@
+import { jwtDecode } from "jwt-decode";
 import { useState, useEffect } from "react"
 
 export default function ReviewCard({truncate=true}) {
-    const id_usuario = 4; //Esto se debe automatizar
+    const token = sessionStorage.getItem("token");
+    const decode = jwtDecode(token);
+    const id_usuario = decode.id_usuario;
+
     const [reviewAmigos, setReviewAmigos] = useState([]);
 
     useEffect(() => {
