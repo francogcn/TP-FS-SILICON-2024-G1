@@ -72,20 +72,26 @@ if (token !== "" && token !== null) {
               </li>
               
             </ul>
-          </div>
-          {/* Aquí agregamos los botones "Logout" y "Signup" */}
-          <div className="d-flex">
-            <button
-                onClick={() => logout()}
-                className='btn btn-outline-danger m-2'>
-                <span
-                    className="material-symbols-outlined">
-                    Cerrar Sesión
-                </span>
-            </button>
-            <NavLink to="/signup" className="btn btn-outline-success m-2">
-              Registrarse
-            </NavLink>
+            {/* Aquí agregamos los botones "Logout" y "Signup" */}
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item">
+              <button
+                  onClick={() => logout()}
+                  className='btn btn-outline-danger m-2'>
+                  <span
+                      className="material-symbols-outlined">
+                      Cerrar Sesión
+                  </span>
+              </button>
+            </li>
+            <li className="nav-item">
+              <NavLink to="/signup" className="btn btn-outline-success m-2">
+                Registrarse
+              </NavLink>
+            </li>
+            
+            
+          </ul>
           </div>
         </div>
       </nav>
@@ -110,17 +116,21 @@ if (token !== "" && token !== null) {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNavDropdown">
           
-          </div>
-          {/* Aquí agregamos los botones "Iniciar sesión" y "Registrarse" */}
-          <div className="d-flex">
-            <NavLink to="/login" className="btn btn-outline-primary m-2">
-              Iniciar sesión
-            </NavLink>
+          <div className="collapse navbar-collapse" id="navbarNavDropdown">
+            {/* Aquí agregamos los botones "Iniciar sesión" y "Registrarse" */}
+          <ul className="navbar-nav me-auto">
+          <li className="nav-item">
+              <NavLink to="/login" className="btn btn-outline-primary m-2">
+                Iniciar sesión
+              </NavLink>
+          </li>
+          <li className="nav-item">
             <NavLink to="/signup" className="btn btn-outline-success m-2">
               Registrarse
             </NavLink>
+          </li>
+          </ul>
           </div>
         </div>
       </nav>
