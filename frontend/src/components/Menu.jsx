@@ -119,7 +119,7 @@ if (token !== "" && token !== null) {
           
           <div className="collapse navbar-collapse" id="navbarNavDropdown">
             {/* Aquí agregamos los botones "Iniciar sesión" y "Registrarse" */}
-          <ul className="navbar-nav me-auto">
+          <ul className="navbar-nav ms-auto">
           <li className="nav-item">
               <NavLink to="/login" className="btn btn-outline-primary m-2">
                 Iniciar sesión
