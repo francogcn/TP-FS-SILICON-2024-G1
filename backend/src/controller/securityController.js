@@ -30,13 +30,15 @@ async function login(req, res) {
 
         if (iguales) {
             let user = {
+                id_usuario: result.id_usuario,
                 nombre: result.nombre,
                 apellido: result.apellido,
                 mail: result.mail,
                 rol: result.rol
             }
+            console.log('User object:', user);
             //firmar usuario
-            jwt.sign(user, 'ultraMegaSecretPass', { expiresIn: '6000s' }, (err, token) => {
+            jwt.sign(user, 'ultraMegaSecretPass', { expiresIn: '6000s', algorithm: 'HS256' }, (err, token) => {
                 if (err) {
                     res.status(500).send({
                         message: err

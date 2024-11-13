@@ -1,13 +1,25 @@
 import { useEffect, useState } from "react";
 import AgregarAmigosModal from "../components/NuevoAmigoModal";
+import ReseñaModal from "../components/NuevaReseniaModal";
 import {jwtDecode} from "jwt-decode";
 
 export default function Perfil() {
   const token = sessionStorage.getItem("token");
   const decode = jwtDecode(token);
   console.log(decode);
+
+
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    console.log('Decoded token:', decodedToken); // Verificar si el id_usuario está acá
+    const userId = decodedToken.id_usuario; // Obtener el id_usuario del token
+}
+
+
+  const id_usuario = decode.id_usuario;
+
   const [perfil, setPerfil] = useState([]);
-  const id_usuario = 2; //Esto se debe automatizar
+  const [showReseniaModal, setShowReseniaModal] = useState(false); 
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -18,11 +30,20 @@ export default function Perfil() {
         const data = await response.json();
         setPerfil(data);
       } catch (error) {
-        console.error("Error al obtener los préstamos:", error);
+        console.error("Error al obtener el perfil:", error);
       }
     };
     fetchProfile();
-  }, []);
+  }, [id_usuario]);
+
+  const handleOpenReseniaModal = () => setShowReseniaModal(true);
+  const handleCloseReseniaModal = () => setShowReseniaModal(false);
+
+  const handleSaveResenia = (nuevaResenia) => {
+    console.log("Nueva Reseña guardada:", nuevaResenia);
+    // Lugar para agregar código para actualizar el estado o hacer algo más con la nueva reseña
+  };
+
 
   //modal para agregar un nuevo amigo
   // const [showModal, setShowModal] = useState(false);
@@ -56,7 +77,7 @@ export default function Perfil() {
             </div>
           </div>
 
-          <button type="button" className="btn btn-primary m-1">
+          <button type="button" className="btn btn-primary m-1" onClick={handleOpenReseniaModal}>
             Agregar Reseña
           </button>
           <button
@@ -72,6 +93,14 @@ export default function Perfil() {
             handleSave={handleSaveAmigo}
             /> */}
         </div>
+
+        {/* Modal de Reseña */}
+        <ReseñaModal
+          show={showReseniaModal}
+          handleClose={handleCloseReseniaModal}
+          handleSave={handleSaveResenia}
+          id_usuario={id_usuario} // Pasamos el id_usuario al modal
+        />
       </div>
     </>
   );

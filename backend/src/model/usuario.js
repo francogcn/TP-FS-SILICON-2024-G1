@@ -51,7 +51,7 @@ const Usuario = {
     //buscar por mail (get)
     findByMail: async (mail) => {
         try {
-            const consulta = 'SELECT nombre, apellido, mail, contrasenia FROM Usuario WHERE mail = ?';
+            const consulta = 'SELECT * FROM Usuario WHERE mail = ?';
             const [result] = await db.execute(consulta, [mail]);
 
             if (result.length == 0) {

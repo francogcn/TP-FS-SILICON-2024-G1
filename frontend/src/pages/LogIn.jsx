@@ -49,32 +49,33 @@ export default function LogIn() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'authorization': sessionStorage.getItem('token')
+                // No incluimos el token acá porque todavía no existe
             },
             body: JSON.stringify(usuario)
-        }
-
+        };
+    
         const url = "http://localhost:8080/api/security/login";
-
+    
         try {
             const res = await fetch(url, parametros);
             const body = await res.json();
-
+    
             if (res.ok) {
-                sessionStorage.setItem('token', body.token);
+                sessionStorage.setItem('token', body.token);  // Guardamos el token que recibimos
                 console.log('Token guardado:', body.token); // Verificar que el token se haya guardado correctamente
                 toast.success(`Bienvenido ${body.datos.nombre}`, confToast);
                 console.log(body.datos);
-                navigate("/");
+                navigate("/");  // Redirigir a la página principal o a donde sea necesario
             } else {
                 toast.error(body.message, confToast);
             }
         } catch (error) {
             toast.error(error.message, confToast);
-
         }
 
-    }
+
+    };
+
 
 
     return (
