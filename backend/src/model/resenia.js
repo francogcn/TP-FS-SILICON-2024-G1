@@ -10,8 +10,8 @@ const Resenia = {
             const params = [id_usuario, id_libro, texto_resenia, clasificacion];
             const query = 'INSERT INTO resenia (id_usuario, id_libro, texto_resenia, clasificacion) VALUES (?, ?, ?, ?)';
 
-// Agregar un log para verificar la consulta y los parámetros
-console.log('Ejecutando consulta:', query, 'con parámetros:', params);
+    // // inspección de la consulta y los parámetros
+    // console.log('Ejecutando consulta:', query, 'con parámetros:', params);
 
             const result = await db.execute(query, params);
             return { message: `Resenia del libro ${id_libro} creada con éxito`, detail: result };

@@ -59,7 +59,8 @@ async function buscarPorIdLibro(req, res) {
 async function crear_resenia(req, res) {
     console.log("Datos recibidos en el servidor:", req.body);
     const { id_usuario, id_libro, texto_resenia, clasificacion} = req.body; 
-    // Validación de los parámetros
+
+    // Validación extra (ya se hace en el frontend)
     if (!id_usuario || !id_libro || !texto_resenia || !clasificacion) {
         return res.status(400).json({ error: "Todos los campos son requeridos." });
     }
@@ -67,7 +68,7 @@ async function crear_resenia(req, res) {
         const resultado = await model.create(id_usuario, id_libro, texto_resenia, clasificacion);
         res.status(201).json(resultado);
     } catch (err) {
-        console.error("Error al crear la reseña:", err);  // Loguea el error completo
+        console.error("Error al crear la reseña:", err);  // si hay, se muestra el error completo
         res.status(500).json({ error: err.message });
     }
 }

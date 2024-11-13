@@ -2,20 +2,13 @@ import { useEffect, useState } from "react";
 import AgregarAmigosModal from "../components/NuevoAmigoModal";
 import ReseñaModal from "../components/NuevaReseniaModal";
 import {jwtDecode} from "jwt-decode";
+import { toast } from 'react-toastify';
 
 export default function Perfil() {
   const token = sessionStorage.getItem("token");
   const decode = jwtDecode(token);
-  console.log(decode);
 
-
-  if (token) {
-    const decodedToken = jwtDecode(token);
-    console.log('Decoded token:', decodedToken); // Verificar si el id_usuario está acá
-    const userId = decodedToken.id_usuario; // Obtener el id_usuario del token
-}
-
-
+  // se obtiene el id_usuario logueado mediante su token decodificado
   const id_usuario = decode.id_usuario;
 
   const [perfil, setPerfil] = useState([]);
@@ -28,7 +21,7 @@ export default function Perfil() {
           `http://localhost:8080/api/usuario/perfil/${id_usuario}`
         );
         const data = await response.json();
-        console.log(data);
+        console.log(data); // inspección de la info del usuario apenas llega del fetch
         setPerfil(data);
       } catch (error) {
         console.error("Error al obtener el perfil:", error);
@@ -41,7 +34,8 @@ export default function Perfil() {
   const handleCloseReseniaModal = () => setShowReseniaModal(false);
 
   const handleSaveResenia = (nuevaResenia) => {
-    console.log("Nueva Reseña guardada:", nuevaResenia);
+    toast.success("Reseña publicada");
+    console.log("Reseña publicada exitosamente: ", nuevaResenia);
     // Lugar para agregar código para actualizar el estado o hacer algo más con la nueva reseña
   };
 

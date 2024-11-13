@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { toast } from 'react-toastify';
 
 const ReseñaModal = ({ show, handleClose, handleSave, id_usuario }) => {
   const [libros, setLibros] = useState([]);
@@ -7,17 +8,16 @@ const ReseñaModal = ({ show, handleClose, handleSave, id_usuario }) => {
   const [clasificacion, setClasificacion] = useState(1); // Valor por defecto
 
   useEffect(() => {
-    // Traemos los libros que el usuario ha devuelto (suponemos que se guardan en el backend)
+    // Traemos los libros que el usuario ha devuelto (se sacan del backend, desde un endpoint en prestamos)
     const fetchLibrosDevueltos = async () => {
       try {
-
-        
 
         const response = await fetch(
           `http://localhost:8080/api/prestamos/usuario/${id_usuario}/devueltos`
         );
         const data = await response.json();
-        console.log(data); // Aquí puedes inspeccionar el contenido de 'data'
+
+        console.log(data); // inspección 1 (apenas llegaron los libros devueltos)
         
         // Verifica que 'data' es un arreglo
         if (Array.isArray(data)) {
@@ -41,11 +41,11 @@ const ReseñaModal = ({ show, handleClose, handleSave, id_usuario }) => {
       clasificacion,
     };
   
-    console.log("Datos a enviar:", nuevaResenia);  // Verifica que los datos sean correctos
+    console.log("Datos a enviar:", nuevaResenia); // inspección 2 (data lista para crear la resenia)
 
-    // Asegúrate de que los valores no estén vacíos o incorrectos
-    if (!libroSeleccionado || !textoResenia) {
-      alert("Por favor, selecciona un libro y escribe una reseña.");
+    // validación
+    if (!libroSeleccionado || !textoResenia || !clasificacion) {
+      toast.error("Todos los campos son obligatorios");
       return;
     }
   
@@ -63,9 +63,10 @@ const ReseñaModal = ({ show, handleClose, handleSave, id_usuario }) => {
       }
   
       const data = await response.json();  // Obtener la respuesta
-      console.log("la data es: ", data);
+
       handleSave(data); // Pasar la respuesta de la API al componente padre
       handleClose(); // Cerrar el modal
+
     } catch (error) {
       console.error("Error:", error);
       alert("Hubo un error al intentar guardar la reseña. Por favor, inténtalo de nuevo.");
