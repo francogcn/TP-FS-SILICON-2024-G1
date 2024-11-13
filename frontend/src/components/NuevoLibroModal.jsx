@@ -132,23 +132,6 @@ const NuevoLibroModal = ({ show, handleClose, handleSave }) => {
                     onChange={(e) => setGenero(e.target.value)}
                   />
                 </div>
-
-                {/* <div className="mb-3">
-                  <label htmlFor="estado" className="form-label">
-                    Estado
-                  </label>
-                  <select
-                    className="form-select"
-                    id="estado"
-                    value={estado}
-                    onChange={(e) => setEstado(e.target.value)}
-                  >
-                    <option value="disponible">Disponible</option>
-                    <option value="prestado">Prestado</option>
-                    <option value="retrasado">Retrasado</option>
-                    <option value="extraviado">Extraviado</option>
-                  </select>
-                </div> */}
               </form>
             </div>
             <div className="modal-footer">
