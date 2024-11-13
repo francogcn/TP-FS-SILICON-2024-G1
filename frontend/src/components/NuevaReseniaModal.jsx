@@ -10,11 +10,21 @@ const ReseñaModal = ({ show, handleClose, handleSave, id_usuario }) => {
     // Traemos los libros que el usuario ha devuelto (suponemos que se guardan en el backend)
     const fetchLibrosDevueltos = async () => {
       try {
+
+        
+
         const response = await fetch(
-          `http://localhost:8080/api/libros/usuario/${id_usuario}/devueltos`
+          `http://localhost:8080/api/prestamos/usuario/${id_usuario}/devueltos`
         );
         const data = await response.json();
-        setLibros(data);
+        console.log(data); // Aquí puedes inspeccionar el contenido de 'data'
+        
+        // Verifica que 'data' es un arreglo
+        if (Array.isArray(data)) {
+          setLibros(data);
+        } else {
+          console.error("La respuesta de la API no es un arreglo:", data);
+        }
       } catch (error) {
         console.error("Error al obtener los libros devueltos:", error);
       }
@@ -26,26 +36,36 @@ const ReseñaModal = ({ show, handleClose, handleSave, id_usuario }) => {
   const handleSubmit = async () => {
     const nuevaResenia = {
       id_usuario,
-      id_libro: libroSeleccionado,
+      id_libro: parseInt(libroSeleccionado),
       texto_resenia: textoResenia,
       clasificacion,
     };
+  
+    console.log("Datos a enviar:", nuevaResenia);  // Verifica que los datos sean correctos
 
+    // Asegúrate de que los valores no estén vacíos o incorrectos
+    if (!libroSeleccionado || !textoResenia) {
+      alert("Por favor, selecciona un libro y escribe una reseña.");
+      return;
+    }
+  
     try {
-      const response = await fetch("http://localhost:8080/api/resenias/", {
+      const response = await fetch("http://localhost:8080/api/resenia/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(nuevaResenia),
       });
-
+  
       if (!response.ok) {
         throw new Error("Error al guardar la reseña.");
       }
-
-      handleSave(nuevaResenia); // Pasamos la nueva reseña al componente superior
-      handleClose(); // Cerramos el modal
+  
+      const data = await response.json();  // Obtener la respuesta
+      console.log("la data es: ", data);
+      handleSave(data); // Pasar la respuesta de la API al componente padre
+      handleClose(); // Cerrar el modal
     } catch (error) {
       console.error("Error:", error);
       alert("Hubo un error al intentar guardar la reseña. Por favor, inténtalo de nuevo.");
@@ -79,13 +99,17 @@ const ReseñaModal = ({ show, handleClose, handleSave, id_usuario }) => {
                     id="libro"
                     value={libroSeleccionado}
                     onChange={(e) => setLibroSeleccionado(e.target.value)}
-                  >
+                >
                     <option value="">Selecciona un libro</option>
-                    {libros.map((libro) => (
-                      <option key={libro.id_libro} value={libro.id_libro}>
-                        {libro.titulo}
-                      </option>
-                    ))}
+                    {libros.length > 0 ? (
+                        libros.map((libro) => (
+                            <option key={libro.id_libro} value={libro.id_libro}>
+                                {libro.titulo_libro}
+                            </option>
+                        ))
+                    ) : (
+                        <option value="">No hay libros devueltos</option>
+                    )}
                   </select>
                 </div>
 

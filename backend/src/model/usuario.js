@@ -78,9 +78,11 @@ const Usuario = {
     findProfile: async (id) => {
         const query = `
             SELECT 
-            (SELECT COUNT(id_prestamo) 
-            FROM prestamo
-            WHERE id_usuario = ?) AS libros,
+            (SELECT COUNT(DISTINCT p.id_libro)
+            FROM prestamo p
+            WHERE p.id_usuario = ? 
+            AND p.fecha_devolucion IS NOT NULL
+            AND p.fecha_devolucion >= CURDATE()) AS libros,
     
             (SELECT COUNT(*) 
             FROM amigos 

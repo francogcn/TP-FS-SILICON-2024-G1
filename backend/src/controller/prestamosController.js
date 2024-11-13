@@ -14,8 +14,25 @@ router.put('/:id_prestamo',actualizarPrestamo);
 router.delete('/:id', eliminarPrestamo);
 router.get('/usuario/:id_usuario', buscarPorUsuario);
 router.get('/libro/:id_libro', buscarPorLibro);
+router.get('/usuario/:id_usuario/devueltos', buscarLibrosDevueltosPorUsuario);
 
 // Funciones CRUD
+
+//Listar libros devueltos por el usuario logueado
+async function buscarLibrosDevueltosPorUsuario(req, res) {
+    const { id_usuario } = req.params;  // El id del usuario
+    try {
+      const results = await model.findAllDevueltosByUser(id_usuario);
+      if (results.length === 0) {
+        // Si no se encuentran libros devueltos, enviamos un arreglo vacío
+        return res.status(200).json([]);
+      }
+      res.status(200).json(results);  // Enviar los libros devueltos
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
+
 //Listar todos los prestamos
 async function listar_prestamos(req, res) {
     try {

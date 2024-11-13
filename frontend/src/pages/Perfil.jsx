@@ -28,6 +28,7 @@ export default function Perfil() {
           `http://localhost:8080/api/usuario/perfil/${id_usuario}`
         );
         const data = await response.json();
+        console.log(data);
         setPerfil(data);
       } catch (error) {
         console.error("Error al obtener el perfil:", error);

@@ -57,11 +57,17 @@ async function buscarPorIdLibro(req, res) {
 }
 
 async function crear_resenia(req, res) {
-    const { id_usuario, id_libro, texto_resenia, clasificacion, id_rol } = req.body; 
+    console.log("Datos recibidos en el servidor:", req.body);
+    const { id_usuario, id_libro, texto_resenia, clasificacion} = req.body; 
+    // Validación de los parámetros
+    if (!id_usuario || !id_libro || !texto_resenia || !clasificacion) {
+        return res.status(400).json({ error: "Todos los campos son requeridos." });
+    }
     try {
-        const resultado = await model.create(id_usuario, id_libro, texto_resenia, clasificacion, id_rol);
+        const resultado = await model.create(id_usuario, id_libro, texto_resenia, clasificacion);
         res.status(201).json(resultado);
     } catch (err) {
+        console.error("Error al crear la reseña:", err);  // Loguea el error completo
         res.status(500).json({ error: err.message });
     }
 }
@@ -69,9 +75,9 @@ async function crear_resenia(req, res) {
 async function actualizar_resenia(req, res) {
     //ojo con como se pasan esos parametros
     const { id_resenia } = req.params;
-    const { id_usuario, id_libro, texto_resenia, clasificacion, id_rol } = req.body; 
+    const { id_usuario, id_libro, texto_resenia, clasificacion} = req.body; 
     try {
-        await model.update(id_resenia, id_usuario, id_libro, texto_resenia, clasificacion, id_rol);
+        await model.update(id_resenia, id_usuario, id_libro, texto_resenia, clasificacion);
         res.status(200).json({ message: 'Resenia actualizada correctamente' });
     } catch (err) {
         res.status(500).json({ error: err.message });

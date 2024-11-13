@@ -1,6 +1,30 @@
 const db = require("../config/config_database");
 
 const Prestamo = {
+   // Buscar los libros devueltos por un usuario
+   findAllDevueltosByUser: async (id_usuario) => {
+    const query = `
+      SELECT 
+      p.id_prestamo, 
+      l.id_libro,
+      l.titulo AS titulo_libro,
+      DATE_FORMAT(p.fecha_prestamo, '%d-%m-%Y') AS fecha_prestamo, 
+      DATE_FORMAT(p.fecha_devolucion, '%d-%m-%Y') AS fecha_devolucion 
+    FROM Prestamo p
+    JOIN Libro l ON p.id_libro = l.id_libro
+    WHERE p.id_usuario = ? 
+    AND p.fecha_devolucion IS NOT NULL 
+    AND p.fecha_devolucion >= CURDATE()
+    GROUP BY l.id_libro;
+    `; // Agregar GROUP BY para evitar duplicados por libro
+    try {
+      const [rows] = await db.execute(query, [id_usuario]);
+      return rows;  // Retorna los libros devueltos con fecha de vencimiento >= hoy
+    } catch (error) {
+      throw new Error("Error al obtener los libros devueltos: " + error.message);
+    }
+  },
+
   //Crear un nuevo prestamo
   findAll: async () => {
     try {
