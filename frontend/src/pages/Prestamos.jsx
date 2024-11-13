@@ -1,10 +1,18 @@
 import { useState, useEffect } from "react";
 import NuevoPrestamoModal  from "../components/NuevoPrestamo";
+import { jwtDecode } from "jwt-decode";
 
 export default function Prestamos() {
+  const token = sessionStorage.getItem("token");
+  const decode = jwtDecode(token);
+  /*Si decode.rol == 1 es admin 
+  si decode.rol ==2 es bibliotecario y se habilita 
+  el boton de agregar prestamo, borrar y editar.*/
+  const isadmin = decode.rol == 1 || decode.rol == 2; 
+
   const [prestamos, setPrestamos] = useState([]);
   const [mensajeEliminar, setMensajeEliminar] = useState("");
-  const isadmin = true;
+  
 
   //Hago el fetch a la API para traer todos los prestamos
   useEffect(() => {

@@ -34,7 +34,7 @@ async function login(req, res) {
                 nombre: result.nombre,
                 apellido: result.apellido,
                 mail: result.mail,
-                rol: result.rol
+                rol: result.id_rol
             }
             console.log('User object:', user);
             //firmar usuario
