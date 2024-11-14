@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import NuevoPrestamoModal  from "../components/NuevoPrestamo";
+import NuevoPrestamoModal from "../components/NuevoPrestamo";
 import { jwtDecode } from "jwt-decode";
+import EditarPrestamoModal from "../components/EditarPrestamoModal";
 
 export default function Prestamos() {
   const token = sessionStorage.getItem("token");
@@ -8,11 +9,13 @@ export default function Prestamos() {
   /*Si decode.rol == 1 es admin 
   si decode.rol ==2 es bibliotecario y se habilita 
   el boton de agregar prestamo, borrar y editar.*/
-  const isadmin = decode.rol == 1 || decode.rol == 2; 
+  const isadmin = decode.rol == 1 || decode.rol == 2;
 
   const [prestamos, setPrestamos] = useState([]);
   const [mensajeEliminar, setMensajeEliminar] = useState("");
-  
+  const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [prestamoSeleccionado, setPrestamoSeleccionado] = useState(null);
 
   //Hago el fetch a la API para traer todos los prestamos
   useEffect(() => {
@@ -29,15 +32,50 @@ export default function Prestamos() {
   }, []);
 
   //modal para agregar un nuevo prestamo
-  const [showModal, setShowModal] = useState(false);
-
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
-
   const handleSavePrestamo = (nuevoPrestamo) => {
     console.log("Nuevo Prestamo:", nuevoPrestamo);
   };
 
+  //modal para editar un prestamo
+   const handleOpenEditModal = (prestamo) => {
+     setPrestamoSeleccionado(prestamo);
+     setShowEditModal(true);
+   };
+   const handleCloseEditModal = () => setShowEditModal(false);
+
+   const handleSaveEdit = async (updatedPrestamo) => {
+     try {
+       const response = await fetch(
+         `http://localhost:8080/api/prestamos/${updatedPrestamo.id_prestamo}`,
+         {
+           method: "PUT",
+           headers: {
+             "Content-Type": "application/json",
+           },
+           body: JSON.stringify(updatedPrestamo),
+         }
+       );
+
+       if (response.ok) {
+        setPrestamos((prevPrestamos) =>
+          prevPrestamos.map((prestamo) =>
+            prestamo.id_prestamo === updatedPrestamo.id_prestamo
+              ? updatedPrestamo
+              : prestamo
+          )
+        );
+        handleCloseEditModal();
+      } else {
+        console.error("Error al actualizar el préstamo");
+      }
+    } catch (error) {
+      console.error("Error al conectar con el servidor:", error);
+    }
+  };
+
+  //eliminar prestamo
   const handleDelete = async (id) => {
     try {
       const response = await fetch(
@@ -48,7 +86,9 @@ export default function Prestamos() {
       );
 
       if (response.ok) {
-        setPrestamos((prevPrestamos) => prevPrestamos.filter((prestamo) => prestamo.id_prestamo !== id));
+        setPrestamos((prevPrestamos) =>
+          prevPrestamos.filter((prestamo) => prestamo.id_prestamo !== id)
+        );
         setMensajeEliminar("Prestamo eliminado con éxito.");
       } else {
         setMensajeEliminar("Hubo un error al eliminar el prestamo.");
@@ -102,7 +142,7 @@ export default function Prestamos() {
                   <td>{prestamo.fecha_devolucion}</td>
                   {isadmin ? (
                     <td>
-                      <button className="btn btn-secondary">Editar</button>
+                      <button className="btn btn-secondary" onClick={() => handleOpenEditModal(prestamo)}>Editar</button>
                     </td>
                   ) : null}
                   {isadmin ? (
@@ -120,6 +160,14 @@ export default function Prestamos() {
             </tbody>
           </table>
         </div>
+        {showEditModal && (
+          <EditarPrestamoModal
+            show={showEditModal}
+            handleClose={handleCloseEditModal}
+            handleSave={handleSaveEdit}
+            prestamo={prestamoSeleccionado}
+          />
+        )}
       </div>
     </>
   );
