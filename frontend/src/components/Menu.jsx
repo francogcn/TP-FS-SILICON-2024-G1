@@ -84,7 +84,7 @@ if (token !== "" && token !== null) {
                   onClick={() => logout()}
                   className='btn btn-outline-danger m-2'>
                   <span
-                      className="material-symbols-outlined">
+                      className="material-symbols-outlined" title={decode.nombre}>
                       Cerrar Sesión
                   </span>
               </button>
