@@ -54,6 +54,7 @@ function EditarLibroModal({ show, handleClose, handleSave, libro }) {
             ></button>
           </div>
           <div className="modal-body">
+            <label htmlFor="Titulo" className="form-label">Titulo</label>
             <input
               type="text"
               name="titulo"
@@ -62,6 +63,7 @@ function EditarLibroModal({ show, handleClose, handleSave, libro }) {
               placeholder="Título"
               className="form-control mb-2"
             />
+            <label htmlFor="Autor" className="form-label">Autor</label>
             <input
               type="text"
               name="autor"
@@ -70,6 +72,7 @@ function EditarLibroModal({ show, handleClose, handleSave, libro }) {
               placeholder="Autor"
               className="form-control mb-2"
             />
+            <label htmlFor="Editorial" className="form-label">Editorial</label>
             <input
               type="text"
               name="editorial"
@@ -78,6 +81,7 @@ function EditarLibroModal({ show, handleClose, handleSave, libro }) {
               placeholder="Editorial"
               className="form-control mb-2"
             />
+            <label htmlFor="anio_publicacion" className="form-label">Año de publicacion</label>
             <input
               type="number"
               name="anio_publicacion"
@@ -86,6 +90,7 @@ function EditarLibroModal({ show, handleClose, handleSave, libro }) {
               placeholder="Año de publicación"
               className="form-control mb-2"
             />
+            <label htmlFor="genero" className="form-label">Género</label>            
             <input
               type="text"
               name="genero"
@@ -94,6 +99,7 @@ function EditarLibroModal({ show, handleClose, handleSave, libro }) {
               placeholder="Género"
               className="form-control mb-2"
             />
+            <label htmlFor="estado" className="form-label">Estado</label>
             <select
               name="estado"
               value={formData.estado}
