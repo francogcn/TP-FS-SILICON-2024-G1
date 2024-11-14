@@ -7,7 +7,6 @@ router.get("/titulo/:titulo", buscarPorTitulo);
 router.post("/", crearLibro);
 router.put("/:titulo", actualizarLibro);
 router.delete("/:id_libro", eliminarLibro);
-router.get("/estado/:estado", buscarPorEstado);
 
 async function crearLibro(req, res) {
   try {
@@ -63,16 +62,5 @@ async function eliminarLibro(req, res) {
   }
 }
 
-async function buscarPorEstado(req, res) {
-  try {
-    const result = await model.buscarPorEstado(req.params.estado);
-    if (!result) {
-      return res.status(404).send("Libros no encontrados");
-    }
-    res.json(result);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-}
 
 module.exports = router;

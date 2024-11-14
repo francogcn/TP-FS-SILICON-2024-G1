@@ -100,19 +100,6 @@ const libros = {
         }
     },
 
-    buscarPorEstado: async function (estado) {
-        try {
-            const [result] = await db.execute('SELECT * FROM Libro WHERE estado =?', [estado]);
-            if (result.length == 0) {
-                throw new Error(`No se encontro un libro con el estado: ${estado}`);
-            } else {
-                return { message: `Libros hallados con exito`, detail: result };
-            }
-        } catch (error) {
-            throw new Error('Revisar codigo de error: ' + error.message);
-        }
-    },
-
 }
 
 
