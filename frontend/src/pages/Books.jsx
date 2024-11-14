@@ -5,6 +5,7 @@ import { jwtDecode } from "jwt-decode";
 
 export default function Books() {
   const [libros, setLibros] = useState([]);
+  const [librosDisponibles, setLibrosDisponibles] = useState([]);
   const [mensajeEliminar, setMensajeEliminar] = useState("");
   const token = sessionStorage.getItem("token");
   const decode = jwtDecode(token);
@@ -26,6 +27,12 @@ export default function Books() {
     };
     fetchLibros();
   }, []);
+  
+  // Mostrar solo libros disponibles
+  const mostrarLibrosDisponibles = () => {
+    const disponibles = libros.filter((libro) => libro.estado === "disponible");
+    setLibrosDisponibles(disponibles);
+  };
 
   //modal para agregar un nuevo libro
   const [showModal, setShowModal] = useState(false);
@@ -114,10 +121,9 @@ export default function Books() {
               handleClose={handleCloseModal}
               handleSave={handleSaveLibro}
             />
-            <button className="btn btn-primary">Ver libros disponibles</button>
+            <button className="btn btn-primary" onClick={mostrarLibrosDisponibles}>Ver libros disponibles</button>
           </div>
         </div>
-
         <div className="table-responsive">
           <table className="table table-striped table-hover">
             <thead>
@@ -133,7 +139,7 @@ export default function Books() {
               </tr>
             </thead>
             <tbody>
-              {libros.map((libro) => (
+            {(librosDisponibles.length > 0 ? librosDisponibles : libros).map((libro) => (
                 <tr key={libro.id_libro}>
                   <td>{libro.titulo}</td>
                   <td>{libro.autor}</td>
