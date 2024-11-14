@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
+import { jwtDecode } from "jwt-decode";
 
 
 export default function Menu() {
@@ -26,10 +27,14 @@ export default function Menu() {
   function logout() {
       sessionStorage.removeItem('token');
       setToken(""); // limpiar el estado local
-      navigate('/'); // redirigir al inicio
+      navigate('/login'); // redirigir al inicio
   }
 
 if (token !== "" && token !== null) {
+  const tokenCodificado = sessionStorage.getItem('token');
+  const decode = jwtDecode(tokenCodificado);
+  const rol = decode.rol;
+  const isAdmin = rol === 1 || rol === 2;
   return (
     <>
       <nav className="navbar fixed-top navbar-expand-lg ">
@@ -85,9 +90,7 @@ if (token !== "" && token !== null) {
               </button>
             </li>
             <li className="nav-item">
-              <NavLink to="/signup" className="btn btn-outline-success m-2">
-                Registrarse
-              </NavLink>
+              { isAdmin &&<NavLink to="/signup" className="btn btn-outline-success m-2">Registrarse</NavLink>}
             </li>
             
             
