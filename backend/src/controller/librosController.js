@@ -51,16 +51,11 @@ async function actualizarLibro(req, res) {
 async function eliminarLibro(req, res) {
   const { id_libro } = req.params;
   try {
-    const result = await model.eliminarLibro(id_libro);
-    if (result) {
-      res.status(200).json({ message: "Libro eliminado correctamente" });
-    } else {
-      res.status(404).json({ message: "Libro no encontrado" });
-    }
+    await model.eliminarLibro(id_libro);
+    res.status(200).json({ message: "Libro eliminado correctamente" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 }
-
 
 module.exports = router;

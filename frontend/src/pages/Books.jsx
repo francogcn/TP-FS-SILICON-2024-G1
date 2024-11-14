@@ -81,10 +81,10 @@ export default function Books() {
   };
 
   //eliminar un libro
-  const handleDelete = async (id_libro) => {
+  const handleDelete = async (libro) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/libros/${id_libro}`,
+        `http://localhost:8080/api/libros/${libro.id_libro}`,
         {
           method: "DELETE",
         }
@@ -92,7 +92,7 @@ export default function Books() {
 
       if (response.ok) {
         setLibros((prevLibros) =>
-          prevLibros.filter((libro) => libro.id_libro !== id_libro)
+          prevLibros.filter((item) => item.id_libro !== libro.id_libro)
         );
         setMensajeEliminar("Libro eliminado con éxito.");
         console.log(mensajeEliminar);
@@ -161,7 +161,7 @@ export default function Books() {
                     <td>
                       <button
                         className="btn btn-danger"
-                        onClick={() => handleDelete(libro.id_libro)}
+                        onClick={() => handleDelete(libro)}
                       >
                         Eliminar
                       </button>
