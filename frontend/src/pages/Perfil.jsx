@@ -14,6 +14,7 @@ export default function Perfil() {
 
   const [perfil, setPerfil] = useState([]);
   const [resenias, setResenias] = useState([]); // Para las últimas reseñas
+  const [amigos, setAmigos] = useState([]); // Para los últimos amigos
   const [showReseniaModal, setShowReseniaModal] = useState(false); 
 
   useEffect(() => {
@@ -32,6 +33,14 @@ export default function Perfil() {
         console.log("dataResenias: ", dataResenias); // inspección de las reseñas
 
         setResenias(dataResenias);  // Guarda las reseñas en su estado
+
+
+        // Obtener los amigos del usuario
+        const responseAmigos = await fetch(
+          `http://localhost:8080/api/amistad/listar/${id_usuario}`
+        );
+        const dataAmigos = await responseAmigos.json();
+        setAmigos(dataAmigos); // Guardamos los amigos en el estado
 
       } catch (error) {
         console.error("Error al obtener el perfil:", error);
@@ -130,29 +139,34 @@ export default function Perfil() {
               )}
           </div>
 
-          {/* Cuadro de la tabla de amigos (hardcode) */}
+          {/* Cuadro de la tabla de amigos */}
           <div className="cuadro-resenia derecha">
-            <h4>Próximos Amigos</h4>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Juan Pérez</td>
-                  <td>Amigo</td>
-                </tr>
-                <tr>
-                  <td>Ana García</td>
-                  <td>Esperando confirmación</td>
-                </tr>
-              </tbody>
-            </table>
+              <h4>Mis Amigos</h4>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {amigos.length > 0 ? (
+                    amigos.map((amigo, index) => (
+                      <tr key={index}>
+                        <td>{amigo.nombre} {amigo.apellido}</td>
+                        <td>Amigo</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="2">No tienes amigos aún.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+
           
         <AgregarAmigosModal
             show={showModal}
