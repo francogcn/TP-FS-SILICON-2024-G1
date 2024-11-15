@@ -16,10 +16,29 @@ router.get('/libro/:id_libro', buscarPorIdLibro);
 router.post('/', crear_resenia);
 router.put('/:id_resenia', actualizar_resenia);
 router.delete('/:id_resenia', eliminar_resenia);
+router.get('/usuario/:id_usuario', cuadroResenias);
 
 // -------------------------------------------------------------- 
 // -- Operaciones CRUD utilizadas por el router  ----------------
 // --------------------------------------------------------------
+
+
+// Endpoint para obtener las últimas reseñas de un usuario
+async function cuadroResenias(req, res) {
+    const { id_usuario } = req.params;  // Obtener el ID del usuario desde la ruta
+  
+    try {
+      const resenias = await model.obtenerUltimasReseniasPorUsuario(id_usuario);
+      if (resenias.length === 0) {
+        return res.status(404).json({ message: 'No se encontraron reseñas para este usuario.' });
+      }
+      res.status(200).json(resenias);  // Retorna las reseñas
+    } catch (err) {
+      console.error('Error al obtener reseñas:', err);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  }
+
 
 async function listar_resenias(req, res) {
     try {

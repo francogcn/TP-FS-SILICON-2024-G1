@@ -1,0 +1,65 @@
+/* Asegurémonos de que el contenedor de los cuadros esté dentro del perfil */
+.perfil {
+  position: relative;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;  /* Opcional, para redondear las esquinas */
+}
+
+/* Estilos para los cuadros de reseña */
+.resenia-cuadros {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
+  flex-wrap: wrap; /* Esto asegura que si el ancho es pequeño, se acomoden en nuevas filas */
+}
+
+.resenia-cuadros .cuadro-resenia.izquierda {
+  max-height: 290px; /* O el valor que consideres adecuado */
+  overflow-y: auto;  /* Activa el scroll cuando el contenido exceda el alto máximo */
+  padding-right: 10px;  /* A veces es necesario un poco de espacio para el scroll */
+}
+
+/* Cada cuadro de reseña */
+.cuadro-resenia {
+  flex: 1;
+  min-width: 250px;  /* Asegura que el cuadro no se achique demasiado */
+  background-color: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.izquierda h4, .derecha h4 {
+  margin-bottom: 15px;
+}
+
+/* Estilos para la tabla de la derecha */
+.derecha {
+  background-color: #f9f9f9;
+  text-align: center;
+  padding: 15px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.derecha table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.derecha table th, .derecha table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.derecha table th {
+  background-color: #f1f1f1;
+}
+
+.derecha p {
+  margin-top: 10px;
+  color: #888;
+}

@@ -4,6 +4,36 @@
 const db = require('../config/config_database');
 
 const Resenia = {
+    // Función para obtener las últimas reseñas de un usuario
+  obtenerUltimasReseniasPorUsuario: async (id_usuario) => {
+    const query = `
+      SELECT 
+            r.id_resenia, r.id_usuario, r.id_libro, r.texto_resenia, r.clasificacion,
+            l.titulo
+        FROM resenia r
+        JOIN libro l ON r.id_libro = l.id_libro
+        WHERE r.id_usuario = ?
+        ORDER BY r.id_resenia DESC
+        LIMIT 5;`;  // Limita a las últimas 5 reseñas
+
+    //   SELECT 
+    //         r.id_resenia, r.id_usuario, r.id_libro, r.texto_resenia, r.clasificacion,
+    //         l.titulo_libro
+    //     FROM resenia r
+    //     JOIN libro l ON r.id_libro = l.id_libro
+    //     WHERE r.id_usuario = ?
+    //     ORDER BY r.id_resenia DESC
+    //     LIMIT 5;`;  // Limita a las últimas 5 reseñas
+
+    try {
+      const [rows] = await db.execute(query, [id_usuario]);
+      
+      return rows;
+    } catch (error) {
+      throw new Error('Error al obtener las últimas reseñas del usuario: ' + error.message);
+    }
+  },
+
     //crear resenia (post)
     create: async (id_usuario, id_libro, texto_resenia, clasificacion) => {
         try {
@@ -14,6 +44,13 @@ const Resenia = {
     // console.log('Ejecutando consulta:', query, 'con parámetros:', params);
 
             const result = await db.execute(query, params);
+
+// // Ahora obtenemos la reseña completa usando el `insertId` que es el ID de la reseña recién creada
+// const [reseniaCreada] = await db.execute('SELECT * FROM resenia WHERE id_resenia = ?', [result.insertId]);
+        
+// // Devolvemos la reseña completa
+// return reseniaCreada[0];
+
             return { message: `Resenia del libro ${id_libro} creada con éxito`, detail: result };
         } catch (error) {
                 throw new Error('Error al crear la resenia: ' + error.message);
