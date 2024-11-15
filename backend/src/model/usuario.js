@@ -39,7 +39,7 @@ const Usuario = {
 
     //funcion para buscar usuarios al agregar amistad
     findUsers: async (id) => {
-        const query = 'SELECT nombre, apellido FROM Usuario WHERE id_usuario!=?';
+        const query = 'SELECT id_usuario, nombre, apellido FROM Usuario WHERE id_usuario!=?';
         try {
             const [rows] = await db.execute(query, [id]);
             return rows;

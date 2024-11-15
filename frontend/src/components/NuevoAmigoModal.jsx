@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
+import {jwtDecode} from "jwt-decode";
 
 const AgregarAmigosModal = ({ show, handleClose, handleSave }) => {
+  const token = sessionStorage.getItem("token");
+  const decode = jwtDecode(token);
+  const id_usuario = decode.id_usuario;
+  //para obtener los usuarios demas usuarios que no son el que esta logeado
   const [usuarios, setUsuarios] = useState([]);
-  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState("");
+  //para seleccionar el amigo
+  const [amigoSeleccionado, setAmigoSeleccionado] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/usuario/usuarios/2") //esto se tiene que automatizar con el id del usuario logueado
+    fetch(`http://localhost:8080/api/usuario/usuarios/${id_usuario}`) 
       .then((response) => response.json())
       .then((data) => setUsuarios(data))
       .catch((error) => console.error("Error al buscar usuarios:", error));
@@ -13,8 +19,8 @@ const AgregarAmigosModal = ({ show, handleClose, handleSave }) => {
 
   const handleSubmit = async () => {
     const nuevaAmistad = {
-      id_usuario: 2,
-      id_amigo_usuario: usuarioSeleccionado,
+      id_usuario: id_usuario,
+      id_amigo_usuario: amigoSeleccionado,
     };
 
     try {
@@ -27,7 +33,7 @@ const AgregarAmigosModal = ({ show, handleClose, handleSave }) => {
       });
 
       if (!response.ok) {
-        throw new Error("Error al guardar el prestamo.");
+        throw new Error("Error al guardar amistad");
       }
 
       handleSave(nuevaAmistad);
@@ -36,10 +42,10 @@ const AgregarAmigosModal = ({ show, handleClose, handleSave }) => {
     } catch (error) {
       console.error("Error:", error);
       alert(
-        "Hubo un error al agregar amigo. Por favor, inténtalo de nuevo."
+        "Hubo un error al agregar amigo. Por favor, inténtalo de nuevo." + error
       );
     }
-    setUsuarioSeleccionado("");
+    setAmigoSeleccionado("");
   };
 
   if (!show) return null; // Oculta el modal si no está activo
@@ -66,8 +72,8 @@ const AgregarAmigosModal = ({ show, handleClose, handleSave }) => {
                   <select
                     className="form-select"
                     id="amigo"
-                    value={usuarioSeleccionado}
-                    onChange={(e) => setUsuarioSeleccionado(e.target.value)}
+                    value={amigoSeleccionado}
+                    onChange={(e) => setAmigoSeleccionado(e.target.value)}
                   >
                     <option value="">Selecciona un amigo</option>
                     {usuarios.map((usuario) => (

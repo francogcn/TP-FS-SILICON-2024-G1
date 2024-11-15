@@ -41,14 +41,14 @@ export default function Perfil() {
 
 
   //modal para agregar un nuevo amigo
-  // const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  // const handleOpenModal = () => setShowModal(true);
-  // const handleCloseModal = () => setShowModal(false);
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
-  // const handleSaveAmigo = (nuevaAmistad) => {
-  //   console.log("Nueva Amistad:", nuevaAmistad);
-  // };
+  const handleSaveAmigo = (nuevaAmistad) => {
+    console.log("Nueva Amistad:", nuevaAmistad);
+  };
 
   return (
     <>
@@ -78,15 +78,15 @@ export default function Perfil() {
           <button
             type="button"
             className="btn btn-primary m-1"
-            // onClick={handleOpenModal}
+            onClick={handleOpenModal}
           >
             Agregar Amigo
           </button>
-          {/* <AgregarAmigosModal
+          <AgregarAmigosModal
             show={showModal}
             handleClose={handleCloseModal}
             handleSave={handleSaveAmigo}
-            /> */}
+            />
         </div>
 
         {/* Modal de Reseña */}
