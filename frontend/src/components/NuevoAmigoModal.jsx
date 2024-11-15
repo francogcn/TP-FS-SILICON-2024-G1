@@ -5,55 +5,51 @@ const AgregarAmigosModal = ({ show, handleClose, handleSave }) => {
   const token = sessionStorage.getItem("token");
   const decode = jwtDecode(token);
   const id_usuario = decode.id_usuario;
-  //para obtener los usuarios demas usuarios que no son el que esta logeado
+
   const [usuarios, setUsuarios] = useState([]);
-  //para seleccionar el amigo
   const [amigoSeleccionado, setAmigoSeleccionado] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/usuario/usuarios/${id_usuario}`) 
+    fetch(`http://localhost:8080/api/usuario/usuarios/${id_usuario}`)
       .then((response) => response.json())
       .then((data) => setUsuarios(data))
       .catch((error) => console.error("Error al buscar usuarios:", error));
-  });
+  }, [id_usuario]);
 
   const handleSubmit = async () => {
-    const nuevaAmistad = {
-      id_usuario: id_usuario,
-      id_amigo_usuario: amigoSeleccionado,
-    };
+    if (!amigoSeleccionado) {
+      alert("Por favor, selecciona un amigo.");
+      return;
+    }
+
+    const nuevaAmistad = { id_usuario, id_amigo_usuario: amigoSeleccionado };
 
     try {
       const response = await fetch("http://localhost:8080/api/amistad/", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(nuevaAmistad),
       });
 
-      if (!response.ok) {
-        throw new Error("Error al guardar amistad");
-      }
+      if (!response.ok) throw new Error("Error al guardar amistad");
 
       handleSave(nuevaAmistad);
       handleClose();
-      window.location.reload();
+      window.location.reload(); 
     } catch (error) {
       console.error("Error:", error);
-      alert(
-        "Hubo un error al agregar amigo. Por favor, inténtalo de nuevo." + error
-      );
+      alert("Hubo un error al agregar amigo. Por favor, inténtalo de nuevo.");
+    } finally {
+      setAmigoSeleccionado("");
     }
-    setAmigoSeleccionado("");
   };
 
-  if (!show) return null; // Oculta el modal si no está activo
+  if (!show) return null;
 
   return (
     <div className="modal fade show d-block" tabIndex="-1" role="dialog">
       <div className="modal-backdrop">
-        <div className="modal-dialog" role="document">
+        <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">Agregar Amigo</h5>
@@ -65,25 +61,30 @@ const AgregarAmigosModal = ({ show, handleClose, handleSave }) => {
               ></button>
             </div>
             <div className="modal-body">
-              <form>
-                <div className="mb-3">
-                  <label htmlFor="amigo" className="form-label">
-                  </label>
-                  <select
-                    className="form-select"
-                    id="amigo"
-                    value={amigoSeleccionado}
-                    onChange={(e) => setAmigoSeleccionado(e.target.value)}
-                  >
-                    <option value="">Selecciona un amigo</option>
-                    {usuarios.map((usuario) => (
-                      <option key={usuario.id_usuario} value={usuario.id_usuario}>
-                        {usuario.nombre} {usuario.apellido}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </form>
+              {!usuarios.length ? (
+                <p>Cargando usuarios...</p>
+              ) : (
+                <form>
+                  <div className="mb-3">
+                    <label htmlFor="amigo" className="form-label">
+                      Selecciona un amigo
+                    </label>
+                    <select
+                      className="form-select"
+                      id="amigo"
+                      value={amigoSeleccionado}
+                      onChange={(e) => setAmigoSeleccionado(e.target.value)}
+                    >
+                      <option value="">Selecciona un amigo</option>
+                      {usuarios.map((usuario) => (
+                        <option key={usuario.id_usuario} value={usuario.id_usuario}>
+                          {usuario.nombre} {usuario.apellido}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </form>
+              )}
             </div>
             <div className="modal-footer">
               <button
