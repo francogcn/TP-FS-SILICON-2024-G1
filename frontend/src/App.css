@@ -68,7 +68,18 @@ body {
 .busqueda{
   padding: 5% 10%;
 }
+.resultados-busqueda{
+  border-radius: 5px;
+  margin: 0px auto;
 
+  div{
+    background: #f0f0f0;
+    padding: 10px 0px;}
+  div:hover{
+    background-color: #f9f9f9;
+    cursor: pointer;
+  }
+}
 /*Reseñas home*/
 .resenias-amigos-home {
   margin-top: 10px;
