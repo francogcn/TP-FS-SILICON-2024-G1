@@ -93,25 +93,30 @@ const libros = {
     try {
       // Iniciar la transacción
       await db.execute("START TRANSACTION");
-  
+
       // Eliminar las reseñas relacionadas con el libro
       await db.execute("DELETE FROM resenia WHERE id_libro = ?", [id_libro]);
-  
+
       // Eliminar los préstamos relacionados con el libro
       await db.execute("DELETE FROM prestamo WHERE id_libro = ?", [id_libro]);
-  
+
       // Eliminar el libro
-      const [result] = await db.execute("DELETE FROM libro WHERE id_libro = ?", [id_libro]);
-  
+      const [result] = await db.execute(
+        "DELETE FROM libro WHERE id_libro = ?",
+        [id_libro]
+      );
+
       if (result.affectedRows === 0) {
-        const error = new Error("No se encontró un libro con el id: " + id_libro);
+        const error = new Error(
+          "No se encontró un libro con el id: " + id_libro
+        );
         error.statusCode = 404;
         throw error;
       }
-  
+
       // Confirmar la transacción
       await db.execute("COMMIT");
-  
+
       return { message: "Libro eliminado con éxito", detail: result };
     } catch (error) {
       // Si hay un error, revertir la transacción
@@ -119,7 +124,6 @@ const libros = {
       throw new Error("Error al eliminar el libro: " + error.message);
     }
   },
-  
 
   buscarPorTitulo: async function (titulo) {
     try {
@@ -133,6 +137,18 @@ const libros = {
         return { message: `Libro hallado con exito`, detail: result };
       }
     } catch (error) {
+      throw new Error("Revisar codigo de error: " + error.message);
+    }
+  },
+
+  buscarPorEstado: async function (estado) {
+    try {
+      const [result] = await db.execute(
+        "SELECT * FROM Libro WHERE estado = ?",
+        [estado])
+        return result;
+      }
+     catch (error) {
       throw new Error("Revisar codigo de error: " + error.message);
     }
   },

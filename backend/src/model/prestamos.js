@@ -57,6 +57,7 @@ const Prestamo = {
         fecha_prestamo,
         fecha_devolucion,
       ]);
+      await db.execute("UPDATE Libro set estado = ? where id_libro = ?", ["prestado", id_libro]);
     } catch (error) {
       throw new Error("Error al crear el prestamo: " + error.message);
     }

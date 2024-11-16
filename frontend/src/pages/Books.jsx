@@ -33,7 +33,7 @@ export default function Books() {
     const disponibles = libros.filter((libro) => libro.estado === "disponible");
     setLibrosDisponibles(disponibles);
   };
-
+ 
   //modal para agregar un nuevo libro
   const [showModal, setShowModal] = useState(false);
   const handleOpenModal = () => setShowModal(true);
