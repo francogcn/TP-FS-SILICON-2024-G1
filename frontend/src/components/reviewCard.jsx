@@ -41,7 +41,7 @@ export default function ReviewCard({ initialTruncate = true }) {
     return (
         <>
             <h3 className="text-start m-3">Mira lo que están leyendo tus amigos</h3>
-            {reviewAmigos.map(review => (
+            {reviewAmigos !=""? reviewAmigos.map(review => (
                 <div key={review.id_resenia} className="row justify-content-md-center">
                     <div className="resenias-amigos-home">
                         <p className="">
@@ -61,7 +61,7 @@ export default function ReviewCard({ initialTruncate = true }) {
                         </button>
                     </div>
                 </div>
-            ))}
+            )): <h5>Tus amigos aún no han dejado reseñas</h5>}
         </>
     )
 }
