@@ -80,6 +80,13 @@ body {
 .busqueda{
   padding: 5% 10%;
 }
+.buscar-btn a{
+  color:#6c757d;
+  text-decoration: none;
+}
+.buscar-btn:hover a{
+  color:#fff;
+}
 .resultados-busqueda{
   border-radius: 5px;
   margin: 0px auto;

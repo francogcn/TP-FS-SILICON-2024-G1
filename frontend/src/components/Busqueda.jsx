@@ -39,8 +39,8 @@ export default function Busqueda() {
                         value={inputValue} 
                         onChange={(e)=>{setInputValue(e.target.value)}}/>
                     
-                    <button className="btn btn-outline-secondary">
-                        <NavLink to={"books/titulo/"+encodeURI(inputValue)}>Buscar</NavLink>
+                    <button className="buscar-btn btn btn-outline-secondary">
+                    <NavLink to={"books/"+encodeURI(inputValue)}>Buscar</NavLink>
                     </button>   
                     
                 </div>
