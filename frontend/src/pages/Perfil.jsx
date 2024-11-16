@@ -17,8 +17,6 @@ export default function Perfil() {
   const [amigos, setAmigos] = useState([]); // Para los últimos amigos
   const [showReseniaModal, setShowReseniaModal] = useState(false); 
 
-console.log("AMIGOS: ", amigos);
-
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -102,6 +100,14 @@ console.log("AMIGOS: ", amigos);
     console.log("Nueva Amistad:", nuevaAmistad);
   };
 
+  const renderResenia = (textoResenia) => {
+    const maxLength = 50; // se puede controlar los caracteres mostrados
+    if (textoResenia && textoResenia.length > maxLength) {
+      return textoResenia.slice(0, maxLength) + "...";
+    }
+    return textoResenia;
+  };
+
   return (
     <>
       <div className="container">
@@ -150,11 +156,11 @@ console.log("AMIGOS: ", amigos);
                         {renderStars(dataResenias.clasificacion)}
                       </span>
                     </p>
-                    <p>{dataResenias.texto_resenia || "No hay reseña disponible"}</p>
+                    <p>{renderResenia(dataResenias.texto_resenia) || "No hay reseña disponible"}</p>
                   </div>
                 ))
               ) : (
-                <p>No tienes reseñas aún.</p>
+                <p className="no-resenias">No tienes reseñas aún.</p>
               )}
             </div>
 
@@ -181,7 +187,7 @@ console.log("AMIGOS: ", amigos);
               </table>
             ) : (
               // Si no hay amigos, mostramos el mensaje dentro del cuadro
-              <p>No tienes amigos aún.</p>
+              <p className="no-amigos">No tienes amigos aún.</p>
             )}
           </div>
           </div>

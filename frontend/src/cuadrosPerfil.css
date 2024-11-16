@@ -9,7 +9,8 @@
 
 .resenia-cuadros .cuadro-resenia.izquierda {
   max-height: 290px; /* Mantener el tamaño fijo */
-  overflow-y: auto;  /* Asegura que el cuadro de reseñas tenga scroll si el contenido se excede */
+  overflow-y: auto;  /* Habilita solo el scroll vertical */
+  overflow-x: hidden; /* Evita el scroll horizontal */
   padding-right: 10px;  /* Espacio para el scroll */
 }
 
@@ -33,6 +34,12 @@
 .izquierda p {
   text-align: left; /* Alineación a la izquierda para el texto */
   margin-bottom: 10px;
+
+  /*Límites de renderizado en los textos de reseñas del cuadro*/
+  white-space: nowrap;         /* Evita que el texto se divida en varias líneas */
+  overflow: hidden;            /* Oculta el texto que se desborda */
+  text-overflow: ellipsis;     /* Agrega '...' al final si el texto excede el límite */
+  max-width: 100%;             /* Asegura que no se desborde horizontalmente */
 }
 
 /* Alineamos el título de los libros de reseña a la izquierda */
@@ -47,7 +54,7 @@
 .derecha {
   background-color: #f9f9f9;
   text-align: center; /* Título centrado */
-  padding: 15px;
+  padding: 20px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   max-height: 290px;  /* Asegura que el cuadro no se extienda demasiado */
   overflow-y: auto;   /* Agrega el scroll si hay muchos amigos */
@@ -129,4 +136,15 @@
 
 .izquierda p:last-of-type {
   margin-bottom: 20px;
+}
+
+
+
+/* Este es para los mensajes específicos de cuando no hay amigos ni reseñas */
+.cuadro-resenia p.no-amigos,
+.cuadro-resenia p.no-resenias {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #888;  /* Un gris más suave */
+  text-align: center;  /* Para diferenciar el mensaje */
 }
