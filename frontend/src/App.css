@@ -5,7 +5,9 @@
   --azul-boton: #003554;
   --rosa-borrar: #ff5d73;
   --otrocolor: #98c1d9;
-  --body: #f0f7fc
+  --body: #f0f7fc;
+  --fondoCarrusel: #ACBFD7;
+  /* --fondoCarrusel: #B7B9CD; */
 }
 
 #root {
@@ -60,8 +62,20 @@ body {
 /*Carrusel*/
 .newRelease {
   padding: 25vh 10vw;
-  background-color: var(--bs-gray-200);
+  /* background-color: var(--bs-gray-200); */
   border-radius: 10px;
+  background-color: var(--fondoCarrusel);
+}
+
+.badge {
+  background-color: var(--fondo-oscuro);
+  font-size: medium;
+  padding: 7px;
+  margin: 5px;
+}
+
+.carrusel-autor {
+  margin: 10px;
 }
 
 /*Busqueda Main*/
@@ -150,6 +164,10 @@ body {
   background: url("profile.jpg");
   border-radius: 100%;
   margin: -50px auto 0 auto;
+}
+
+.profile-name {
+  margin-top: 10px;
 }
 
 .perfil-info {

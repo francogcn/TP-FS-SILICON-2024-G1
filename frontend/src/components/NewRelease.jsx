@@ -3,8 +3,8 @@ export default function NewRelease({titulo,autor,genero}) {
     <>
        <div className="newRelease"> 
         <h1>{titulo}</h1>
-        <h3>{autor}</h3>
-        <span className="badge text-bg-secondary">{genero}</span>
+        <h3 className="carrusel-autor">{autor}</h3>
+        <span className="badge ">{genero}</span>
         </div>
     </>
   )
