@@ -17,6 +17,8 @@ export default function Perfil() {
   const [amigos, setAmigos] = useState([]); // Para los últimos amigos
   const [showReseniaModal, setShowReseniaModal] = useState(false); 
 
+console.log("AMIGOS: ", amigos);
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -42,12 +44,20 @@ export default function Perfil() {
         const dataAmigos = await responseAmigos.json();
         setAmigos(dataAmigos); // Guardamos los amigos en el estado
 
+        console.log("Datos de amigos recibidos: ", dataAmigos);
+
       } catch (error) {
         console.error("Error al obtener el perfil:", error);
       }
     };
     fetchProfile();
   }, [id_usuario]);
+
+  const renderStars = (valor) => {
+    const filledStars = "★".repeat(valor);
+    const emptyStars = "☆".repeat(5 - valor);
+    return filledStars + emptyStars;
+  };
 
   const handleOpenReseniaModal = () => setShowReseniaModal(true);
   const handleCloseReseniaModal = () => setShowReseniaModal(false);
@@ -60,14 +70,18 @@ export default function Perfil() {
     
     // Verificamos que nuevaResenia tenga datos válidos antes de actualizar el estado
     if (nuevaResenia) {
-      // Agrega la nueva reseña al principio de la lista y limita el número de reseñas a las últimas 5
-      setResenias(prevResenias => [nuevaResenia, ...prevResenias].slice(0, 5)); 
+      setResenias(prevResenias => {
+        // Asegúrate de que prevResenias es un arreglo
+        const validPrevResenias = Array.isArray(prevResenias) ? prevResenias : [];
+        return [nuevaResenia, ...validPrevResenias.slice(0, 4)]; // Limita a 5 reseñas
+      });      
 
       // Fetch adicional para obtener las últimas reseñas justo después de guardar la nueva
     try {
       const responseResenias = await fetch(`http://localhost:8080/api/resenia/usuario/${id_usuario}`);
       const dataResenias = await responseResenias.json();
-      setResenias(dataResenias);
+      // Si no hay reseñas, asegurarse de que sea un arreglo vacío
+      setResenias(Array.isArray(dataResenias) ? dataResenias : []);
     } catch (error) {
       console.error("Error al obtener las reseñas después de la publicación:", error);
     }
@@ -123,25 +137,32 @@ export default function Perfil() {
 
           {/* Cuadros de reseñas debajo de los botones */}
         <div className="resenia-cuadros">
-          {/* Cuadro de las reseñas */}
-          <div className="cuadro-resenia izquierda">
+           {/* Cuadro de las reseñas */}
+           <div className="cuadro-resenia izquierda">
               <h4>Últimas Reseñas</h4>
               {resenias.length > 0 ? (
-                  resenias.map((dataResenias, index) => (
-                      <div key={index}>
-                          <h5>{dataResenias.titulo || 'Título no disponible'}</h5>
-                          <p>{`Clasificación: ${dataResenias.clasificacion || 'No disponible'} estrellas`}</p>
-                          <p>{dataResenias.texto_resenia || 'No hay reseña disponible'}</p>
-                      </div>
-                  ))
+                resenias.map((dataResenias, index) => (
+                  <div key={index}>
+                    <h5>{dataResenias.titulo || "Título no disponible"}</h5>
+                    <p>
+                      Clasificación:{" "}
+                      <span className="stars">
+                        {renderStars(dataResenias.clasificacion)}
+                      </span>
+                    </p>
+                    <p>{dataResenias.texto_resenia || "No hay reseña disponible"}</p>
+                  </div>
+                ))
               ) : (
-                  <p>No tienes reseñas aún.</p>
+                <p>No tienes reseñas aún.</p>
               )}
-          </div>
+            </div>
 
           {/* Cuadro de la tabla de amigos */}
           <div className="cuadro-resenia derecha">
-              <h4>Mis Amigos</h4>
+            <h4>Mis Amigos</h4>
+            {/* Solo renderizamos la tabla si hay amigos */}
+            {amigos.length > 0 ? (
               <table className="table">
                 <thead>
                   <tr>
@@ -150,21 +171,19 @@ export default function Perfil() {
                   </tr>
                 </thead>
                 <tbody>
-                  {amigos.length > 0 ? (
-                    amigos.map((amigo, index) => (
-                      <tr key={index}>
-                        <td>{amigo.nombre} {amigo.apellido}</td>
-                        <td>Amigo</td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="2">No tienes amigos aún.</td>
+                  {amigos.map((amigo, index) => (
+                    <tr key={index}>
+                      <td>{amigo.nombre} {amigo.apellido}</td>
+                      <td>Amigo</td>
                     </tr>
-                  )}
+                  ))}
                 </tbody>
               </table>
-            </div>
+            ) : (
+              // Si no hay amigos, mostramos el mensaje dentro del cuadro
+              <p>No tienes amigos aún.</p>
+            )}
+          </div>
           </div>
 
           
