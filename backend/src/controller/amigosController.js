@@ -4,10 +4,20 @@ const model = require('../model/amigos.js');
 
 
 router.get('/listar/:id_usuario', listarAmigos);
+router.get('/', listarAmistades);
 router.post('/', crearAmistad);
 router.delete('/eliminar/:id_amistad', eliminarAmistad);
 router.get('/resenias_amigos/:id_usuario', buscarReseniasPorId);
 
+
+async function listarAmistades(req, res) {
+    try {
+        const results = await model.findAll();
+        res.status(200).json(results);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
 
 async function crearAmistad(req, res) {
     try {
@@ -33,14 +43,14 @@ async function listarAmigos(req, res) {
 
 async function eliminarAmistad(req, res) {
     try {
-        const { id_amistad } = req.params;
-        const result = await model.eliminarAmistad(id_amistad);
-        res.status(204).send(result);
+      const { id_amistad } = req.params;
+      const result = await model.eliminarAmistad(id_amistad);
+      res.status(200).json(result);
     } catch (error) {
-        const statusCode = error.statusCode || 500;
-        res.status(statusCode).send(error.message);
+      const statusCode = error.statusCode || 500;
+      res.status(statusCode).json({ error: error.message });
     }
-}
+  }
 
 async function buscarReseniasPorId(req, res) {
     try {

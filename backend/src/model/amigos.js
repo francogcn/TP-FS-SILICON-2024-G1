@@ -1,6 +1,17 @@
 const db = require("../config/config_database");
 
 const amigos = {
+  //listar todas las amistades (get)
+  findAll: async () => {
+    const query = 'SELECT * FROM amigos';
+    try {
+        const [rows] = await db.execute(query);
+        return rows;
+    } catch (error) {
+        throw new Error('Error al obtener las amistades: ' + error.message);
+    }
+},
+
   crearAmistad: async function (datos) {
     try {
       const checkQuery =
@@ -37,19 +48,27 @@ const amigos = {
 
   eliminarAmistad: async function (id_amistad) {
     try {
-      const query = "DELETE FROM Amigos WHERE id_amistad =?;";
+      // Verificar si la amistad existe
+      const checkQuery = "SELECT * FROM Amigos WHERE id_amistad = ?";
+      const [exists] = await db.execute(checkQuery, [id_amistad]);
+      if (exists.length === 0) {
+        throw new Error("No se encontró la amistad");
+      }
+
+      // Eliminar la amistad
+      const query = "DELETE FROM Amigos WHERE id_amistad = ?";
       const result = await db.execute(query, [id_amistad]);
 
       if (result.affectedRows === 0) {
-        const error = new Error("No se encontró amistad");
-        error.statusCode = 404;
-        throw error;
+        throw new Error("No se pudo eliminar la amistad");
       }
-      return { message: "Amistad eliminada con éxito ", detail: result };
+
+      return { message: "Amistad eliminada con éxito" };
     } catch (error) {
       throw new Error("Error al eliminar la amistad: " + error.message);
     }
   },
+
 
   buscarReseniasPorId: async function (id_usuario) {
     try {
