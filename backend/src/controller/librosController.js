@@ -4,6 +4,7 @@ const model = require("../model/libros.js");
 
 router.get("/", listarLibros);
 router.get("/titulo/:titulo", buscarPorTitulo);
+router.get("/estado/:estado", buscarPorEstado);
 router.post("/", crearLibro);
 router.put("/:titulo", actualizarLibro);
 router.delete("/:id_libro", eliminarLibro);
@@ -29,6 +30,18 @@ async function listarLibros(req, res) {
 async function buscarPorTitulo(req, res) {
   try {
     const result = await model.buscarPorTitulo(req.params.titulo);
+    if (!result) {
+      return res.status(404).send("Libro no encontrado");
+    }
+    res.json(result);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
+async function buscarPorEstado(req, res) {
+  try {
+    const result = await model.buscarPorEstado(req.params.estado);
     if (!result) {
       return res.status(404).send("Libro no encontrado");
     }

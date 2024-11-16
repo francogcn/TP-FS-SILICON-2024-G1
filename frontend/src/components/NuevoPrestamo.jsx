@@ -7,6 +7,7 @@ const NuevoPrestamoModal = ({ show, handleClose, handleSave }) => {
   const [libroSeleccionado, setLibroSeleccionado] = useState("");
   const [fecha_prestamo, setFecha_prestamo] = useState();
   const [fecha_devolucion, setFecha_devolucion] = useState();
+  const [librosDisponibles, setLibrosDisponibles] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:8080/api/usuario")
@@ -14,7 +15,7 @@ const NuevoPrestamoModal = ({ show, handleClose, handleSave }) => {
       .then((data) => setAlumnos(data))
       .catch((error) => console.error("Error al cargar alumnos:", error));
 
-    fetch("http://localhost:8080/api/libros")
+    fetch("http://localhost:8080/api/libros/estado/disponible")
       .then((response) => response.json())
       .then((data) => setLibros(data))
       .catch((error) => console.error("Error al cargar libros:", error));

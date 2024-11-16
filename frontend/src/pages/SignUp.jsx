@@ -152,7 +152,7 @@ export default function SignUp() {
                         />
                         <label htmlFor="password">Contraseña</label>
                     </div>
-
+                    
                     <div className="form-floating mb-3">
                         <select
                             className="form-control"
