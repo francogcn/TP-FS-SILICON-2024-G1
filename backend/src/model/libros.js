@@ -134,7 +134,7 @@ const libros = {
       if (result.length == 0) {
         throw new Error(`No se encontro un libro con el titulo: ${titulo}`);
       } else {
-        return { message: `Libro hallado con exito`, detail: result };
+        return result ;
       }
     } catch (error) {
       throw new Error("Revisar codigo de error: " + error.message);
