@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
-import NuevoLibroModal from "../components/nuevoLibroModal";
+import { useState, useEffect, useRef } from "react";
+import NuevoLibroModal from "../components/NuevoLibroModal";
 import EditarLibroModal from "../components/EditarLibroModal";
 import { jwtDecode } from "jwt-decode";
+import { toast } from 'react-toastify';
 
 export default function Books() {
   const [libros, setLibros] = useState([]);
@@ -13,6 +14,7 @@ export default function Books() {
   si decode.rol ==2 es bibliotecario y 
   se habilita el boton de agregar libro, borrar y editar.*/
   const isadmin = decode.rol == 1 || decode.rol == 2; 
+  const mensajeExitoToastRef = useRef(false); // Referencia para evitar mostrar el toast más de una vez (contrarrestar el strict mode)
 
   // Listar libros
   useEffect(() => {
@@ -38,8 +40,11 @@ export default function Books() {
   const [showModal, setShowModal] = useState(false);
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+
   const handleSaveLibro = (nuevoLibro) => {
-    console.log("Nuevo Libro:", nuevoLibro);
+    // Guardamos el mensaje de éxito en localStorage
+    localStorage.setItem('mensajeExitoToast', 'Libro publicado');
+    localStorage.setItem('mensajeExitoConsola', `Libro publicado exitosamente: ${JSON.stringify(nuevoLibro, null, 2)}`);
   };
 
   //modal para editar un libro
@@ -104,6 +109,21 @@ export default function Books() {
       setMensajeEliminar("Error al conectar con el servidor.");
     }
   };
+
+// useEffect para mostrar el mensaje de éxito después de recargar la página
+useEffect(() => {
+  const mensajeExitoToast = localStorage.getItem('mensajeExitoToast');
+  const mensajeExitoConsola = localStorage.getItem('mensajeExitoConsola');
+
+  if (mensajeExitoToast && !mensajeExitoToastRef.current) {
+    mensajeExitoToastRef.current = true; // Marcar que el mensaje ya fue mostrado
+    setTimeout(() => {
+      toast.success(mensajeExitoToast); // Mostrar el mensaje de éxito
+      console.log(mensajeExitoConsola); // Mostrar en consola
+      localStorage.removeItem('mensajeExitoToast', 'mensajeExitoConsola'); // Limpiar los mensajes para que no se repitan
+    }, 500); // Retraso de 500 ms (así se conserva tras la recarga)
+  }
+}, []); // Ejecutarse solo una vez después de cargar el componente
 
   return (
     <>

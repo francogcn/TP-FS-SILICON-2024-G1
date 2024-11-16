@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from 'react-toastify';
 
 const NuevoLibroModal = ({ show, handleClose, handleSave }) => {
   const [titulo, setTitulo] = useState("");
@@ -9,6 +10,14 @@ const NuevoLibroModal = ({ show, handleClose, handleSave }) => {
   const [estado, setEstado] = useState("disponible");
 
   const handleSubmit = async () => {
+
+    // se valida el año antes de enviarlo
+    // siendo que anio_publicacion es de tipo YEAR, si se sale de este rango ya salta un error genérico
+    if (anio_publicacion < 1901 || anio_publicacion > 2155) {
+      toast.error("El año debe estar entre 1901 y 2155.");
+      return;
+    }
+
     const nuevoLibro = {
       titulo,
       autor,
