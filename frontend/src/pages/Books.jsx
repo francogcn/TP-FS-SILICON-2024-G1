@@ -153,6 +153,22 @@ useEffect(() => {
           </div>
         </div>
         <div className="table-responsive">
+        {libros.length === 0 ? (
+          // Si no hay libros
+          decode.rol !== 1 && decode.rol !== 2 ? (
+            // Si es cliente y no hay libros, mostramos el mensaje para clientes
+            <p>No hay libros disponibles.</p>
+          ) : (
+            // Si es admin o bibliotecario y no hay libros, mostramos el mensaje para admin/bibliotecario
+            <div>
+              <p>No hay libros disponibles aún.</p>
+              {isadmin && (
+                <p>Como administrador o bibliotecario, puedes agregar nuevos libros.</p>
+              )}
+            </div>
+          )
+        ) : (
+          // Si hay libros, renderizamos la tabla
           <table className="table table-striped table-hover">
             <thead>
               <tr>
@@ -167,7 +183,7 @@ useEffect(() => {
               </tr>
             </thead>
             <tbody>
-            {(librosDisponibles.length > 0 ? librosDisponibles : libros).map((libro) => (
+              {(librosDisponibles.length > 0 ? librosDisponibles : libros).map((libro) => (
                 <tr key={libro.id_libro}>
                   <td>{libro.titulo}</td>
                   <td>{libro.autor}</td>
@@ -199,7 +215,8 @@ useEffect(() => {
               ))}
             </tbody>
           </table>
-        </div>
+        )}
+      </div>
         {showEditModal && (
           <EditarLibroModal
             show={showEditModal}
