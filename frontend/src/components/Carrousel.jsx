@@ -29,7 +29,7 @@ export default function Carrousel() {
         </div>
         <div className="carousel-inner">
         {librosCarrousel.map((libro, index) => (
-                        <div key={libro.id} className={`carousel-item ${index === 0 ? "active" : ""}`}>
+                        <div key={libro.id_libro} className={`carousel-item ${index === 0 ? "active" : ""}`}>
                             <NewRelease
                                 titulo={libro.titulo}
                                 autor={libro.autor}

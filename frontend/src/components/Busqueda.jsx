@@ -25,9 +25,6 @@ export default function Busqueda() {
         }
         fetchData();
     },[inputValue])
-    useEffect(() => {
-        console.log(results); // Inspección de la información obtenida del fetch
-    }, [results])
     
     return (
         <>

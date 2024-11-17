@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { isValidEmail, isValidPassword, isValidName, isValidSurname } from '../utils/validaciones';
+import { jwtDecode } from "jwt-decode";
 
 const confToast = {
     position: 'bottom-center',
@@ -20,8 +21,14 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [roles, setRoles] = useState([]);  // Estado para los roles disponibles
-  const [id_rol, setIdRol] = useState('');  // Estado para el rol seleccionado
+  const [id_rol, setIdRol] = useState('3');  // Estado para el rol seleccionado
   const navigate = useNavigate();
+  const token = sessionStorage.getItem('token');
+  let isAdmin = false;
+  if(token){
+    const decode = jwtDecode(token);
+    isAdmin = decode.rol ==1 || decode.rol ==2;
+  }
 
   // Cargar los roles desde el backend cuando el componente se monta
   useEffect(() => {
@@ -135,6 +142,7 @@ export default function SignUp() {
                             type="email"
                             className="form-control"
                             id="email"
+                            autoComplete="current-email"
                             placeholder="alguien@tumail.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -148,12 +156,13 @@ export default function SignUp() {
                             id="password"
                             placeholder="Contraseña"
                             value={password}
+                            autoComplete="current-password"
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <label htmlFor="password">Contraseña</label>
                     </div>
                     
-                    <div className="form-floating mb-3">
+                    {token && isAdmin ? <div className="form-floating mb-3">
                         <select
                             className="form-control"
                             id="id_rol"
@@ -168,7 +177,8 @@ export default function SignUp() {
                             ))}
                         </select>
                         <label htmlFor="id_rol">Rol</label>
-                    </div>
+                    </div>: <input style={{display:"none"}} id="id_rol"
+                            defaultValue="3"></input>}
 
                     <button type="submit" className="btn btn-primary">Registrarme</button>
                 </form>
