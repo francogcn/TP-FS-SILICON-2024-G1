@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
+import { NavLink } from "react-router-dom";
 
 export default function Busqueda() {
     const [inputValue, setInputValue] = useState("");
     const [results, setResults] = useState([]);
-
     useEffect(() => {
         const fetchData = async () => {
             if (inputValue) {
@@ -14,6 +14,7 @@ export default function Busqueda() {
                     const filteredResults = data.filter(libro => libro.titulo.toLowerCase().includes(inputValue.toLowerCase()));
                     // Setear los resultados al estado
                     setResults(filteredResults);
+
                 }
              catch(error){
                 console.error("Error al obtener los resultados:", error);
@@ -27,6 +28,7 @@ export default function Busqueda() {
     useEffect(() => {
         console.log(results); // Inspección de la información obtenida del fetch
     }, [results])
+    
     return (
         <>
             <div className="row busqueda">
@@ -36,7 +38,11 @@ export default function Busqueda() {
                         placeholder="¿Qué vas a leer hoy?"
                         value={inputValue} 
                         onChange={(e)=>{setInputValue(e.target.value)}}/>
-                    <button className="btn btn-outline-secondary">Buscar</button>   
+                    
+                    <button className="buscar-btn btn btn-outline-secondary">
+                    <NavLink to={"books/"+encodeURI(inputValue)}>Buscar</NavLink>
+                    </button>   
+                    
                 </div>
                 <div className="row resultados-busqueda">
                         {results.map((resultado)=>{

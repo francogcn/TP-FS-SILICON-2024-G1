@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import NuevoLibroModal from "../components/NuevoLibroModal";
 import EditarLibroModal from "../components/EditarLibroModal";
 import { jwtDecode } from "jwt-decode";
+import { useParams } from "react-router-dom";
 import { toast } from 'react-toastify';
 
 export default function Books() {
@@ -10,6 +11,8 @@ export default function Books() {
   const [mensajeEliminar, setMensajeEliminar] = useState("");
   const token = sessionStorage.getItem("token");
   const decode = jwtDecode(token);
+  const { titulo } = useParams();
+
   /*Si decode.rol == 1 es admin 
   si decode.rol ==2 es bibliotecario y 
   se habilita el boton de agregar libro, borrar y editar.*/
@@ -19,16 +22,21 @@ export default function Books() {
   // Listar libros
   useEffect(() => {
     const fetchLibros = async () => {
+      let url ="http://localhost:8080/api/libros";
+      if (titulo) {
+        url += `/titulo/${titulo}`;
+      }
       try {
-        const response = await fetch("http://localhost:8080/api/libros");
+        const response = await fetch(url);
         const data = await response.json();
         setLibros(data);
+        console.log(data);
       } catch (error) {
         console.error("Error al obtener los libros:", error);
       }
     };
     fetchLibros();
-  }, []);
+  }, [titulo]);
   
   // Mostrar solo libros disponibles
   const mostrarLibrosDisponibles = () => {
