@@ -8,6 +8,7 @@ import Prestamos from './pages/Prestamos'
 import Books from './pages/Books'
 import LogIn from './pages/LogIn'
 import SignUp from './pages/SignUp';
+import Users from './pages/Users'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { PrivateRoute } from './utils/PrivateRoute';
@@ -33,6 +34,7 @@ function App() {
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/prestamos" element={<Prestamos />} />
             <Route path="/prestamos/:id" element={<Prestamos />} />
+            <Route path="/usuarios" element={<Users />} />
           </Route>
 
           {/* Ruta para cuando no se encuentra la página */}

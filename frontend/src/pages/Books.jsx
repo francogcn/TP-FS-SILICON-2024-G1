@@ -30,7 +30,6 @@ export default function Books() {
         const response = await fetch(url);
         const data = await response.json();
         setLibros(data);
-        console.log(data);
       } catch (error) {
         console.error("Error al obtener los libros:", error);
       }
@@ -111,10 +110,12 @@ export default function Books() {
         console.log(mensajeEliminar);
       } else {
         setMensajeEliminar("Hubo un error al eliminar el libro.");
+        console.log(mensajeEliminar);
       }
     } catch (error) {
       console.error("Error:", error);
       setMensajeEliminar("Error al conectar con el servidor.");
+      console.log(mensajeEliminar);
     }
   };
 

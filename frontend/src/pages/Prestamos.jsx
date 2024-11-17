@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import NuevoPrestamoModal from "../components/NuevoPrestamo";
 import { jwtDecode } from "jwt-decode";
 import EditarPrestamoModal from "../components/EditarPrestamoModal";
+import { toast } from 'react-toastify';
 
 export default function Prestamos() {
   const token = sessionStorage.getItem("token");
@@ -90,14 +91,31 @@ export default function Prestamos() {
           prevPrestamos.filter((prestamo) => prestamo.id_prestamo !== id)
         );
         setMensajeEliminar("Prestamo eliminado con éxito.");
+        console.log(mensajeEliminar);
       } else {
         setMensajeEliminar("Hubo un error al eliminar el prestamo.");
+        console.log(mensajeEliminar);
       }
     } catch (error) {
       console.error("Error:", error);
       setMensajeEliminar("Error al conectar con el servidor.");
     }
   };
+
+  // useEffect para mostrar el mensaje de éxito después de recargar la página
+useEffect(() => {
+  const mensajeExitoToast = localStorage.getItem('mensajeExitoToast');
+  const mensajeExitoConsola = localStorage.getItem('mensajeExitoConsola');
+
+  if (mensajeExitoToast && !mensajeExitoToastRef.current) {
+    mensajeExitoToastRef.current = true; // Marcar que el mensaje ya fue mostrado
+    setTimeout(() => {
+      toast.success(mensajeExitoToast); // Mostrar el mensaje de éxito
+      console.log(mensajeExitoConsola); // Mostrar en consola
+      localStorage.removeItem('mensajeExitoToast', 'mensajeExitoConsola'); // Limpiar los mensajes para que no se repitan
+    }, 500); // Retraso de 500 ms (así se conserva tras la recarga)
+  }
+}, []); // Ejecutarse solo una vez después de cargar el componente
 
   return (
     <>
