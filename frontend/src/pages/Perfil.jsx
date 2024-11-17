@@ -17,6 +17,7 @@ export default function Perfil() {
   const [amigos, setAmigos] = useState([]); // Para los últimos amigos
   const [showReseniaModal, setShowReseniaModal] = useState(false); 
   const [prestamos, setPrestamos] = useState([]); // Para los préstamos activos
+  const [expandedResenias, setExpandedResenias] = useState({});// Para controlar la expansión de cada reseña
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -101,11 +102,19 @@ export default function Perfil() {
   };
 
   const renderResenia = (textoResenia) => {
-    const maxLength = 50; // se puede controlar los caracteres mostrados
+    const maxLength = 100; // Controla la cantidad de caracteres que se muestran antes de "Leer más"
     if (textoResenia && textoResenia.length > maxLength) {
       return textoResenia.slice(0, maxLength) + "...";
     }
     return textoResenia;
+  };
+  
+  // Función para manejar el cambio de estado de expandir/contraer
+  const toggleExpand = (id) => {
+    setExpandedResenias((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id], // Alterna el valor actual de expandir/contraer
+    }));
   };
 
   return (
@@ -137,9 +146,9 @@ export default function Perfil() {
             Agregar Amigo
           </button>
 
-          {/* Cuadros de reseñas debajo de los botones */}
+          {/* Cuadros debajo de los botones */}
           <div className="resenia-cuadros">
-            {/* Cuadro de las reseñas */}
+            {/* Cuadro de resenias */}
             <div className="cuadro-resenia izquierda">
               <h4>Últimas Reseñas</h4>
               {resenias.length > 0 ? (
@@ -152,7 +161,23 @@ export default function Perfil() {
                         {renderStars(dataResenias.clasificacion)}
                       </span>
                     </p>
-                    <p>{renderResenia(dataResenias.texto_resenia) || "No hay reseña disponible"}</p>
+
+                    {/* Acá empieza el texto de la reseña */}
+                    <p 
+                      className={`text-start ${expandedResenias[dataResenias.id_resenia] ? 'expanded' : ''}`}
+                    >
+                      {/* Si la reseña está expandida, se muestra todo el texto, 
+                          si no, se muestra el texto truncado con "Leer más" */}
+                      {expandedResenias[dataResenias.id_resenia] ? dataResenias.texto_resenia : renderResenia(dataResenias.texto_resenia)}
+                    </p>
+
+                    {/* Botón de "Leer más" o "Leer menos" */}
+                    <button 
+                      className="btn btn-primary" 
+                      onClick={() => toggleExpand(dataResenias.id_resenia)}
+                    >
+                      {expandedResenias[dataResenias.id_resenia] ? "Leer menos" : "Leer más"}
+                    </button>
                   </div>
                 ))
               ) : (

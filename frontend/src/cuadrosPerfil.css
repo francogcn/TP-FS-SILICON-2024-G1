@@ -38,13 +38,20 @@
 /* El contenido de las reseñas: alineado a la izquierda */
 .izquierda p {
   text-align: left; /* Alineación a la izquierda para el texto */
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 
   /*Límites de renderizado en los textos de reseñas del cuadro*/
-  white-space: nowrap;         /* Evita que el texto se divida en varias líneas */
-  overflow: hidden;            /* Oculta el texto que se desborda */
-  text-overflow: ellipsis;     /* Agrega '...' al final si el texto excede el límite */
+  white-space: normal;         /* Permitir que el texto se divida en varias líneas */
+  overflow: visible;           /* Permitir que el texto se expanda */
+  text-overflow: clip;         /* Eliminar los '...' al final del texto */
   max-width: 100%;             /* Asegura que no se desborde horizontalmente */
+  transition: max-height 0.3s ease-out; /* Añadir una transición para que la expansión sea suave */
+}
+
+/* Estilo de las reseñas expandidas */
+.izquierda p.expanded {
+  max-height: none;  /* Permitir que el texto ocupe su altura completa */
+  white-space: normal; /* Asegurar que el texto pueda envolverse en varias líneas */
 }
 
 /* Alineamos el título de los libros de reseña a la izquierda */
@@ -122,13 +129,6 @@
   margin-bottom: 0px;
 }
 
-/* Estilo de los textos dentro de los cuadros de reseñas */
-.izquierda p {
-  text-align: left;
-  margin-bottom: 0px;
-  line-height: 1.2; /* Ajuste para la distancia entre líneas de los párrafos */
-}
-
 /* Estilos de la tabla de préstamos */
 .table {
   width: 100%;
@@ -157,7 +157,6 @@
 /* Estilo para cuando no hay préstamos activos */
 .no-prestamos {
   color: #6c757d;
-  font-style: italic;
 }
 
 /* Ajuste para pantallas más pequeñas (menores a 768px) */
