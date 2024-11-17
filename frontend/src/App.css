@@ -151,7 +151,6 @@ body {
   border-radius: 10px;
   position: relative;
   top: -15vh;
-  height: calc(80vh - 110px);
   margin: 0 5vw;
   box-shadow: 0px 0px 10px #999;
 }
@@ -187,6 +186,20 @@ span.perfil-info-bubtitle {
   }
 }
 
+/* Tablas libros y prestamos */
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  --bs-table-bg-type: #c3dbe9;
+}
+
+.table-striped > tbody > tr:nth-of-type(even) > * {
+  --bs-table-bg-type: #98c1d9;
+}
+
+.table-striped > thead > tr > th {
+  --bs-table-bg-type: var(--fondo-oscuro);
+  color: #fff;
+}
+
 /*Página de Prestamos*/
 .prestamos,
 .libros {
@@ -218,18 +231,4 @@ span.perfil-info-bubtitle {
   border-color: var(--letra-clara);
 }  
 
-
-/* Tablas libros y prestamos */
-.table-striped > tbody > tr:nth-of-type(odd) > * {
-  --bs-table-bg-type: #c3dbe9;
-}
-
-.table-striped > tbody > tr:nth-of-type(even) > * {
-  --bs-table-bg-type: #98c1d9;
-}
-
-.table-striped > thead > tr > th {
-  --bs-table-bg-type: var(--fondo-oscuro);
-  color: #fff;
-}
 
