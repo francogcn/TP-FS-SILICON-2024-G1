@@ -152,6 +152,19 @@ const libros = {
       throw new Error("Revisar codigo de error: " + error.message);
     }
   },
+  
+  lastThree: async function () {
+    try {
+      const [result] = await db.execute(
+        "SELECT * FROM Libro ORDER BY id_libro DESC LIMIT 3"
+      );
+      return result;
+    } catch (error) {
+      throw new Error("Error al obtener los ultimos libros: " + error.message);
+    }
+  },
 };
+
+
 
 module.exports = libros;

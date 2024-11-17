@@ -5,6 +5,7 @@ const model = require("../model/libros.js");
 router.get("/", listarLibros);
 router.get("/titulo/:titulo", buscarPorTitulo);
 router.get("/estado/:estado", buscarPorEstado);
+router.get("/lastest", lastThree);
 router.post("/", crearLibro);
 router.put("/:titulo", actualizarLibro);
 router.delete("/:id_libro", eliminarLibro);
@@ -45,6 +46,15 @@ async function buscarPorEstado(req, res) {
     if (!result) {
       return res.status(404).send("Libro no encontrado");
     }
+    res.json(result);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
+async function lastThree(req, res) {
+  try {
+    const result = await model.lastThree();
     res.json(result);
   } catch (error) {
     res.status(500).send(error.message);

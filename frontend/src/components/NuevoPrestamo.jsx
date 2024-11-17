@@ -7,7 +7,6 @@ const NuevoPrestamoModal = ({ show, handleClose, handleSave }) => {
   const [libroSeleccionado, setLibroSeleccionado] = useState("");
   const [fecha_prestamo, setFecha_prestamo] = useState();
   const [fecha_devolucion, setFecha_devolucion] = useState();
-  const [librosDisponibles, setLibrosDisponibles] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:8080/api/usuario")
