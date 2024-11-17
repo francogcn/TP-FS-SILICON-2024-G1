@@ -200,12 +200,22 @@ span.perfil-info-bubtitle {
   margin-bottom: 25px;
 }
 
+
+/*Pagina Login*/
 #login form {
   background: #cbdae5;
   padding: 20px;
   text-align: left;
   border-radius: 10px;
   margin-top:50px;
+}
+
+#login h3 {
+  margin-bottom: 15px;
+}
+
+.img-fluid {
+  margin-top: 8vh;
 }
 
 /* Botones */
