@@ -72,7 +72,7 @@ export default function Perfil() {
       setResenias(prevResenias => {
         // Asegúrate de que prevResenias es un arreglo
         const validPrevResenias = Array.isArray(prevResenias) ? prevResenias : [];
-        return [nuevaResenia, ...validPrevResenias.slice(0, 4)]; // Limita a 5 reseñas
+        return [nuevaResenia, ...validPrevResenias]; // Trae todas las resenias de vuelta
       });      
 
       // Fetch adicional para obtener las últimas reseñas justo después de guardar la nueva
@@ -150,7 +150,7 @@ export default function Perfil() {
           <div className="resenia-cuadros">
             {/* Cuadro de resenias */}
             <div className="cuadro-resenia izquierda">
-              <h4>Últimas Reseñas</h4>
+              <h4>Mis Reseñas</h4>
               {resenias.length > 0 ? (
                 resenias.map((dataResenias, index) => (
                   <div key={index}>

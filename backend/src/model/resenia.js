@@ -6,24 +6,13 @@ const db = require('../config/config_database');
 const Resenia = {
     // Función para obtener las últimas reseñas de un usuario
   obtenerUltimasReseniasPorUsuario: async (id_usuario) => {
-    const query = `
-      SELECT 
+    const query = `SELECT 
             r.id_resenia, r.id_usuario, r.id_libro, r.texto_resenia, r.clasificacion,
             l.titulo
         FROM resenia r
         JOIN libro l ON r.id_libro = l.id_libro
         WHERE r.id_usuario = ?
-        ORDER BY r.id_resenia DESC
-        LIMIT 5;`;  // Limita a las últimas 5 reseñas
-
-    //   SELECT 
-    //         r.id_resenia, r.id_usuario, r.id_libro, r.texto_resenia, r.clasificacion,
-    //         l.titulo_libro
-    //     FROM resenia r
-    //     JOIN libro l ON r.id_libro = l.id_libro
-    //     WHERE r.id_usuario = ?
-    //     ORDER BY r.id_resenia DESC
-    //     LIMIT 5;`;  // Limita a las últimas 5 reseñas
+        ORDER BY r.id_resenia DESC;`;
 
     try {
       const [rows] = await db.execute(query, [id_usuario]);
