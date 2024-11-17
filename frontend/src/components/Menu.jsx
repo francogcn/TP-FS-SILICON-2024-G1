@@ -90,7 +90,7 @@ if (token !== "" && token !== null) {
               </button>
             </li>
             <li className="nav-item">
-              { isAdmin &&<NavLink to="/signup" className="btn btn-outline-success m-2">Registrarse</NavLink>}
+              { isAdmin &&<NavLink to="/signup" className="btn btn-outline-success m-2">Crear usuario</NavLink>}
             </li>
             
             
@@ -130,7 +130,7 @@ if (token !== "" && token !== null) {
           </li>
           <li className="nav-item">
             <NavLink to="/signup" className="btn btn-outline-success m-2">
-              Registrarse
+              Crear usuario
             </NavLink>
           </li>
           </ul>

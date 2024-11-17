@@ -118,11 +118,25 @@ export default function Prestamos() {
           </div>
         </div>
         <div className="table-responsive">
+        {prestamos.length === 0 ? (
+          // Si no hay préstamos
+          decode.rol !== 1 && decode.rol !== 2 ? (
+            // Si es cliente y no hay préstamos, mostramos el mensaje para clientes
+            <p>No tienes préstamos aún.</p>
+          ) : (
+            // Si es admin o bibliotecario y no hay préstamos, mostramos el mensaje para admin/bibliotecario
+            <div>
+              <p>No hay préstamos aún.</p>
+            </div>
+          )
+        ) : (
+          // Si hay préstamos, renderizamos la tabla
           <table className="table table-striped table-hover">
             <thead>
               <tr>
                 <th>Préstamo</th>
-                <th>Usuario</th>
+                 {/* Mostrar columna "Usuario" solo si el usuario es admin o bibliotecario */}
+                {isadmin && <th>Usuario</th>}
                 <th>Libro</th>
                 <th>Fecha Préstamo</th>
                 <th>Fecha Devolución</th>
@@ -134,23 +148,21 @@ export default function Prestamos() {
               {prestamos.map((prestamo) => (
                 <tr key={prestamo.id_prestamo}>
                   <td>{prestamo.id_prestamo}</td>
-                  <td>
-                    {prestamo.nombre_usuario} {prestamo.apellido_usuario}
-                  </td>
+                  {/* Mostrar el nombre del usuario solo si el usuario es admin o bibliotecario */}
+                  {isadmin && (<td>{prestamo.nombre_usuario} {prestamo.apellido_usuario}</td>)}
                   <td>{prestamo.titulo_libro}</td>
                   <td>{prestamo.fecha_prestamo}</td>
                   <td>{prestamo.fecha_devolucion}</td>
                   {isadmin ? (
                     <td>
-                      <button className="btn btn-secondary" onClick={() => handleOpenEditModal(prestamo)}>Editar</button>
+                      <button className="btn btn-secondary" onClick={() => handleOpenEditModal(prestamo)}>
+                        Editar
+                      </button>
                     </td>
                   ) : null}
                   {isadmin ? (
                     <td>
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => handleDelete(prestamo.id_prestamo)}
-                      >
+                      <button className="btn btn-danger" onClick={() => handleDelete(prestamo.id_prestamo)}>
                         Eliminar
                       </button>
                     </td>
@@ -159,7 +171,8 @@ export default function Prestamos() {
               ))}
             </tbody>
           </table>
-        </div>
+        )}
+      </div>
         {showEditModal && (
           <EditarPrestamoModal
             show={showEditModal}

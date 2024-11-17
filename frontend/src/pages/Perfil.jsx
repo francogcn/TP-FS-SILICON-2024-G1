@@ -16,13 +16,14 @@ export default function Perfil() {
   const [resenias, setResenias] = useState([]); // Para las últimas reseñas
   const [amigos, setAmigos] = useState([]); // Para los últimos amigos
   const [showReseniaModal, setShowReseniaModal] = useState(false); 
+  const [prestamos, setPrestamos] = useState([]); // Para los préstamos activos
+  const [expandedResenias, setExpandedResenias] = useState({});// Para controlar la expansión de cada reseña
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8080/api/usuario/perfil/${id_usuario}`
-        );
+        // traer info del usuario
+        const response = await fetch(`http://localhost:8080/api/usuario/perfil/${id_usuario}`);
         const data = await response.json();
         console.log(data); // inspección de la info del usuario apenas llega del fetch
         setPerfil(data);
@@ -31,18 +32,18 @@ export default function Perfil() {
         const responseResenias = await fetch(`http://localhost:8080/api/resenia/usuario/${id_usuario}`);
         const dataResenias = await responseResenias.json();
         console.log("dataResenias: ", dataResenias); // inspección de las reseñas
-
         setResenias(dataResenias);  // Guarda las reseñas en su estado
 
-
         // Obtener los amigos del usuario
-        const responseAmigos = await fetch(
-          `http://localhost:8080/api/amistad/listar/${id_usuario}`
-        );
+        const responseAmigos = await fetch(`http://localhost:8080/api/amistad/listar/${id_usuario}`);
         const dataAmigos = await responseAmigos.json();
         setAmigos(dataAmigos); // Guardamos los amigos en el estado
-
         console.log("Datos de amigos recibidos: ", dataAmigos);
+
+        // Obtener préstamos activos
+        const responsePrestamos = await fetch(`http://localhost:8080/api/prestamos/usuario/${id_usuario}`);
+        const dataPrestamos = await responsePrestamos.json();
+        setPrestamos(dataPrestamos); // Guarda los préstamos activos
 
       } catch (error) {
         console.error("Error al obtener el perfil:", error);
@@ -71,7 +72,7 @@ export default function Perfil() {
       setResenias(prevResenias => {
         // Asegúrate de que prevResenias es un arreglo
         const validPrevResenias = Array.isArray(prevResenias) ? prevResenias : [];
-        return [nuevaResenia, ...validPrevResenias.slice(0, 4)]; // Limita a 5 reseñas
+        return [nuevaResenia, ...validPrevResenias]; // Trae todas las resenias de vuelta
       });      
 
       // Fetch adicional para obtener las últimas reseñas justo después de guardar la nueva
@@ -101,11 +102,19 @@ export default function Perfil() {
   };
 
   const renderResenia = (textoResenia) => {
-    const maxLength = 50; // se puede controlar los caracteres mostrados
+    const maxLength = 100; // Controla la cantidad de caracteres que se muestran antes de "Leer más"
     if (textoResenia && textoResenia.length > maxLength) {
       return textoResenia.slice(0, maxLength) + "...";
     }
     return textoResenia;
+  };
+  
+  // Función para manejar el cambio de estado de expandir/contraer
+  const toggleExpand = (id) => {
+    setExpandedResenias((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id], // Alterna el valor actual de expandir/contraer
+    }));
   };
 
   return (
@@ -133,19 +142,15 @@ export default function Perfil() {
           <button type="button" className="btn btn-primary m-1" onClick={handleOpenReseniaModal}>
             Agregar Reseña
           </button>
-          <button
-            type="button"
-            className="btn btn-primary m-1"
-            onClick={handleOpenModal}
-          >
+          <button type="button" className="btn btn-primary m-1" onClick={handleOpenModal}>
             Agregar Amigo
           </button>
 
-          {/* Cuadros de reseñas debajo de los botones */}
-        <div className="resenia-cuadros">
-           {/* Cuadro de las reseñas */}
-           <div className="cuadro-resenia izquierda">
-              <h4>Últimas Reseñas</h4>
+          {/* Cuadros debajo de los botones */}
+          <div className="resenia-cuadros">
+            {/* Cuadro de resenias */}
+            <div className="cuadro-resenia izquierda">
+              <h4>Mis Reseñas</h4>
               {resenias.length > 0 ? (
                 resenias.map((dataResenias, index) => (
                   <div key={index}>
@@ -156,7 +161,23 @@ export default function Perfil() {
                         {renderStars(dataResenias.clasificacion)}
                       </span>
                     </p>
-                    <p>{renderResenia(dataResenias.texto_resenia) || "No hay reseña disponible"}</p>
+
+                    {/* Acá empieza el texto de la reseña */}
+                    <p 
+                      className={`text-start ${expandedResenias[dataResenias.id_resenia] ? 'expanded' : ''}`}
+                    >
+                      {/* Si la reseña está expandida, se muestra todo el texto, 
+                          si no, se muestra el texto truncado con "Leer más" */}
+                      {expandedResenias[dataResenias.id_resenia] ? dataResenias.texto_resenia : renderResenia(dataResenias.texto_resenia)}
+                    </p>
+
+                    {/* Botón de "Leer más" o "Leer menos" */}
+                    <button 
+                      className="btn btn-primary" 
+                      onClick={() => toggleExpand(dataResenias.id_resenia)}
+                    >
+                      {expandedResenias[dataResenias.id_resenia] ? "Leer menos" : "Leer más"}
+                    </button>
                   </div>
                 ))
               ) : (
@@ -164,41 +185,66 @@ export default function Perfil() {
               )}
             </div>
 
-          {/* Cuadro de la tabla de amigos */}
-          <div className="cuadro-resenia derecha">
-            <h4>Mis Amigos</h4>
-            {/* Solo renderizamos la tabla si hay amigos */}
-            {amigos.length > 0 ? (
+            {/* Cuadro de la tabla de amigos */}
+            <div className="cuadro-resenia derecha">
+              <h4>Mis Amigos</h4>
+              {/* Solo renderizamos la tabla si hay amigos */}
+              {amigos.length > 0 ? (
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {amigos.map((amigo, index) => (
+                      <tr key={index}>
+                        <td>{amigo.nombre} {amigo.apellido}</td>
+                        <td>Amigo</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p className="no-amigos">No tienes amigos aún.</p>
+              )}
+            </div>
+          </div>
+
+          {/* Cuadro de préstamos activos debajo */}
+          <div className="cuadro-resenia cuadro-prestamos">
+            <h4>Préstamos Activos</h4>
+            {prestamos.length > 0 ? (
               <table className="table">
                 <thead>
                   <tr>
-                    <th>Nombre</th>
-                    <th>Estado</th>
+                    <th>Título del Libro</th>
+                    <th>Fecha de Préstamo</th>
+                    <th>Fecha de Devolución</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {amigos.map((amigo, index) => (
+                  {prestamos.map((prestamo, index) => (
                     <tr key={index}>
-                      <td>{amigo.nombre} {amigo.apellido}</td>
-                      <td>Amigo</td>
+                      <td>{prestamo.titulo_libro}</td>
+                      <td>{prestamo.fecha_prestamo}</td>
+                      <td>{prestamo.fecha_devolucion}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             ) : (
-              // Si no hay amigos, mostramos el mensaje dentro del cuadro
-              <p className="no-amigos">No tienes amigos aún.</p>
+              <p className="no-prestamos">No tienes préstamos activos.</p>
             )}
           </div>
-          </div>
-
-          
-        <AgregarAmigosModal
-            show={showModal}
-            handleClose={handleCloseModal}
-            handleSave={handleSaveAmigo}
-            />
         </div>
+
+        <AgregarAmigosModal
+          show={showModal}
+          handleClose={handleCloseModal}
+          handleSave={handleSaveAmigo}
+        />
 
         {/* Modal de Reseña */}
         <ReseñaModal
