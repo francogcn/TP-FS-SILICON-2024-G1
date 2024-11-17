@@ -75,11 +75,11 @@ if (token !== "" && token !== null) {
                   Libros
                 </NavLink>
               </li>
-              <li className="nav-item ">
+              {isAdmin && <li className="nav-item ">
                 <NavLink className="nav-link" to="/usuarios">
                   Usuarios
                 </NavLink>
-              </li>
+              </li>}
               
             </ul>
             {/* Aquí agregamos los botones "Logout" y "Signup" */}
