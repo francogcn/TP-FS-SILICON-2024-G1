@@ -73,7 +73,7 @@ const amigos = {
   buscarReseniasPorId: async function (id_usuario) {
     try {
       const query =
-        "SELECT r.id_resenia, u.nombre AS nombre_amigo, u.apellido AS apellido_amigo, l.titulo AS titulo_libro, r.texto_resenia, r.clasificacion FROM Resenia r JOIN Usuario u ON r.id_usuario = u.id_usuario JOIN Libro l ON r.id_libro = l.id_libro JOIN Amigos a ON (a.id_amigo_usuario = u.id_usuario AND a.id_usuario = ?) OR (a.id_usuario = u.id_usuario AND a.id_amigo_usuario = ?) WHERE r.id_usuario = u.id_usuario;";
+        "SELECT r.id_resenia, u.nombre AS nombre_amigo, u.apellido AS apellido_amigo, l.titulo AS titulo_libro, r.texto_resenia, r.clasificacion FROM Resenia r JOIN Usuario u ON r.id_usuario = u.id_usuario JOIN Libro l ON r.id_libro = l.id_libro JOIN Amigos a ON (a.id_amigo_usuario = u.id_usuario AND a.id_usuario = ?) OR (a.id_usuario = u.id_usuario AND a.id_amigo_usuario = ?) WHERE r.id_usuario = u.id_usuario ORDER BY r.id_resenia DESC;";
       const [result] = await db.execute(query, [id_usuario, id_usuario]);
       return result;
     } catch (error) {
