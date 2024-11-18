@@ -114,7 +114,7 @@ export default function SignUp() {
             </div>
             <div className="col-sm-6">
                 <form onSubmit={handleSubmit} className="form-container">
-                    <h3 style={{ color: "#fff" }}>Registrate:</h3>
+                    <h3 style={{ color: "#fff" }}>Crear una nueva cuenta:</h3>
                     <div className="form-floating mb-3">
                         <input
                             type="text"
@@ -180,7 +180,7 @@ export default function SignUp() {
                     </div>: <input style={{display:"none"}} id="id_rol"
                             defaultValue="3"></input>}
 
-                    <button type="submit" className="btn btn-primary">Registrarme</button>
+                    <button type="submit" className="btn btn-primary">Crear</button>
                 </form>
             </div>
         </div>
