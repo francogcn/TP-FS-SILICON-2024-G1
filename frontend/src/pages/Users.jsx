@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
 import EditarUsuario from "../components/EditarUsuario";
+import NotFound from "./NotFound";
 
 export default function Users() {
   const [usuarios, setUsuarios] = useState([]);
@@ -15,6 +16,7 @@ export default function Users() {
   // Decodificar el token y obtener el id_usuario
   const decode = token ? jwtDecode(token) : null;
   const idUsuarioLogueado = decode ? decode.id_usuario : null;
+  const isAdmin = decode.rol === 1 || decode.rol === 2;
 
   // Obtener usuarios al cargar el componente
   useEffect(() => {
@@ -127,8 +129,8 @@ export default function Users() {
 
   return (
     <div className="container">
-      <h1>Usuarios</h1>
-      <div className="table-responsive">
+      
+      {isAdmin ? <><h1>Usuarios</h1><div className="table-responsive">
         <table className="table table-striped table-hover">
           <thead>
             <tr>
@@ -167,7 +169,7 @@ export default function Users() {
             ))}
           </tbody>
         </table>
-      </div>
+      </div></> : <NotFound/> }
 
       {showEditModal && (
         <EditarUsuario

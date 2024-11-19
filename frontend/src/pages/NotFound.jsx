@@ -7,7 +7,7 @@ export default function NotFound(){
             <p>Parece que te perdiste</p>
             
             <NavLink to="/">
-                <button className="btn btn-outline-primary">
+                <button className="btn btn-outline-secondary">
                     Volver al inicio
                 </button>
             </NavLink>
