@@ -108,10 +108,10 @@ export default function LogIn() {
                                 />
                                 <label htmlFor="loginPassword">Contraseña</label>
                             </div>
-                            <div className="mb-3 form-check">
+                            {/* <div className="mb-3 form-check">
                                 <input type="checkbox" className="form-check-input" id="loginCheck" />
                                 <label className="form-check-label" htmlFor="loginCheck">Recordarme</label>
-                            </div>
+                            </div> */}
                             <button type="submit" className="btn btn-primary">Ingresar</button>
 
                         </form>
