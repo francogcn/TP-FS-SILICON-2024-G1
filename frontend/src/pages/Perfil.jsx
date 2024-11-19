@@ -216,7 +216,7 @@ export default function Perfil() {
           <div className="cuadro-resenia cuadro-prestamos">
             <h4>Préstamos Activos</h4>
             {prestamos.length > 0 ? (
-              <table className="table">
+              <div className="table-responsive"><table className="table">
                 <thead>
                   <tr>
                     <th>Título del Libro</th>
@@ -233,7 +233,7 @@ export default function Perfil() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </table></div>
             ) : (
               <p className="no-prestamos">No tienes préstamos activos.</p>
             )}

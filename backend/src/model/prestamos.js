@@ -42,7 +42,8 @@ const Prestamo = {
         JOIN 
           Usuario u ON p.id_usuario = u.id_usuario 
         JOIN 
-          Libro l ON p.id_libro = l.id_libro;`
+          Libro l ON p.id_libro = l.id_libro
+          ORDER BY p.fecha_prestamo DESC;`
         const [rows] = await db.execute(query);
       return rows;
     } catch (error) {

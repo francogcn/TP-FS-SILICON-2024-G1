@@ -36,7 +36,7 @@ const Usuario = {
   //listar todos los usuarios (get)
   findAll: async () => {
     const query =
-      "SELECT u.id_usuario, u.nombre, u.apellido, u.mail, u.contrasenia, r.nombre_rol FROM Usuario u JOIN Rol r ON u.id_rol = r.id_rol";
+      "SELECT u.id_usuario, u.nombre, u.apellido, u.mail, u.contrasenia, r.nombre_rol FROM Usuario u JOIN Rol r ON u.id_rol = r.id_rol ORDER BY u.apellido ASC;";
     try {
       const [rows] = await db.execute(query);
       return rows;
