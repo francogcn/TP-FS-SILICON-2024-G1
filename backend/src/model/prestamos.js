@@ -29,7 +29,7 @@ const Prestamo = {
   findAll: async () => {
     try {
       const query =
-        "SELECT p.id_prestamo, u.nombre AS nombre_usuario, u.apellido AS apellido_usuario, l.titulo AS titulo_libro, DATE_FORMAT(p.fecha_prestamo, '%d-%m-%Y') AS fecha_prestamo, DATE_FORMAT(p.fecha_devolucion, '%d-%m-%Y') AS fecha_devolucion FROM Prestamo p JOIN Usuario u ON p.id_usuario = u.id_usuario JOIN Libro l ON p.id_libro = l.id_libro";
+        "SELECT p.id_prestamo, u.nombre AS nombre_usuario, u.apellido AS apellido_usuario, l.titulo AS titulo_libro, DATE_FORMAT(p.fecha_prestamo, '%d-%m-%Y') AS fecha_prestamo, DATE_FORMAT(p.fecha_devolucion, '%d-%m-%Y') AS fecha_devolucion FROM Prestamo p JOIN Usuario u ON p.id_usuario = u.id_usuario JOIN Libro l ON p.id_libro = l.id_libro ORDER BY p.fecha_prestamo DESC;";
       const [rows] = await db.execute(query);
       return rows;
     } catch (error) {
