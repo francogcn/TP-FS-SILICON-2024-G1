@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import AgregarAmigosModal from "../components/NuevoAmigoModal";
-import buttonEliminarAmigo from "../components/ButtonEliminarAmigo";
 import ReseñaModal from "../components/NuevaReseniaModal";
 import {jwtDecode} from "jwt-decode";
 import { toast } from 'react-toastify';
