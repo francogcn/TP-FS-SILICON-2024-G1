@@ -169,3 +169,11 @@
     width: 100%; /* Hacer que los cuadros ocupen el 100% del ancho disponible */
   }
 }
+.eliminar-amigo{
+  display: none;
+  float:right;
+}
+
+.cuadro-resenia table td:hover .eliminar-amigo{ 
+  display: inline-block;
+}

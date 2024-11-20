@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import AgregarAmigosModal from "../components/NuevoAmigoModal";
+import buttonEliminarAmigo from "../components/ButtonEliminarAmigo";
 import ReseñaModal from "../components/NuevaReseniaModal";
 import {jwtDecode} from "jwt-decode";
 import { toast } from 'react-toastify';
 import '../cuadrosPerfil.css';
+import ButtonEliminarAmigo from "../components/buttonEliminarAmigo";
 
 export default function Perfil() {
   const token = sessionStorage.getItem("token");
@@ -200,7 +202,9 @@ export default function Perfil() {
                   <tbody>
                     {amigos.map((amigo, index) => (
                       <tr key={index}>
-                        <td>{amigo.nombre} {amigo.apellido}</td>
+                        <td>{amigo.nombre} {amigo.apellido}
+                          <ButtonEliminarAmigo />
+                        </td>
                         <td>Amigo</td>
                       </tr>
                     ))}
